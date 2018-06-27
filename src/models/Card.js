@@ -1,17 +1,12 @@
 const mongoose = require('mongoose');
-
-// remote db connection settings. For security, connectionString should be in a separate file not committed to git
-// var connectionString = "mongodb://<dbuser>:<dbuserpassword>@ds015962.mlab.com:15962/<dbname>";
-// mongoose.connect(connectionString);
-
-// local db connection settings 
-const ip = process.env.ip || '127.0.0.1';
-mongoose.connect('mongodb://' + ip + '/books');
+const credentials = require('../credentials');
+mongoose.connect(credentials.mongo.development.connectionString);
 
 const conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
 
 const mySchema = mongoose.Schema({
+    id: Number,
     name: {
         type: String,
         required: true
@@ -26,6 +21,7 @@ const mySchema = mongoose.Schema({
         trash: Number
     },
     text: String,
+    reactionText: String,
     upgrade: Boolean,
     box: String,
     extraSetup: String
