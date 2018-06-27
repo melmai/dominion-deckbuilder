@@ -6,7 +6,7 @@ const conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
 
 const mySchema = mongoose.Schema({
-    id: Number,
+    _id: Number,
     name: {
         type: String,
         required: true
