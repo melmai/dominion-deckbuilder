@@ -29,10 +29,10 @@ app.get('/api/cards', (req, res) => {
 });
 
 // READ (get one)
-app.get('/api/card/:title', (req, res) => {
-    const title = req.params.title;
+app.get('/api/card/:id', (req, res) => {
+    const id = req.params.id;
     Card.find({
-        'title': title
+        '_id': id
     }, (err, result) => {
         if (err) return err;
         if (result) {
