@@ -21,10 +21,22 @@ const mySchema = mongoose.Schema({
         trash: Number
     },
     text: String,
-    reactionText: String,
-    upgrade: Boolean,
     box: String,
-    extraSetup: String
+    journeyToken: Boolean,
+    heirloom: String,
+    linkedCard: String,
+    /* strategy: {
+        trash: Boolean,
+        filter: Boolean,
+        draw: Boolean,
+        gainCard: Boolean,
+        gainTreasure: Boolean,
+        immunity: Boolean,
+        attack: {
+            curse: Boolean,
+            discard: Boolean
+        }
+    } */
 });
 
 module.exports = mongoose.model('Card', mySchema);

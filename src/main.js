@@ -28,6 +28,45 @@ app.get('/api/cards', (req, res) => {
     });
 });
 
+// READ (get all cards from single box)
+app.get('/api/cards/:box', (req, res) => {
+    const box = req.params.box;
+    Card.find({
+        'box': box
+    }, (err, result) => {
+        if (err) return err;
+        if (result) {
+            res.json(result);
+        } else {
+            res.json({
+                'message': 'No cards found for this box!'
+            });
+        }
+    });
+});
+
+// READ (get all cards from single box by type)
+app.get('/api/cards/:box/:type', (req, res) => {
+    const box = req.params.box;
+    const type = req.params.type;
+
+    Card.find({
+        'box': box,
+        'class': type
+    }, (err, result) => {
+        if (err) return err;
+        if (result) {
+            res.json(result);
+        } else {
+            res.json({
+                'message': 'No cards of this type found for this box!'
+            });
+        }
+    });
+});
+
+
+
 // READ (get one)
 app.get('/api/card/:id', (req, res) => {
     const id = req.params.id;
