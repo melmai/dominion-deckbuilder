@@ -1,6 +1,9 @@
 const express = require('express');
-const Card = require('./models/Card');
 const parser = require('body-parser');
+
+// models
+const Card = require('./models/Card');
+const Deck = require('./models/Deck');
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
@@ -65,9 +68,7 @@ app.get('/api/cards/:box/:type', (req, res) => {
     });
 });
 
-
-
-// READ (get one)
+// READ (get one card)
 app.get('/api/card/:id', (req, res) => {
     const id = req.params.id;
     Card.find({
@@ -79,6 +80,20 @@ app.get('/api/card/:id', (req, res) => {
         } else {
             res.json({
                 'message': 'No Card found!'
+            });
+        }
+    });
+});
+
+// READ (get all suggested decks)
+app.get('/api/decks', (req, res) => {
+    Deck.find((err, result) => {
+        if (err) return err;
+        if (result) {
+            res.json(result);
+        } else {
+            res.json({
+                'message': 'No cards of this type found for this box!'
             });
         }
     });
