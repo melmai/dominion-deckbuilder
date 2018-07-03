@@ -35,11 +35,12 @@ class Card extends Component {
         fetch(`/api/card/${id}`)
             .then(response => response.json())
             .then(responseData => {
-                const abilities = responseData[0].abilities ? responseData[0].abilities : false;
+                let card = responseData[0];
+                let abilities = responseData[0].abilities ? responseData[0].abilities : false;
                 this.setState({
-                    name: responseData[0].name,
-                    id: responseData[0]._id,
-                    cost: responseData[0].cost,
+                    name: card.name,
+                    id: card._id,
+                    cost: card.cost,
                     abilities: {
                         buy: abilities.buy,
                         action: abilities.action,
@@ -47,12 +48,12 @@ class Card extends Component {
                         trash: abilities.trash,
                         card: abilities.card 
                     } ,
-                    class: responseData[0].class,
-                    text: responseData.text,
-                    box: responseData.box,
-                    journeyToken: responseData.journeyToken,
-                    heirloom: responseData.heirloom,
-                    linkedCard: responseData.linkedCard,
+                    class: card.class,
+                    text: card.text,
+                    box: card.box,
+                    journeyToken: card.journeyToken,
+                    heirloom: card.heirloom,
+                    linkedCard: card.linkedCard,
                 })
             })
             .catch((err) => {
@@ -61,13 +62,32 @@ class Card extends Component {
     }
 
     render() {
+
+        // basic card info
+        let text = this.state.text;
+        let cost = this.state.cost;
+        let linkedCard = this.state.linkedCard;
+        let heirloom = this.state.heirloom;
+
+        // abilities
+        let actions = this.state.abilities.action;
+        let money = this.state.abilities.money;
+        let buys = this.state.abilities.buy;
+        let cards = this.state.abilities.card;
+
         return (
             <div className="card">
                 <h2>{this.state.name}</h2>
-                <p>Action: {this.state.abilities.action}</p>
-                <p>Money: {this.state.abilities.money}</p>
-                <p>Buy: {this.state.abilities.buy}</p>
-                <p>Card: {this.state.abilities.card}</p>
+                <ul className="card-abilities">
+                    { actions ? <li>+{actions} Actions</li> : '' }
+                    { money ? <li>+{money} Money</li> : '' }
+                    { buys ? <li>+{buys} Buys</li> : '' }
+                    { cards ? <li>+{cards} Cards</li> : '' }
+                </ul>
+                <p>{text}</p>
+                <p>{cost}</p>
+                <p>{ linkedCard ? linkedCard : '' }</p>
+                <p>{ heirloom ? heirloom : '' }</p>
             </div>
         );
     }
