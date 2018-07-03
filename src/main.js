@@ -1,12 +1,13 @@
 const express = require('express');
 const parser = require('body-parser');
+const path = require('path');
 
 // models
 const Card = require('./models/Card');
 const Deck = require('./models/Deck');
 
 const app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 4000);
 app.use('/api', require('cors')()); // set Access-Control-Allow-Origin header for api route
 app.use(parser.json());
 app.use(parser.urlencoded({
@@ -16,7 +17,7 @@ app.use(express.static(__dirname + '/public'));
 
 // routing
 app.get('/', (req, res) => {
-    res.send('index');
+    res.sendFile('index.html', {root: path.join(__dirname, 'views')});
 });
 
 // API Routing
