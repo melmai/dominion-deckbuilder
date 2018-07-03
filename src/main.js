@@ -16,9 +16,7 @@ app.use(parser.urlencoded({
 app.use(express.static(__dirname + '/public'));
 
 // routing
-app.get('/', (req, res) => {
-    res.sendFile('index.html', {root: path.join(__dirname, 'views')});
-});
+app.get('/', (req, res) => res.sendFile('index.html', {root: path.join(__dirname)}));
 
 // API Routing
 // READ (get all)
@@ -54,10 +52,7 @@ app.get('/api/cards/:box/:type', (req, res) => {
     const box = req.params.box;
     const type = req.params.type;
 
-    Card.find({
-        'box': box,
-        'class': type
-    }, (err, result) => {
+    Card.find({ 'box': box,'class': type }, (err, result) => {
         if (err) return err;
         if (result) {
             res.json(result);
@@ -72,9 +67,7 @@ app.get('/api/cards/:box/:type', (req, res) => {
 // READ (get one card)
 app.get('/api/card/:id', (req, res) => {
     const id = req.params.id;
-    Card.find({
-        '_id': id
-    }, (err, result) => {
+    Card.find({ '_id': id }, (err, result) => {
         if (err) return err;
         if (result) {
             res.json(result);
@@ -100,7 +93,22 @@ app.get('/api/decks', (req, res) => {
     });
 });
 
-// CREATE
+// READ (get one deck)
+app.get('/api/deck/:id', (req, res) => {
+    const id = req.params.id;
+    Deck.find({ _id: id }, (err, result) => {
+        if (err) return err;
+        if (result) {
+            res.json(result);
+        } else {
+            res.json({
+                'message': 'No cards of this type found for this box!'
+            });
+        }
+    });
+});
+
+/* // CREATE
 app.post('/api/cards/add', (req, res) => {
     const newCard = new Card();
     newCard.title = req.body.title || '';
@@ -149,7 +157,7 @@ app.delete('/api/card/delete/:id', (req, res) => {
             });
         }
     });
-});
+}); */
 
 // 404 Error
 app.use((req, res) => {
