@@ -3,8 +3,8 @@ const parser = require('body-parser');
 const path = require('path');
 
 // models
-const Card = require('./models/Card');
-const Deck = require('./models/Deck');
+const Card = require('../models/Card');
+const Deck = require('../models/Deck');
 
 const app = express();
 app.set('port', process.env.PORT || 4000);
