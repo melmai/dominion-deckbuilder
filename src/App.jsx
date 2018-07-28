@@ -11,9 +11,10 @@ class App extends Component {
         // set state
         this.state = {
             boxes: [],
-            box: 0,
             showBoxes: true,
-            showCards: false
+            showCards: false,
+            setID: 0,
+            cardID: 0
         };
 
         // bind events
@@ -30,13 +31,14 @@ class App extends Component {
         this.setState({ showBoxes: true, showCards: false });
     }
 
-    showBoxCards() {
-        this.setState({ showBoxes: true, showCards: false });
-    }
-
-    addBox(box) {
+    toggleBox(box) {
         const boxes = this.state.boxes;
-        boxes.push(box);
+        let boxExists = boxes.includes(box);
+        if (!boxExists) {
+            boxes.filter(item => item !== box);
+        } else {
+            boxes.push(box);
+        }
         this.setState({ boxes: boxes });
     }
   
@@ -47,7 +49,7 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Dominion Deck Builder</h1>
                 </header>
-                { this.state.showBoxes ? <BoxContainer showCards={ this.showBoxCards } addBox={ this.addBox } /> : <Deck /> }
+                { this.state.showBoxes ? <BoxContainer showCards={ this.showBoxCards } toggleBox={ this.toggleBox } /> : <Deck /> }
             </div>
         );
     }
