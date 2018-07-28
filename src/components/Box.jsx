@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 
 class Box extends Component {
@@ -10,7 +11,7 @@ class Box extends Component {
     
     onClick(e){
         e.preventDefault();
-        this.addBox();
+        this.toggleBox();
     }
 
     render() {

@@ -8,10 +8,10 @@ class BoxContainer extends Component {
         return (
             <div className="box-container">
                 <div className="boxes">
-                    <Box name="Dominion 2nd ed" onClick={ this.props.addBox } />
-                    <Box name="Intrigue 2nd ed" onClick={ this.props.addBox } />
-                    <Box name="Adventures" onClick={ this.props.addBox } />
-                    <Box name="Nocturne" onClick={ this.props.addBox } />
+                    <Box name="Dominion 2nd ed" onClick={ this.props.toggleBox } />
+                    <Box name="Intrigue 2nd ed" onClick={ this.props.toggleBox } />
+                    <Box name="Adventures" onClick={ this.props.toggleBox } />
+                    <Box name="Nocturne" onClick={ this.props.toggleBox } />
                 </div>
                 <Button onClick={ (e) => this.props.showBoxCards(e) } value="View Cards" />
             </div>  
