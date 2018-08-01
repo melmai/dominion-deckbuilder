@@ -9,14 +9,16 @@ class Box extends Component {
         this.onClick = this.onClick.bind(this);
     }
     
-    onClick(e){
+    // toggles selection of box on user click
+    onClick(e) {
         e.preventDefault();
-        this.toggleBox();
+        const box = this.props.name;
+        this.props.toggleBox(box);
     }
 
     render() {
         return (
-            <div className="box">
+            <div className="box" toggleBox={this.onClick}>
                 {this.props.name}
             </div>
         );
