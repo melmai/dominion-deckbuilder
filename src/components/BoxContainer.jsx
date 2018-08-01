@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import Box from './Box';
 
 // BoxContainer contains Box components 
-class BoxContainer extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
-    
+class BoxContainer extends Component {    
     render() {
         return (
             <div className="box-container">
