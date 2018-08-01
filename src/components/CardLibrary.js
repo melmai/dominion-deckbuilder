@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const Row = (props) => (
-    <tr key={props.card._id}>
+    <tr>
         <td>{props.card.name}</td>
         <td>{props.card.cost}</td>
         <td>{props.card.box}</td>
@@ -22,14 +22,26 @@ function Table(props) {
                 </tr>
             </thead>
             <tbody>
-                {cards.map(card => <Row card={card} />)}
+                {cards.map(card => <Row key={card._id} card={card} />)}
             </tbody>
         </table>
     );
 }
 
-class Library extends Component {
+class CardLibrary extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.hideCards = this.hideCards.bind(this);
+    }
     
+    // TODO: function to hide cards if not part of selected boxes
+    hideCards(boxes) {
+
+    }
+
+    // TODO: function to show card details when selected from list
+    // TODO: function to show stats based on seleted boxes
     
     render() {
         return (
@@ -40,4 +52,4 @@ class Library extends Component {
     }
 }
 
-export default Library;
+export default CardLibrary;

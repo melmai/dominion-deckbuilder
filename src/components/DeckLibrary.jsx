@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Card from './Card';
 
-class Deck extends Component {
+class DeckLibrary extends Component {
     constructor(props) {
         super(props);
 
@@ -23,13 +23,7 @@ class Deck extends Component {
         this.getCards();
     }
 
-    // get complete list of cards
-    getCards() {
-        fetch('/api/cards/')
-            .then(response => response.json())
-            .then(responseData => this.setState({ allCards: responseData }))
-            .catch((err) => console.log('Fetching and parsing data error', err));
-    }
+    
 
     getDeck(id) {
         fetch(`/api/deck/${id}`)
@@ -64,4 +58,4 @@ Deck.propTypes = {
 
 };
 
-export default Deck;
+export default DeckLibrary;
