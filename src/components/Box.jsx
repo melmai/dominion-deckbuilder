@@ -18,7 +18,7 @@ class Box extends Component {
 
     render() {
         return (
-            <div className="box" toggleBox={this.onClick}>
+            <div className="box" onClick={this.onClick}>
                 {this.props.name}
             </div>
         );
