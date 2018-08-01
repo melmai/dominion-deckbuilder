@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Deck from './components/Deck';
-import BoxContainer from './components/BoxContainer';
-import logo from './logo.svg';
 import './App.css';
+//import Deckbuilder from './components/Deckbuilder';
+import CardLibrary from './components/CardLibrary';
+import BoxContainer from './components/BoxContainer';
+//import Filter from './components/Filter';
 
 class App extends Component {
     constructor(props) {
@@ -11,45 +12,87 @@ class App extends Component {
         // set state
         this.state = {
             boxes: [],
-            showBoxes: true,
-            showCards: false,
-            setID: 0,
-            cardID: 0
+            filters: {},
+            showLibrary: false,
+            cardID: 0,
+            cards: [],
+            cardsBySet: {
+                dominion2: [],
+                intrigue2: [],
+                adventures: [],
+                nocturne: [],
+            }
         };
 
-        // bind events
-        //this.onClick = this.onClick.bind(this);
+        this.loadData = this.loadData.bind(this);
+        this.toggleBox = this.toggleBox.bind(this);
+        this.sortCardsBySet = this.sortCardsBySet.bind(this);
     }
 
-    showCards(e) {
-        e.preventDefault();
-        this.setState({ showBoxes: false, showCards: true });
+    componentDidMount() {
+        this.loadData();
     }
 
-    showBoxes(e) {
-        e.preventDefault();
-        this.setState({ showBoxes: true, showCards: false });
+    // get initial data
+    loadData() {
+        fetch('/api/cards/')
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({ cards: responseData });
+                this.sortCardsBySet();
+            })
+            .catch((err) => console.log('Fetching and parsing data error', err));
     }
 
+    // toggle box selection
     toggleBox(box) {
-        const boxes = this.state.boxes;
-        let boxExists = boxes.includes(box);
-        if (!boxExists) {
-            boxes.filter(item => item !== box);
-        } else {
-            boxes.push(box);
+        console.log(box);
+        let boxes = this.state.boxes; 
+        let boxExists = boxes.includes(box); 
+        try {
+            if (boxExists) {
+                boxes = boxes.filter(item => item !== box);
+            } else {
+                boxes.push(box);
+            }
+            this.setState({ boxes: boxes });
+        } catch(err) {
+            console.log(err);
         }
-        this.setState({ boxes: boxes });
+        
     }
-  
-    render() {
+    
+    // sorts cards into subarrays by set
+    sortCardsBySet() {
+        const cards = this.state.cards;
+        const dominion2 = [], intrigue2 = [], adventures = [], nocturne = [];
+        cards.forEach(card => {
+            console.log(card.box);
+            if (card.box === "Dominion2") dominion2.push(card);
+            if (card.box === "Intrigue2") intrigue2.push(card);
+            if (card.box === "Adventures") adventures.push(card);
+            if (card.box === "Nocturne") nocturne.push(card);
+        });
+        this.setState({
+            cardsBySet: {
+                dominion2: dominion2,
+                intrigue2: intrigue2,
+                adventures: adventures,
+                nocturne: nocturne,
+            }
+        });
+    }
+
+    // TODO: function to show conditional views based on state values
+    // TODO: function to set filters
+
+    render () {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Dominion Deck Builder</h1>
-                </header>
-                { this.state.showBoxes ? <BoxContainer showCards={ this.showBoxCards } toggleBox={ this.toggleBox } /> : <Deck /> }
+            <div>
+                <header />
+                <BoxContainer toggleBox={this.toggleBox}/>
+                <CardLibrary boxes={this.state.boxes} cards={this.state.cards} />
+                <footer />
             </div>
         );
     }
