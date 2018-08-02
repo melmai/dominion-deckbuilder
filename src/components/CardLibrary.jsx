@@ -29,19 +29,6 @@ function Table(props) {
 }
 
 class CardLibrary extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.hideCards = this.hideCards.bind(this);
-    }
-    
-    // TODO: function to hide cards if not part of selected boxes
-    hideCards(boxes) {
-
-    }
-
-    // TODO: function to show card details when selected from list
-    // TODO: function to show stats based on seleted boxes
     
     render() {
         return (

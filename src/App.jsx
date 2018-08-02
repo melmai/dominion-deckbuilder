@@ -21,9 +21,11 @@ class App extends Component {
                 intrigue2: [],
                 adventures: [],
                 nocturne: [],
-            }
+            },
+            filteredCards: []
         };
 
+        this.filterCardsBySet = this.filterCardsBySet.bind(this);
         this.loadData = this.loadData.bind(this);
         this.toggleBox = this.toggleBox.bind(this);
         this.sortCardsBySet = this.sortCardsBySet.bind(this);
@@ -33,12 +35,20 @@ class App extends Component {
         this.loadData();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        const oldSelection = prevState.boxes;
+        const newSelection = this.state.boxes;
+        if (oldSelection === newSelection) return;
+        this.filterCardsBySet();
+    }
+    
+
     // get initial data
     loadData() {
         fetch('/api/cards/')
             .then(response => response.json())
             .then(responseData => {
-                this.setState({ cards: responseData });
+                this.setState({ cards: responseData, filteredCards: responseData });
                 this.sortCardsBySet();
             })
             .catch((err) => console.log('Fetching and parsing data error', err));
@@ -56,10 +66,10 @@ class App extends Component {
                 boxes.push(box);
             }
             this.setState({ boxes: boxes });
+            this.filterCardsBySet();
         } catch(err) {
             console.log(err);
         }
-        
     }
     
     // sorts cards into subarrays by set
@@ -67,7 +77,6 @@ class App extends Component {
         const cards = this.state.cards;
         const dominion2 = [], intrigue2 = [], adventures = [], nocturne = [];
         cards.forEach(card => {
-            console.log(card.box);
             if (card.box === "Dominion2") dominion2.push(card);
             if (card.box === "Intrigue2") intrigue2.push(card);
             if (card.box === "Adventures") adventures.push(card);
@@ -83,6 +92,19 @@ class App extends Component {
         });
     }
 
+    // creates an array of cards based on selected boxes
+    filterCardsBySet() {
+        const selected = this.state.boxes;
+        let cards = [];
+        if (selected.includes('Dominion2')) cards = cards.concat(this.state.cardsBySet.dominion2);
+        if (selected.includes('Intrigue2')) cards = cards.concat(this.state.cardsBySet.intrigue2);
+        if (selected.includes('Adventures')) cards = cards.concat(this.state.cardsBySet.adventures);
+        if (selected.includes('Nocturne')) cards = cards.concat(this.state.cardsBySet.nocturne);
+        this.setState({
+            filteredCards: cards
+        });
+    }
+
     // TODO: function to show conditional views based on state values
     // TODO: function to set filters
 
@@ -90,8 +112,8 @@ class App extends Component {
         return (
             <div>
                 <header />
-                <BoxContainer toggleBox={this.toggleBox}/>
-                <CardLibrary boxes={this.state.boxes} cards={this.state.cards} />
+                <BoxContainer toggleBox={this.toggleBox} />
+                <CardLibrary cards={this.state.filteredCards} />
                 <footer />
             </div>
         );
