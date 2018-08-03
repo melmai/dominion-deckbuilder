@@ -13,8 +13,6 @@ class App extends Component {
         this.state = {
             boxes: [],
             filters: {},
-            showLibrary: false,
-            cardID: 0,
             cards: [],
             cardsBySet: {
                 dominion2: [],
@@ -39,7 +37,11 @@ class App extends Component {
         const oldSelection = prevState.boxes;
         const newSelection = this.state.boxes;
         if (oldSelection === newSelection) return;
-        this.filterCardsBySet();
+        if (!newSelection) {
+            this.setState({ filteredCards: this.state.cards });
+        } else {
+            this.filterCardsBySet();
+        }
     }
     
 
@@ -56,7 +58,6 @@ class App extends Component {
 
     // toggle box selection
     toggleBox(box) {
-        console.log(box);
         let boxes = this.state.boxes; 
         let boxExists = boxes.includes(box); 
         try {
@@ -95,14 +96,17 @@ class App extends Component {
     // creates an array of cards based on selected boxes
     filterCardsBySet() {
         const selected = this.state.boxes;
-        let cards = [];
-        if (selected.includes('Dominion2')) cards = cards.concat(this.state.cardsBySet.dominion2);
-        if (selected.includes('Intrigue2')) cards = cards.concat(this.state.cardsBySet.intrigue2);
-        if (selected.includes('Adventures')) cards = cards.concat(this.state.cardsBySet.adventures);
-        if (selected.includes('Nocturne')) cards = cards.concat(this.state.cardsBySet.nocturne);
-        this.setState({
-            filteredCards: cards
-        });
+        if (selected.length > 0) {
+            let cards = [];
+            if (selected.includes('Dominion2')) cards = cards.concat(this.state.cardsBySet.dominion2);
+            if (selected.includes('Intrigue2')) cards = cards.concat(this.state.cardsBySet.intrigue2);
+            if (selected.includes('Adventures')) cards = cards.concat(this.state.cardsBySet.adventures);
+            if (selected.includes('Nocturne')) cards = cards.concat(this.state.cardsBySet.nocturne);
+            this.setState({ filteredCards: cards });
+        } else {
+            this.setState({ filteredCards: this.state.cards });
+        }
+        
     }
 
     // TODO: function to show conditional views based on state values
