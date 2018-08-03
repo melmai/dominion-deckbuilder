@@ -4,16 +4,34 @@ body {
     font-family: Georgia, serif;
 }
 
-.boxes {
+header, footer { 
+  background: #ccc;
+  padding: 5%;
+}
+
+/* Library */
+table {
+  max-width: 80%;
+  margin: auto;
+}
+
+/* Boxes */
+
+.box-container {
+    width: 40%;
+    margin: auto;
+}
+.boxes { 
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-around;
     align-content: center;
+    height: 200px;
 }
 .box {
-    height: 300px;
-    width: 300px;
+    height: 25%;
     border: 1px solid black;
+    text-align: center;
 }
 .deck {
     display: flex;
