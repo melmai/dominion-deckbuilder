@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Filter from './Filter';
+import Filter from './Filter';
 // import Button from './Button';
 
 // this component will generate a deck of 10 cards based on user preferences
@@ -16,6 +16,7 @@ const Card = (props) => (
 
 function Deck(props) {
     const cards = props.cards;
+    if (!cards) return null; 
     cards.forEach(card => <Card key={card._id} card={card} />);
 }
 
@@ -25,12 +26,16 @@ class Deckbuilder extends Component {
         
         this.state = {
             deckID: 0,
-            setCards: [],
+            setCards: this.props.cards,
             filters: {},
             deck: [],
             showFilters: true
         }
     }
+
+    componentDidMount() {
+    }
+    
     
     // TODO: hide filters, show deck on button click
     showDeck(e) {
@@ -53,8 +58,12 @@ class Deckbuilder extends Component {
 
     // render filters or deck
     render() {
+        const Content = () => this.state.showFilters ? <Filter /> : <Deck cards={this.props.cards} />;
+
         return (
-            <Deck />
+            <div>
+                <Content />
+            </div>
         );
     }
 }
