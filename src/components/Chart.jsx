@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class Chart extends Component {
     render() {
@@ -10,9 +9,5 @@ class Chart extends Component {
         );
     }
 }
-
-Chart.propTypes = {
-
-};
 
 export default Chart;
