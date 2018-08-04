@@ -6,11 +6,11 @@ import Filter from './Filter';
 // input: [ boxes ], { filters }
 // output: [ cards ]
 const Card = (props) => (
-    <div>
+    <section className="card">
         <h1>{props.card.name}</h1>
         <p>{props.card.cost}</p>
         <p>{props.card.box}</p>
-    </div>
+    </section>
 );
 
 
@@ -61,9 +61,7 @@ class Deckbuilder extends Component {
         const Content = () => this.state.showFilters ? <Filter /> : <Deck cards={this.props.cards} />;
 
         return (
-            <div>
-                <Content />
-            </div>
+            <Content />
         );
     }
 }

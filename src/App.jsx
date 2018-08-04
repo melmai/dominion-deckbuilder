@@ -142,13 +142,13 @@ class App extends Component {
         };
 
         return (
-            <div>
+            <main className="app">
                 <section className="set__container">
                     <BoxContainer toggleBox={this.toggleBox} />
                     <Chart />
                 </section>
                 <Content />
-            </div>
+            </main>
         );
     }
 }

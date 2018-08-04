@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class Chart extends Component {
     render() {
         return (
-            <div>
+            <section className="chart__container">
                 This is a placeholder for the Chart component.
-            </div>
+            </section>
         );
     }
 }

@@ -1,5 +1,4 @@
 body 
-    max-width: 980px 
     margin: 0
     padding: 0
     font-family: Georgia, serif
@@ -8,17 +7,39 @@ header, footer
   background: #ccc
   padding: 5%
 
-.boxes 
+.app
+    max-width: 980px
+    margin: auto
+
+.border
+    border: 2px dashed black
+
+// ####### Set Selector & Chart ####### //
+.set__container
+    display: flex
+
+.box__container 
+    border: 1px solid black
     display: flex
     flex-direction: column
     justify-content: space-around
     align-content: center
     height: 200px
+    flex-basis: 50%
 
 .box 
+    @extend .border
     height: 25%
-    border: 1px solid black
     text-align: center
+
+.chart__container 
+    @extend .border
+    flex-basis: 50%
+
+// ############ Deckbuilder ############ //
+.filter__container
+    @extend .border
+    min-height: 500px
 
 .deck 
     display: flex
@@ -26,5 +47,5 @@ header, footer
     justify-content: space-around
 
 .card 
-    border: 1px solid black
+    @extend .border
     width: 250px
