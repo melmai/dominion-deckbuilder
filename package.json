@@ -11,13 +11,15 @@
     "mongoose": "^5.1.7",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "react-scripts start nodemon",
+    "start": "react-scripts start nodemon && npm run sass",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sass": "sass --watch src/styles/sass:src/styles/css"
   },
   "devDependencies": {
     "concurrently": "^3.6.0"
