@@ -54,7 +54,7 @@ class DeckLibrary extends Component {
     }
 }
 
-Deck.propTypes = {
+DeckLibrary.propTypes = {
 
 };
 
