@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-//import Deckbuilder from './components/Deckbuilder';
+import Deckbuilder from './components/Deckbuilder';
 import CardLibrary from './components/CardLibrary';
+import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
-//import Filter from './components/Filter';
+import Chart from './components/Chart';
 
 class App extends Component {
     constructor(props) {
@@ -19,13 +20,16 @@ class App extends Component {
                 adventures: [],
                 nocturne: [],
             },
-            filteredCards: []
+            filteredCards: [],
+            showCardList: false,
+            showDeckList: false
         };
 
         this.filterCardsBySet = this.filterCardsBySet.bind(this);
         this.loadData = this.loadData.bind(this);
         this.toggleBox = this.toggleBox.bind(this);
         this.sortCardsBySet = this.sortCardsBySet.bind(this);
+        this.showPage = this.showPage.bind(this);
     }
 
     componentDidMount() {
@@ -108,16 +112,42 @@ class App extends Component {
         
     }
 
-    // TODO: function to show conditional views based on state values
+    // TODO: function to change views
+    showPage(e, page) {
+        e.preventDefault();
+        switch (page) {
+            case 'card':
+                this.setState({ showDeckList: false, showCardList: true });
+                break;
+            case 'deck':
+                this.setState({ showDeckList: true, showCardList: false });
+                break;        
+            default:
+                this.setState({ showCardList: false, showDeckList: false });
+                break;
+        }
+    }
+
     // TODO: function to set filters
 
     render () {
+        const Content = () => {
+            const cards = this.state.showCardList;
+            const decks = this.state.showDeckList;
+
+            if (cards) return <CardLibrary cards={this.state.filteredCards} />;
+            if (decks) return <DeckLibrary boxes={this.state.boxes} />;
+
+            return <Deckbuilder cards={this.state.filteredCards} />;
+        };
+
         return (
             <div>
-                <header />
-                <BoxContainer toggleBox={this.toggleBox} />
-                <CardLibrary cards={this.state.filteredCards} />
-                <footer />
+                <section className="set__container">
+                    <BoxContainer toggleBox={this.toggleBox} />
+                    <Chart />
+                </section>
+                <Content />
             </div>
         );
     }
