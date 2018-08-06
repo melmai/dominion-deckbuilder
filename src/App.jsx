@@ -43,7 +43,7 @@ class App extends Component {
         this.toggleBox = this.toggleBox.bind(this);
         this.processCards = this.processCards.bind(this);
         this.sortCardsBySet = this.sortCardsBySet.bind(this);
-        this.calcClassData = this.calcClassData.bind(this);
+        this.calcData = this.calcData.bind(this);
         this.showPage = this.showPage.bind(this);
         this.countInArray = this.countInArray.bind(this);
     }
@@ -55,12 +55,12 @@ class App extends Component {
     componentDidUpdate(prevProps, prevState) {
         const oldSelection = prevState.boxes;
         const newSelection = this.state.boxes;
-        if (oldSelection === newSelection) return;
-        if (!newSelection) {
-            this.setState({ setCards: this.state.cards });
-        } else {
-            this.filterCardsBySet();
+        console.log(`OLD: ${oldSelection} \n NEW: ${newSelection}`);
+        if (newSelection !== oldSelection && newSelection.length === 0) {
+            console.log('componentDidUpdate');
+            this.processCards(this.state.cards);
         }
+
     }
 
     // get initial data
@@ -70,7 +70,7 @@ class App extends Component {
             .then(responseData => {
                 this.setState({ cards: responseData, setCards: responseData });
                 this.sortCardsBySet(responseData); // create subarrays of card objects by expansion
-                this.processCards(responseData);
+                this.processCards(responseData); // break down data to use in charts
             })
             .catch((err) => console.log('Fetching and parsing data error', err));
     }
@@ -86,41 +86,67 @@ class App extends Component {
                 boxes.push(box);
             }
             this.setState({ boxes: boxes });
-            this.filterCardsBySet();
+            const cards = this.filterCardsBySet();
+            this.processCards(cards);            
         } catch(err) {
             console.log(err);
         }
     }
     
     // sorts cards
+    // TODO: change strategy object to an array
     processCards(cards) {
+        console.log(cards);
+        console.log('processCards');
         let types = [];
-        //let costs = [];
-        //let strategies = [];
+        let costs = [];
+        let strategies = [];
     
         cards.forEach(card => {
-            types = types.concat(card.class); // adds card classes to array
-            //costs.concat(card.cost); // adds cost to array
-            //strategies.concat(card.strategy); // adds strategies to array
+            types = types.concat(card.class);
+            costs = costs.concat(card.cost);
+
+            // deconstructs strategy object to append strategies only if present
+            const strategy = card.strategy;
+            const keys = Object.keys(strategy);
+            const values = Object.values(strategy);
+
+            for (let i = 0; i < keys.length; i++) {
+                if (values[i] === 1) strategies.push(keys[i]);
+            }
         });
 
-        console.log(types);
+        const classData = this.calcData(types);
+        const costData = this.calcData(costs);
+        const strategyData = this.calcData(strategies);
 
-        this.calcClassData(types);
-        // this.calcCostData(costs);
-        // this.calcStrategyData(strategies);
+        this.setState({
+            setCards: cards,
+            class: {
+                type: classData.type,
+                count: classData.count
+            },
+            cost: {
+                type: costData.type,
+                count: costData.count
+            },
+            strategy: {
+                type: strategyData.type,
+                count: strategyData.count
+            },
+        });
     }
 
-    calcClassData(types) {
-        const uniqueClasses = [...new Set(types)].sort(); 
-        console.log(uniqueClasses);
+    calcData(array) {
+        const uniqueTypes = [...new Set(array)].sort();
         const quantities = [];
-        uniqueClasses.forEach(type => {
-            const count = this.countInArray(types, type);
+
+        uniqueTypes.forEach(type => {
+            const count = this.countInArray(array, type);
             quantities.push(count);
         });
 
-        this.setState({ class: { type: uniqueClasses, count: quantities }});
+        return ({ type: uniqueTypes, count: quantities });        
     }
 
     countInArray(array, query) {
@@ -166,16 +192,16 @@ class App extends Component {
     // creates an array of cards based on selected boxes
     filterCardsBySet() {
         const selected = this.state.boxes;
+        let cards = [];
         if (selected.length > 0) {
-            let cards = [];
             if (selected.includes('Dominion2')) cards = cards.concat(this.state.cardsBySet.dominion2);
             if (selected.includes('Intrigue2')) cards = cards.concat(this.state.cardsBySet.intrigue2);
             if (selected.includes('Adventures')) cards = cards.concat(this.state.cardsBySet.adventures);
             if (selected.includes('Nocturne')) cards = cards.concat(this.state.cardsBySet.nocturne);
-            this.setState({ setCards: cards });
         } else {
-            this.setState({ setCards: this.state.cards });
+            cards = this.state.cards;
         }
+        return cards;
     }
 
     // TODO: function to change views
@@ -215,7 +241,7 @@ class App extends Component {
             <main className="app">
                 <section className="set__container">
                     <BoxContainer toggleBox={this.toggleBox} />
-                    <ChartContainer cards={cards} />
+                    <ChartContainer cards={cards} types={this.state.class} costs={this.state.cost} strategies={this.state.strategy} />
                 </section>  
                 <Content />
             </main>
