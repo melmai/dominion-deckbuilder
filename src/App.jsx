@@ -240,7 +240,7 @@ class App extends Component {
             <main className="app">
                 <section className="set__container">
                     <BoxContainer toggleBox={this.toggleBox} />
-                    <ChartContainer cards={cards} types={this.state.class} costs={this.state.cost} strategies={this.state.strategy} />
+                    <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
                 </section>  
                 <Content />
             </main>
