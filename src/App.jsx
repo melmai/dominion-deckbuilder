@@ -55,10 +55,9 @@ class App extends Component {
     componentDidUpdate(prevProps, prevState) {
         const oldSelection = prevState.boxes;
         const newSelection = this.state.boxes;
-        console.log(`OLD: ${oldSelection} \n NEW: ${newSelection}`);
-        if (newSelection !== oldSelection && newSelection.length === 0) {
-            console.log('componentDidUpdate');
-            this.processCards(this.state.cards);
+        if (newSelection !== oldSelection) {
+            const cards = this.filterCardsBySet();
+            this.processCards(cards);
         }
 
     }
