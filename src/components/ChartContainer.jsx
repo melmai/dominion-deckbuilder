@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 
 class ChartContainer extends Component {
     // props: cards [obj], costData (obj), classData (obj), strategyData (obj)
@@ -59,20 +59,36 @@ class ChartContainer extends Component {
     
 
     render() {
-        //const node = this.element;
-        const data = {
-            labels: this.props.classData.type,
+        const data = (object) => ({
+            labels: object.type,
             datasets: [{
-                label: "Count",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: this.props.classData.count,
+                label: 'count',
+                data: object.count,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
             }]
-        }
+        });
 
         return (
             <section className="chart__container">
-                <Bar data={data} options={{ responsive: true}} />}
+                <Bar data={data(this.props.classData)} options={{ responsive: true, legend: false }} />
+                <Bar data={data(this.props.strategyData)} options={{ responsive: true, legend: false }} />
+                <Pie data={data(this.props.costData)} options={{ responsive: true }} />
             </section>
         );
     }
