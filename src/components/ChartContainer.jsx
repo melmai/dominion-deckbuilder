@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
-import Chart from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
 class ChartContainer extends Component {
-    // props: cards, filteredCards
+    // props: cards [obj], costData (obj), classData (obj), strategyData (obj)
 
     constructor(props) {
         super(props);
                 
         this.state = {
-            cards: []
+            graph: bar
         };
 
         //this.drawPieChart = this.drawPieChart.bind(this);
-        this.drawBarGraph = this.drawBarGraph.bind(this);
+        //this.drawBarGraph = this.drawBarGraph.bind(this);
     }
 
     componentDidMount() {
-        this.drawBarGraph();
+
     }
 
     // TODO: create bar graph
-    drawBarGraph(type) {
-        const ctx = document.getElementById('myChart');
+/*     drawBarGraph(data) {
+        //const ctx = document.getElementById('myChart');
+        const labels = data.type;
+        const count = data.count;
+        console.log(labels, count);
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Action", "Reaction", "Attack", "Treasure", "Victory"],
+                labels: labels,
                 datasets: [{
-                    label: 'Quantity',
-                    data: [12, 19, 3, 5, 2],
+                    label: 'Count',
+                    data: count,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -51,13 +54,25 @@ class ChartContainer extends Component {
             options: {
                 responsive: true
             }
-        });
-    }
+        }); 
+    }*/
+    
 
     render() {
+        //const node = this.element;
+        const data = {
+            labels: this.props.classData.type,
+            datasets: [{
+                label: "Count",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: this.props.classData.count,
+            }]
+        }
+
         return (
             <section className="chart__container">
-                <canvas id="myChart"></canvas>
+                <Bar data={data} options={{ responsive: true}} />}
             </section>
         );
     }
