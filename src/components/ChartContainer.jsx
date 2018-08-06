@@ -8,7 +8,7 @@ class ChartContainer extends Component {
         super(props);
                 
         this.state = {
-            graph: bar
+            graph: 'bar'
         };
 
         //this.drawPieChart = this.drawPieChart.bind(this);
