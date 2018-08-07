@@ -16,24 +16,10 @@ class App extends Component {
             boxes: [],
             filters: {},
             cards: [],
-            cardsBySet: {
-                dominion2: [],
-                intrigue2: [],
-                adventures: [],
-                nocturne: [],
-            },
-            class: {
-                type: [],
-                count: []
-            },
-            cost: {
-                type: [],
-                count: []
-            },
-            strategy: {
-                type: [],
-                count: []
-            },
+            cardsBySet: { dominion2: [], intrigue2: [], adventures: [], nocturne: [] },
+            class: { type: [], count: [] },
+            cost: { type: [], count: [] },
+            strategy: { type: [], count: [] },
             setCards: [],
             filteredCards: [],
             showCardList: false,
@@ -210,33 +196,33 @@ class App extends Component {
     showPage(e, page) {
         e.preventDefault();
         switch (page) {
-            case 'card':
+            case 'card': // card library
                 this.setState({ showDeckList: false, showCardList: true });
                 break;
-            case 'deck':
+            case 'deck': // deck library
                 this.setState({ showDeckList: true, showCardList: false });
                 break;        
-            default:
+            default: // deckbuilder
                 this.setState({ showCardList: false, showDeckList: false });
                 break;
         }
     }
 
+    // creates deck from setCards array (no filters)
     createDeck() {
-        // draw 10 cards
         let cards = this.state.setCards;
         let deck = [];
         for (let i = 0; i < 10; i++) {
             const index = Math.round(Math.random() * (cards.length-1));
-            console.log(index);
             const card = cards[index];
             deck.push(card);
         }
-        console.log(deck);
+        this.setState({ deck: deck });
     }
 
     // TODO: function to set filters
-
+    setFilters(){}
+    
     render () {
         // show Deckbuilder on load, module will change to one of the libraries based on booleans
         const Content = () => {
