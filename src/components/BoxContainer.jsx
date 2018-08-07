@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // BoxContainer contains Box components 
-class BoxContainer extends Component {    
-    render() {
-        return (
-            <section className="box__container">
-                {this.props.children}
-            </section>  
-        );
-    }
-}
-
+const BoxContainer = (props) => (
+    <section className="box__container">
+        {props.children}
+    </section>  
+);
+    
 export default BoxContainer;

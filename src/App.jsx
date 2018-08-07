@@ -5,6 +5,7 @@ import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
 import Box from './components/Box';
 import ChartContainer from './components/ChartContainer';
+import Button from './components/basic/Button';
 
 class App extends Component {
     constructor(props) {
@@ -226,7 +227,8 @@ class App extends Component {
         let cards = this.state.setCards;
         let deck = [];
         for (let i = 0; i < 10; i++) {
-            const index = Math.random() * cards.length;
+            const index = Math.round(Math.random() * (cards.length-1));
+            console.log(index);
             const card = cards[index];
             deck.push(card);
         }
@@ -253,11 +255,12 @@ class App extends Component {
         return (
             <main className="app">
                 <section className="set__container">
-                    <BoxContainer toggleBox={this.toggleBox}>
-                        <Box name="Dominion2" toggleBox={this.props.toggleBox} />
-                        <Box name="Intrigue2" toggleBox={this.props.toggleBox} />
-                        <Box name="Adventures" toggleBox={this.props.toggleBox} />
-                        <Box name="Nocturne" toggleBox={this.props.toggleBox} />                  
+                    <BoxContainer>
+                        <Box name="Dominion2" toggleBox={this.toggleBox} />
+                        <Box name="Intrigue2" toggleBox={this.toggleBox} />
+                        <Box name="Adventures" toggleBox={this.toggleBox} />
+                        <Box name="Nocturne" toggleBox={this.toggleBox} /> 
+                        <Button onClick={(e) => this.createDeck(e)}>Create Deck</Button>
                     </BoxContainer>
                     <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
                 </section>  
