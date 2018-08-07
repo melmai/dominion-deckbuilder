@@ -28,12 +28,12 @@ class Deckbuilder extends Component {
             deckID: 0,
             setCards: this.props.cards,
             filters: {},
-            deck: [],
             showFilters: true
         }
-    }
 
-    componentDidMount() {
+    }
+    
+    componentDidUpdate(prevProps, prevState) {
     }
     
     
@@ -48,7 +48,7 @@ class Deckbuilder extends Component {
     }
 
     // TODO: create deck based on user prefs, will need add'l helper fxns
-    createDeck() {}
+    
 
     // TODO: show basic setup (curses, treasures, victory) based on # of players
     showSetup() {}

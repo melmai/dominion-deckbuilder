@@ -3,6 +3,7 @@ import Deckbuilder from './components/Deckbuilder';
 import CardLibrary from './components/CardLibrary';
 import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
+import Box from './components/Box';
 import ChartContainer from './components/ChartContainer';
 
 class App extends Component {
@@ -46,6 +47,7 @@ class App extends Component {
         this.calcData = this.calcData.bind(this);
         this.showPage = this.showPage.bind(this);
         this.countInArray = this.countInArray.bind(this);
+        this.createDeck = this.createDeck.bind(this);
     }
 
     componentDidMount() {
@@ -219,6 +221,18 @@ class App extends Component {
         }
     }
 
+    createDeck() {
+        // draw 10 cards
+        let cards = this.state.setCards;
+        let deck = [];
+        for (let i = 0; i < 10; i++) {
+            const index = Math.random() * cards.length;
+            const card = cards[index];
+            deck.push(card);
+        }
+        console.log(deck);
+    }
+
     // TODO: function to set filters
 
     render () {
@@ -239,7 +253,12 @@ class App extends Component {
         return (
             <main className="app">
                 <section className="set__container">
-                    <BoxContainer toggleBox={this.toggleBox} />
+                    <BoxContainer toggleBox={this.toggleBox}>
+                        <Box name="Dominion2" toggleBox={this.props.toggleBox} />
+                        <Box name="Intrigue2" toggleBox={this.props.toggleBox} />
+                        <Box name="Adventures" toggleBox={this.props.toggleBox} />
+                        <Box name="Nocturne" toggleBox={this.props.toggleBox} />                  
+                    </BoxContainer>
                     <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
                 </section>  
                 <Content />
