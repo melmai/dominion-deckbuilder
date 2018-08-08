@@ -263,11 +263,11 @@ class App extends Component {
             <main className="app">
                 <section className="set__container">
                     <BoxContainer>
-                        <Box name="Dominion2" toggleBox={this.toggleBox} />
-                        <Box name="Intrigue2" toggleBox={this.toggleBox} />
-                        <Box name="Adventures" toggleBox={this.toggleBox} />
-                        <Box name="Nocturne" toggleBox={this.toggleBox} /> 
-                        <Button onClick={(e) => this.createDeck(e)}>Create Deck</Button>
+                        <Box name="Dominion2" label="Dominion (2nd edition)" toggleBox={this.toggleBox} />
+                        <Box name="Intrigue2" label="Intrigue (2nd edition)" toggleBox={this.toggleBox} />
+                        <Box name="Adventures" label="Adventures" toggleBox={this.toggleBox} />
+                        <Box name="Nocturne" label="Nocturne" toggleBox={this.toggleBox} /> 
+                        <Button className="btn btn_create_deck" onClick={(e) => this.createDeck(e)}>Create Deck</Button>
                     </BoxContainer>
                     <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
                 </section>
