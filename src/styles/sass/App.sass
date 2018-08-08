@@ -12,14 +12,14 @@ header, footer
     margin: auto
 
 .border
-    border: 2px dashed black
+    border: 1px solid black
 
 // ####### Set Selector & Chart ####### //
 .set__container
     display: flex
 
 .box__container 
-    border: 1px solid black
+    @extend .border
     display: flex
     flex-direction: column
     justify-content: space-around
@@ -41,6 +41,14 @@ header, footer
     @extend .border
     min-height: 500px
 
+.deck__container
+    @extend .border
+    display: grid
+    grid-template-columns: repeat(5, 1fr)
+    grid-gap: 5px
+    gap: 5px
+    padding: 5px
+
 .deck 
     display: flex
     flex-wrap: wrap
@@ -48,4 +56,5 @@ header, footer
 
 .card 
     @extend .border
-    width: 250px
+    height: 280px
+    text-align: center
