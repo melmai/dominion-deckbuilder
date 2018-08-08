@@ -221,11 +221,12 @@ class App extends Component {
     createDeck() {
         let cards = this.state.setCards;
         let deck = [];
-        for (let i = 0; i < 10; i++) {
+        do {
             const index = Math.round(Math.random() * (cards.length-1));
             const card = cards[index];
-            deck.push(card);
-        }
+            if (!deck.includes(card)) deck.push(card);
+        } while (deck.length < 10)
+
         this.setState({
             deck: deck,
             showFilters: false
