@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CardLibrary from './components/CardLibrary';
+//import CardLibrary from './components/CardLibrary';
 //import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
 import Box from './components/Box';
@@ -92,8 +92,6 @@ class App extends Component {
     // sorts cards
     // TODO: change strategy object to an array
     processCards(cards) {
-        console.log(cards);
-        console.log('processCards');
         let types = [];
         let costs = [];
         let strategies = [];
@@ -257,7 +255,7 @@ class App extends Component {
         const cards = this.state.setCards ? this.state.setCards : this.state.cards;
         const deck = this.state.deck;
 
-        let result = (this.state.deck.length > 0) ? result = <Result cards={deck} /> : 'Select Expansions and/or Preferences';
+        let result = (this.state.deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
         let filter = this.state.showFilters ? <Filter /> : '';
 
         return (
