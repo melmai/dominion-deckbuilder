@@ -30,8 +30,11 @@ class Box extends Component {
 
     render() {
         const className = this.state.selected ? 'box__container-selected' : 'box__container';
+        const src = (box) => `/img/${box.toLowerCase()}-icon.svg`;
+
         return (
             <div className={className} onClick={this.onClick}>
+                <img src={src(this.props.name)} className="box__icon" alt="" />
                 <p className="box__text">{this.props.label}</p>
             </div>
         );
