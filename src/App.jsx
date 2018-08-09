@@ -267,13 +267,15 @@ class App extends Component {
                         <Box name="Intrigue2" label="Intrigue (2nd edition)" toggleBox={this.toggleBox} />
                         <Box name="Adventures" label="Adventures" toggleBox={this.toggleBox} />
                         <Box name="Nocturne" label="Nocturne" toggleBox={this.toggleBox} /> 
-                        <Button className="btn btn_create_deck" onClick={(e) => this.createDeck(e)}>Create Deck</Button>
+                        <Button className="btn btn__create_deck" onClick={(e) => this.createDeck(e)}>Create Deck</Button>
                     </BoxContainer>
                     <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
                 </section>
-                <Button onClick={this.toggleFilters}>{this.state.showFilters ? 'Result' : 'Filters'}</Button>
-                {filter}
-                {result}
+                <section className="setup__container">
+                    <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Show Setup' : 'Show Filters'}</Button>
+                    {filter}
+                    {result}
+                </section>
             </main>
         );
     }
