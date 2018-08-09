@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Cormorant+Unicase')
 
 $white: #d8dccd
-$black: #052e2a
+$black: #00080b
 $lightGray: #99aaa4
+$gray: #444
 $gold: #b49e39
-$brown: #5c3d29
+$brown: #634930
+$lightTan: #9a8362
+$darkBrown:#221815
+$lightBlue: #9bbcf5
+$darkBlue: #293b71
+$lightGreen: #c1dabb
+$darkGreen: #395c41
+$red: #ca393e
+
 
 @mixin shadow($x, $y, $blur, $spread, $color) 
     -moz-box-shadow:    $x $y $blur $spread $color
@@ -17,20 +26,31 @@ $brown: #5c3d29
     -webkit-box-shadow: 0 1px 3px 1px $black
     box-shadow:         0 1px 3px 1px $black
 
+.inner-shadow
+   -moz-box-shadow:    inset 0 0 10px #222
+   -webkit-box-shadow: inset 0 0 10px #222
+   box-shadow:         inset 0 0 10px #222    
+
 .one-edge-shadow 
     -webkit-box-shadow: 0 8px 6px -6px $black
     -moz-box-shadow: 0 8px 6px -6px $black
     box-shadow: 0 8px 6px -6px $black
 
 .wood_border
-    border-left: 3px solid $brown
-    border-right: 3px solid $brown
+    border-left: 3px solid $darkBrown
+    border-right: 3px solid $darkBrown
+
+.btn
+    @extend .shadow
+    border-radius: 4px
+    cursor: pointer
 
 body 
     margin: 0
     padding: 0
     font-family: Georgia, serif
     box-sizing: border-box
+    background: linear-gradient($black, $darkBlue, $lightBlue)
 
 header, footer 
   background: #ccc
@@ -50,23 +70,48 @@ header, footer
 // ####### Set Selector & Chart ####### //
 .set__container
     display: flex
+    margin-top: 30px
 
-.box__container 
-    @extend .border
+.box__selector
     display: flex
     flex-direction: column
-    justify-content: space-around
-    align-content: center
-    height: 200px
+    justify-content: flex-start
+    align-items: center
     flex-basis: 50%
 
-.box 
-    @extend .border
-    height: 25%
-    text-align: center
+.btn_create_deck
+    @extend .inner-shadow
+    @extend .display_font
+    width: 60%
+    height: 60px
+    margin-top: 20px
+    font-size: 2.2em
+    background-color: $darkGreen
+    color: $white
+    border: 2px solid $darkGreen
+
+.box__container
+    @extend .inner-shadow
+    background: radial-gradient($gray, $black)
+    color: $white
+    height: 20%
+    width: 90%
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+
+.box__container-selected
+    @extend .box__container
+    background: radial-gradient($lightTan, $brown, $darkBrown)
+    color: $white
+
+.box__text
+    @extend .display_font
+    font-size: 1.5em
+    margin: 0
 
 .chart__container 
-    @extend .border
     flex-basis: 50%
 
 // ############ Deckbuilder ############ //
@@ -92,7 +137,6 @@ header, footer
     border-radius: 8px
     text-align: center
     background-color: $lightGray
-    //height: 286px
     display: flex
     flex-direction: column
 
@@ -103,18 +147,24 @@ header, footer
     padding: 1%
     margin: 0
 
-.card__icon
+.card__icon_container
     @extend .wood_border
     background-color: $black
     color: $white
     height: 100px
+    display: flex
+    justify-content: center
+    align-items: center
+
+.card__icon_img
+    height: 70px
+    width: auto
 
 .card__divider
     @extend .shadow
     @extend .wood_border
-    height: 2px
+    height: 1px
     width: 97%
-    border-bottom: 1px solid $black
 
 .card__text_container
     height: 110px
