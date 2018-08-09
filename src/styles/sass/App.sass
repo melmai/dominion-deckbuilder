@@ -14,6 +14,20 @@ $lightGreen: #c1dabb
 $darkGreen: #395c41
 $red: #ca393e
 
+$lightReserve: #cdbb59 // tan
+$darkReserve: #74632f
+
+$lightTreasure: #f7dc69 // yellow
+$darkTreasure: #bd9d60
+
+$lightDuration: #fc9843 // orange
+$darkDuration: #885737
+
+$lightVictory: #9bd173 // green
+$darkVictory: #3b693a
+
+$lightReaction: #6ea3c2 // blue
+$darkReaction: #2e607b
 
 @mixin shadow($x, $y, $blur, $spread, $color) 
     -moz-box-shadow:    $x $y $blur $spread $color
@@ -165,6 +179,34 @@ header, footer
     padding: 1%
     margin: 0
 
+.card__banner_reaction
+    background: radial-gradient($lightReaction, $darkReaction)
+
+.card__banner_reserve
+    background: radial-gradient($lightReserve, $darkReserve)
+
+.card__banner_victory
+    background: radial-gradient($lightVictory, $darkVictory) 
+
+.card__banner_traveller
+.card__banner_treasure
+    background: radial-gradient($lightTreasure, $darkTreasure)
+
+.card__banner_duration
+    background: radial-gradient($lightDuration, $darkDuration)
+
+.card__banner_duration-reaction
+    background: linear-gradient($lightDuration, $lightReaction)
+
+.card__banner_treasure-reserve
+    background: linear-gradient($lightTreasure, $lightReserve)
+
+.card__banner_treasure-victory
+    background: linear-gradient($lightTreasure, $lightVictory)
+
+.card__banner_reserve-victory
+    background: linear-gradient($darkReserve, $lightVictory)
+
 .card__icon_container
     @extend .wood_border
     background-color: $black
@@ -188,6 +230,7 @@ header, footer
     height: 110px
     @extend .wood_border
     display: flex
+    justify-content: center
     align-items: center
 
 .card__text
@@ -197,6 +240,7 @@ header, footer
     margin: 0
 
 .card__bottom_banner
+    background-color: $white
     height: 22px
     position: relative
     align-self: flex-end
@@ -205,7 +249,6 @@ header, footer
 
 .card__type
     @extend .display_font
-    background-color: $white
     text-align: center
     font-size: .8em
     line-height: 1.7
