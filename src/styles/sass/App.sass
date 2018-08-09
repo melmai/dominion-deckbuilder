@@ -147,11 +147,18 @@ header, footer
     padding: 1%
     margin: 0
 
-.card__icon
+.card__icon_container
     @extend .wood_border
     background-color: $black
     color: $white
     height: 100px
+    display: flex
+    justify-content: center
+    align-items: center
+
+.card__icon_img
+    height: 70px
+    width: auto
 
 .card__divider
     @extend .shadow

@@ -5,10 +5,25 @@ export const Card = (props) => {
     console.log(cardType);
     cardType = cardType.join('-');
 
+    const icon = (box) => {
+        switch (box) {
+            case 'Dominion2':
+                return <img src="/img/dominion2-icon.svg" alt="Dominion Icon" class="card__icon_img" />
+            case 'Intrigue2':
+                return <img src="/img/intrigue2-icon.svg" alt="Intrigue Icon" class="card__icon_img" />
+            case 'Adventures':
+                return <img src="/img/adventures-icon.svg" alt="Adventures Icon" class="card__icon_img" />
+            case 'Nocturne':
+                return <img src="/img/nocturne-icon.svg" alt="Nocturne Icon" class="card__icon_img" />
+            default:
+                console.log('Error rendering icon');
+        }
+    }
+
     return (
         <section className="card">
             <h1 className="card__name">{props.card.name}</h1>
-            <div className="card__icon">{props.card.box}</div>
+            <div className="card__icon_container">{icon(props.card.box)}</div>
             <div className="card__divider" />
             <div className="card__text_container">
                 <p className="card__text">{props.card.text}</p>
