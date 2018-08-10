@@ -26,7 +26,6 @@ export const Card = (props) => {
         if (type.includes('Treasure') && type.includes('Reserve')) name = `${name} card__treasure-reserve`;
         if (type.includes('Treasure') && type.includes('Victory')) name = `${name} card__treasure-victory`;
         if (type.includes('Reserve') && type.includes('Victory')) name = `${name} card__reserve-victory`;
-        if (type.includes('Night') && type.includes('Duration')) name = `${name} card__night-duration`;
         if (type.includes('Duration')) name = `${name} card__duration`;
         if (type.includes('Reserve')) name = `${name} card__reserve`;
         if (type.includes('Victory')) name = `${name} card__victory`;

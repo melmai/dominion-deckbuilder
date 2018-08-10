@@ -256,12 +256,6 @@ header, footer
     > .card__bottom_banner
         background: radial-gradient($lightReaction, $darkReaction)
 
-.card__reserve
-    > .card__name
-        background: radial-gradient($lightReserve, $darkReserve)
-    > .card__text_container
-    > .card__bottom_banner
-        background: radial-gradient($lightReserve, $darkReserve)
 
 
 .card__victory
@@ -279,12 +273,14 @@ header, footer
     > .card__bottom_banner
         background: radial-gradient($lightTreasure, $darkTreasure)
 
-.card__duration
+.card__reserve
     > .card__name
-        background: radial-gradient($lightDuration, $darkDuration)
+        background: radial-gradient($lightReserve, $darkReserve)
     > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $lightReserve)
     > .card__bottom_banner
-        background: radial-gradient($lightDuration, $darkDuration)
+        background: radial-gradient($lightReserve, $darkReserve)
+
 
 .card__night
     > .card__name
@@ -298,6 +294,17 @@ header, footer
         background: radial-gradient($lightNight, $darkNight)
         > .card__type
             color: $white
+
+.card__duration
+    > .card__name
+        background: radial-gradient($lightDuration, $darkDuration)
+        color: $black
+    > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $darkDuration)
+    > .card__bottom_banner
+        background: radial-gradient($lightDuration, $darkDuration)
+        > .card__type
+            color: $black
 
 .card__traveller
     > .card__name
@@ -332,13 +339,3 @@ header, footer
     > .card__bottom_banner
         background: linear-gradient($darkReserve, $lightVictory)
 
-.card__night-duration
-    > .card__name
-        background: linear-gradient($darkDuration, $lightDuration)
-        color: $black
-    > .card__text_container
-        @include inner-shadow(1px, 1px, 30px, $darkDuration)
-    > .card__bottom_banner
-        background: linear-gradient($darkDuration, $lightDuration)
-        > .card__type
-            color: $black
