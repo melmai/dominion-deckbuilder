@@ -44,9 +44,9 @@ export const Card = (props) => {
             <div className="card__divider" />
             <div className="card__text_container">
                 <p className="card__text">{props.card.text}</p>
-                {heirloom(props.card.heirloom)}
             </div>
             <div className="card__bottom_banner">
+                {heirloom(props.card.heirloom)}
                 <p className="card__type">{cardType}</p>
                 <span className="card__cost">{props.card.cost}</span>
             </div>

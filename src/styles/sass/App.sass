@@ -220,11 +220,21 @@ header, footer
 
 .card__bottom_banner
     background-color: $white
-    height: 22px
     position: relative
     align-self: flex-end
     width: 100%
     overflow: visible
+
+.card__heirloom
+    position: absolute 
+    top: -14px
+    left: 0
+    font-size: .6em
+    text-align: center
+    width: 100%
+    background: radial-gradient($lightTreasure, $darkTreasure)
+    line-height: 1.5
+    font-style: italic
 
 .card__type
     @extend .display_font
@@ -255,8 +265,6 @@ header, footer
         @include inner-shadow(1px, 1px, 30px, $darkReaction)
     > .card__bottom_banner
         background: radial-gradient($lightReaction, $darkReaction)
-
-
 
 .card__victory
     > .card__name
