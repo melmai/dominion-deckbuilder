@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export const Card = (props) => {
     let cardType = props.card.class;
     cardType = cardType.join('-');
@@ -19,8 +18,6 @@ export const Card = (props) => {
                 console.log('Error rendering icon');
         }
     }
-
-
 
     let cardClass = (type) => {
         let name = 'card';
@@ -56,8 +53,6 @@ export const Card = (props) => {
             </div>
         </section>
     );
-
-
 }
 
 export function Deck(props) {
