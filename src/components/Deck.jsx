@@ -35,6 +35,8 @@ export const Card = (props) => {
         return name;
     }
 
+    const heirloom = () => props.card.heirloom ? <span className="card__heirloom">Heirloom: {props.card.heirloom}</span> : null;
+
     return (
         <section className={cardClass(props.card.class)}>
             <h1 className="card__name">{props.card.name}</h1>
@@ -42,6 +44,7 @@ export const Card = (props) => {
             <div className="card__divider" />
             <div className="card__text_container">
                 <p className="card__text">{props.card.text}</p>
+                {heirloom(props.card.heirloom)}
             </div>
             <div className="card__bottom_banner">
                 <p className="card__type">{cardType}</p>
