@@ -1,26 +1,5 @@
 import React from 'react';
 
-const AbilityList = (props) => {
-    const abilities = props.abilities
-    const keys = Object.keys(abilities);
-    const values = Object.values(abilities);
-
-    let items = [];
-    for (let i = 0; i < keys.length; i++) {
-        const capitalizedKey = (key) => {
-            const firstLetter = key.charAt(0).toUpperCase();
-            const remainder = key.substring(1);
-            return firstLetter.concat(remainder);
-        }
-        items.push(`+${values[i]} ${capitalizedKey(keys[i])}`);
-    }
-
-    return (
-        <ul className="card__abilities">
-            {items.map((item, i) => <li key={i}>{item}</li>)}
-        </ul>
-    );    
-}
 
 export const Card = (props) => {
     let cardType = props.card.class;
@@ -91,3 +70,42 @@ export function Deck(props) {
     );
 }
 
+const Coin = (props) => {
+    return (
+        <div className="card__abilities-money">
+            <span>+&nbsp;</span>
+            <div className="card__abilities-coin">
+                {props.value}
+            </div>
+        </div>
+    );
+}
+
+const AbilityList = (props) => {
+    const abilities = props.abilities
+    const keys = Object.keys(abilities);
+    const values = Object.values(abilities);
+
+    let items = [];
+    for (let i = 0; i < keys.length; i++) {
+        const processedKey = (key) => {
+            if (key === 'money') { // replace money with coin
+                items.push(<Coin value={values[i]} />);
+                return null;
+            } else { // replace with capitalized string and pluralize if needed
+                const firstLetter = key.charAt(0).toUpperCase();
+                let remainder = key.substring(1);
+                if (values[i] > 1) remainder = remainder.concat('s');
+                return firstLetter.concat(remainder);
+            }
+        }
+        if (!processedKey(keys[i])) break;
+        items.push(`+${values[i]} ${processedKey(keys[i])}`);
+    }
+
+    return (
+        <ul className="card__abilities">
+            {items.map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+    );    
+}
