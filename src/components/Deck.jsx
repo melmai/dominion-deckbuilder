@@ -19,7 +19,7 @@ export const Card = (props) => {
         }
     }
 
-    let cardClass = (type) => {
+    const cardClass = (type) => {
         let name = 'card';
         if (type.includes('Duration') && type.includes('Reaction')) name = `${name} card__duration-reaction`;
         if (type.includes('Treasure') && type.includes('Reserve')) name = `${name} card__treasure-reserve`;
@@ -34,6 +34,25 @@ export const Card = (props) => {
         return name;
     }
 
+    const cardText = (text) => {
+        if (!text) return null;
+        if (text.includes('//')) {
+            const textArray = text.split('//');
+            return (
+                <div className="card__text">
+                    <span className="card__text-value">{textArray[0]}</span>
+                    <div className="card__text-divider" />
+                    <span className="card__text-value">{textArray[1]}</span>
+                </div>
+            );
+        }
+        return (
+            <div className="card__text">
+                <span className="card__text-value">{text}</span>
+            </div>
+        );
+    }
+
     const heirloom = () => props.card.heirloom ? <span className="card__heirloom">Heirloom: {props.card.heirloom}</span> : null;
     const abilities = (abilities) => abilities ? <AbilityList abilities={props.card.abilities} /> : null;
 
@@ -44,7 +63,7 @@ export const Card = (props) => {
             <div className="card__divider" />
             <div className="card__text_container">
                 {abilities(props.card.abilities)}
-                <p className="card__text">{props.card.text}</p>
+                {cardText(props.card.text)}
             </div>
             <div className="card__bottom_banner">
                 {heirloom(props.card.heirloom)}
