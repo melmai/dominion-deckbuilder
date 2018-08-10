@@ -69,7 +69,7 @@ $darkNight: #1e1c1d
 body 
     margin: 0
     padding: 0
-    font-family: Georgia, serif
+    font-family: 'Times New Roman', Times, serif
     box-sizing: border-box
     background: linear-gradient($black, $darkBlue, $lightBlue)
 
@@ -182,7 +182,7 @@ header, footer
 .card__name
     @extend .display_font
     background-color: $white
-    font-size: .9em
+    font-size: .75em
     padding: 1%
     margin: 0
 
@@ -211,40 +211,70 @@ header, footer
     display: flex
     justify-content: center
     align-items: center
+    font-size: .65em
+    flex-direction: column
+    padding: 4% 1%
 
-.card__text
-    font-family: 'Times New Roman', Times, serif
-    font-size: .7em
-    padding: 2%
+.card__abilities
+    list-style-type: none
+    padding-left: 0
+    font-weight: bold
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
     margin: 0
+
+    .card__abilities-money
+        display: flex
+
+        .card__abilities-coin
+            background: radial-gradient($lightTreasure, $darkTreasure)
+            height: 15px
+            width: 15px
+            line-height: 15px
+            border-radius: 50%
+
+    .card__text
+        margin: 0
 
 .card__bottom_banner
     background-color: $white
-    height: 22px
     position: relative
     align-self: flex-end
     width: 100%
     overflow: visible
 
-.card__type
-    @extend .display_font
-    text-align: center
-    font-size: .8em
-    line-height: 1.7
-    margin: 0
+    .card__heirloom
+        position: absolute 
+        top: -14px
+        left: 0
+        font-size: .6em
+        text-align: center
+        width: 100%
+        background: radial-gradient($lightTreasure, $darkTreasure)
+        line-height: 1.5
+        font-style: italic
 
-.card__cost
-    @extend .one-edge-shadow
-    background: linear-gradient($gold, $lightTan, $brown)
-    width: 22px
-    height: 22px
-    font-size: 1.1em
-    line-height: 1.1
-    border-radius: 50%
-    position: absolute
-    bottom: 0
-    left: 0
-    margin-right: 5px
+    .card__type
+        @extend .display_font
+        text-align: center
+        font-size: .6em
+        line-height: 20px
+        margin: 0
+
+    .card__cost
+        @extend .one-edge-shadow
+        background: linear-gradient($gold, $lightTan, $brown)
+        width: 20px
+        height: 20px
+        font-size: 1.1em
+        line-height: 20px
+        border-radius: 50%
+        position: absolute
+        bottom: 0
+        left: 0
+        margin-right: 5px
 
 // SPECIALTY CARDS
 
@@ -255,14 +285,6 @@ header, footer
         @include inner-shadow(1px, 1px, 30px, $darkReaction)
     > .card__bottom_banner
         background: radial-gradient($lightReaction, $darkReaction)
-
-.card__reserve
-    > .card__name
-        background: radial-gradient($lightReserve, $darkReserve)
-    > .card__text_container
-    > .card__bottom_banner
-        background: radial-gradient($lightReserve, $darkReserve)
-
 
 .card__victory
     > .card__name
@@ -279,12 +301,14 @@ header, footer
     > .card__bottom_banner
         background: radial-gradient($lightTreasure, $darkTreasure)
 
-.card__duration
+.card__reserve
     > .card__name
-        background: radial-gradient($lightDuration, $darkDuration)
+        background: radial-gradient($lightReserve, $darkReserve)
     > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $lightReserve)
     > .card__bottom_banner
-        background: radial-gradient($lightDuration, $darkDuration)
+        background: radial-gradient($lightReserve, $darkReserve)
+
 
 .card__night
     > .card__name
@@ -298,6 +322,17 @@ header, footer
         background: radial-gradient($lightNight, $darkNight)
         > .card__type
             color: $white
+
+.card__duration
+    > .card__name
+        background: radial-gradient($lightDuration, $darkDuration)
+        color: $black
+    > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $darkDuration)
+    > .card__bottom_banner
+        background: radial-gradient($lightDuration, $darkDuration)
+        > .card__type
+            color: $black
 
 .card__traveller
     > .card__name
@@ -332,13 +367,3 @@ header, footer
     > .card__bottom_banner
         background: linear-gradient($darkReserve, $lightVictory)
 
-.card__night-duration
-    > .card__name
-        background: linear-gradient($darkDuration, $lightDuration)
-        color: $black
-    > .card__text_container
-        @include inner-shadow(1px, 1px, 30px, $darkDuration)
-    > .card__bottom_banner
-        background: linear-gradient($darkDuration, $lightDuration)
-        > .card__type
-            color: $black
