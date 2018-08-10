@@ -7,16 +7,19 @@ const AbilityList = (props) => {
 
     let items = [];
     for (let i = 0; i < keys.length; i++) {
-        items.push(`+${values[i]} ${keys[i]}`);
+        const capitalizedKey = (key) => {
+            const firstLetter = key.charAt(0).toUpperCase();
+            const remainder = key.substring(1);
+            return firstLetter.concat(remainder);
+        }
+        items.push(`+${values[i]} ${capitalizedKey(keys[i])}`);
     }
-    console.log(items);
 
     return (
         <ul className="card__abilities">
-            {items.map(item => <li key={item}>{item}</li>)}
+            {items.map((item, i) => <li key={i}>{item}</li>)}
         </ul>
-    ); 
-    
+    );    
 }
 
 export const Card = (props) => {
