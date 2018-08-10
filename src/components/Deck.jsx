@@ -20,8 +20,24 @@ export const Card = (props) => {
         }
     }
 
+    let cardClass = (type) => {
+        let name = 'card';
+        if (type.includes('Duration') && type.includes('Reaction')) name = `${name} card__duration-reaction`;
+        if (type.includes('Treasure') && type.includes('Reserve')) name = `${name} card__treasure-reserve`;
+        if (type.includes('Treasure') && type.includes('Victory')) name = `${name} card__treasure-victory`;
+        if (type.includes('Reserve') && type.includes('Victory')) name = `${name} card__reserve-victory`;
+        if (type.includes('Night') && type.includes('Duration')) name = `${name} card__night-duration`;
+        if (type.includes('Duration')) name = `${name} card__duration`;
+        if (type.includes('Reserve')) name = `${name} card__reserve`;
+        if (type.includes('Victory')) name = `${name} card__victory`;
+        if (type.includes('Night')) name = `${name} card__night`;
+        if (type.includes('Treasure')) name = `${name} card__treasure`;
+        if (type.includes('Reaction')) name = `${name} card__reaction`;
+        return name;
+    }
+
     return (
-        <section className="card">
+        <section className={cardClass(props.card.class)}>
             <h1 className="card__name">{props.card.name}</h1>
             <div className="card__icon_container">{icon(props.card.box)}</div>
             <div className="card__divider" />
