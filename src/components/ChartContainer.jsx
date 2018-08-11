@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Chart, Bar, Pie } from 'react-chartjs-2';
 import Button from './basic/Button';
 
 class ChartContainer extends Component {
@@ -14,6 +14,13 @@ class ChartContainer extends Component {
 
         this.showGraph = this.showGraph.bind(this);
     }
+
+    componentDidMount() {
+        Chart.defaults.global.defaultFontColor = '#ffffff';
+        Chart.defaults.global.defaultFontFamily = 'Times New Roman';
+        Chart.defaults.global.defaultFontSize = 9;
+    }
+    
 
     showGraph(graph, e) {
         e.preventDefault();
@@ -40,12 +47,12 @@ class ChartContainer extends Component {
                 label: 'count',
                 data: object.count,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
@@ -76,10 +83,12 @@ class ChartContainer extends Component {
         return (
             <section className="chart__container">
                 <Graph />
-                <Button onClick={(e) => this.showGraph('class', e)}>Class</Button>
-                <Button onClick={(e) => this.showGraph('cost', e)}>Cost</Button>
-                <Button onClick={(e) => this.showGraph('strategy', e)}>Strategy</Button>
-                <h3># cards: {this.props.cards.length}</h3>
+                <section className="chart__buttons">
+                    <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('class', e)}>Class</Button>
+                    <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('cost', e)}>Cost</Button>
+                    <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('strategy', e)}>Strategy</Button>
+                </section>
+                <h3 className="chart__card_count">{this.props.cards.length} cards remaining</h3>
             </section>
         );
     }
