@@ -105,8 +105,30 @@ header, footer
     color: $white
     border: 2px solid $darkGreen
 
+.btn__select_chart
+    @extend .display_font
+    font-size: 1.1em
+    border-radius: 0
+    background: radial-gradient($lightReserve, $darkReserve)
+    border: 2px solid $darkReserve
+    
+.btn__select_chart-active
+
+
 .chart__container 
     flex-basis: 50%
+
+.chart__buttons
+    text-align: center
+    margin-top: 2%
+
+.chart__card_count
+    font-size: 1.4em
+    text-transform: capitalize
+    background: radial-gradient($lightReaction, $darkReaction)
+    border: 2px solid $darkReaction
+    line-height: 1.8
+    text-align: center
 
 // ############ Deckbuilder ############ //
 .setup__container
@@ -119,10 +141,11 @@ header, footer
     font-size: 1.1em
     line-height: 1.7em
     @extend .btn
-    background: $black
+    background: radial-gradient($lightNight, $darkNight)
     color: $white
     align-self: flex-end
     margin-bottom: 20px
+    border: 1px solid $black
 
 .filter__container
     @extend .border
@@ -266,6 +289,7 @@ header, footer
     > .card__name
         background: radial-gradient($lightVictory, $darkVictory) 
     > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $darkVictory)
     > .card__bottom_banner
         background: radial-gradient($lightVictory, $darkVictory) 
 
@@ -329,9 +353,11 @@ header, footer
 
 .card__treasure-victory
     > .card__name
-        background: linear-gradient($lightTreasure, $lightVictory)
+        background: linear-gradient($lightTreasure, $darkVictory)
+    > .card__text_container
+        background: linear-gradient($lightTreasure, $darkVictory)
     > .card__bottom_banner
-        background: linear-gradient($lightTreasure, $lightVictory)
+        background: linear-gradient($lightTreasure, $darkVictory)
 
 .card__reserve-victory
     > .card__name

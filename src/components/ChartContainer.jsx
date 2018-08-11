@@ -83,10 +83,12 @@ class ChartContainer extends Component {
         return (
             <section className="chart__container">
                 <Graph />
-                <Button onClick={(e) => this.showGraph('class', e)}>Class</Button>
-                <Button onClick={(e) => this.showGraph('cost', e)}>Cost</Button>
-                <Button onClick={(e) => this.showGraph('strategy', e)}>Strategy</Button>
-                <h3># cards: {this.props.cards.length}</h3>
+                <section className="chart__buttons">
+                    <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('class', e)}>Class</Button>
+                    <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('cost', e)}>Cost</Button>
+                    <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('strategy', e)}>Strategy</Button>
+                </section>
+                <h3 className="chart__card_count">{this.props.cards.length} cards remaining</h3>
             </section>
         );
     }
