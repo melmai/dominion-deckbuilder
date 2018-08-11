@@ -1,0 +1,90 @@
+// SPECIALTY CARDS
+
+.card__reaction
+    > .card__name
+        background: radial-gradient($lightReaction, $darkReaction)
+    > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $darkReaction)
+    > .card__bottom_banner
+        background: radial-gradient($lightReaction, $darkReaction)
+
+.card__victory
+    > .card__name
+        background: radial-gradient($lightVictory, $darkVictory) 
+    > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $darkVictory)
+    > .card__bottom_banner
+        background: radial-gradient($lightVictory, $darkVictory) 
+
+.card__treasure
+    > .card__name
+        background: radial-gradient($lightTreasure, $darkTreasure)
+    > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $darkTreasure)
+    > .card__bottom_banner
+        background: radial-gradient($lightTreasure, $darkTreasure)
+
+.card__reserve
+    > .card__name
+        background: radial-gradient($lightReserve, $darkReserve)
+    > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $lightReserve)
+    > .card__bottom_banner
+        background: radial-gradient($lightReserve, $darkReserve)
+
+.card__night
+    > .card__name
+        background: radial-gradient($lightNight, $darkNight)
+        color: $white
+    > .card__text_container
+        background: radial-gradient($lightNight, $darkNight)
+        .card__text-value
+            color: $white
+        .card__text-divider
+            background: $white
+    > .card__bottom_banner
+        background: radial-gradient($lightNight, $darkNight)
+        > .card__type
+            color: $white
+
+.card__duration
+    > .card__name
+        background: radial-gradient($lightDuration, $darkDuration)
+        color: $black
+    > .card__text_container
+        @include inner-shadow(1px, 1px, 30px, $darkDuration)
+    > .card__bottom_banner
+        background: radial-gradient($lightDuration, $darkDuration)
+        > .card__type
+            color: $black
+
+.card__traveller
+    > .card__text_container
+        // add img
+
+.card__duration-reaction
+    > .card__name
+        background: linear-gradient($lightDuration, $lightReaction)
+    > .card__bottom_banner
+        background: linear-gradient($lightDuration, $lightReaction)
+
+.card__treasure-reserve
+    > .card__name
+        background: linear-gradient($lightTreasure, $lightReserve)
+    > .card__bottom_banner
+        background: linear-gradient($lightTreasure, $lightReserve)
+
+.card__treasure-victory
+    > .card__name
+        background: linear-gradient($lightTreasure, $darkVictory)
+    > .card__text_container
+        background: linear-gradient($lightTreasure, $darkVictory)
+    > .card__bottom_banner
+        background: linear-gradient($lightTreasure, $darkVictory)
+
+.card__reserve-victory
+    > .card__name
+        background: linear-gradient($darkReserve, $lightVictory)
+    > .card__bottom_banner
+        background: linear-gradient($darkReserve, $lightVictory)
+

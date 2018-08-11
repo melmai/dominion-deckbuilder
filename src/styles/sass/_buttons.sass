@@ -1,0 +1,27 @@
+.btn
+    @extend .shadow
+    border-radius: 4px
+    cursor: pointer
+
+.btn__create_deck
+    @extend .inner-shadow
+    @extend .display_font
+    width: 60%
+    height: 60px
+    margin-top: 20px
+    font-size: 2.2em
+    background-color: $darkGreen
+    color: $white
+    border: 2px solid $darkGreen
+
+.btn__toggle_filters
+    font-family: 'Times New Roman', Times, serif
+    text-transform: uppercase
+    font-size: 1.1em
+    line-height: 1.7em
+    @extend .btn
+    background: radial-gradient($lightNight, $darkNight)
+    color: $white
+    align-self: flex-end
+    margin-bottom: 20px
+    border: 1px solid $black
