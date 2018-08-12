@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CardLibrary from './components/CardLibrary';
+import Nav from './components/basic/Nav';
 //import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
 import Box from './components/Box';
@@ -8,8 +9,6 @@ import Button from './components/basic/Button';
 import Filter from './components/Filter';
 import Result from './components/Result';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'; 
-
-
 
 class App extends Component {
     constructor(props) {
@@ -38,7 +37,6 @@ class App extends Component {
         this.processCards = this.processCards.bind(this);
         this.sortCardsBySet = this.sortCardsBySet.bind(this);
         this.calcData = this.calcData.bind(this);
-        //this.showPage = this.showPage.bind(this);
         this.countInArray = this.countInArray.bind(this);
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
@@ -55,11 +53,6 @@ class App extends Component {
             const cards = this.filterCardsBySet();
             this.processCards(cards);
         }
-
-        if (prevState.deck !== this.state.deck) {
-
-        }
-
     }
 
     // get initial data
@@ -119,18 +112,9 @@ class App extends Component {
 
         this.setState({
             setCards: cards,
-            class: {
-                type: classData.type,
-                count: classData.count
-            },
-            cost: {
-                type: costData.type,
-                count: costData.count
-            },
-            strategy: {
-                type: strategyData.type,
-                count: strategyData.count
-            },
+            class: { type: classData.type, count: classData.count },
+            cost: { type: costData.type, count: costData.count },
+            strategy: { type: strategyData.type, count: strategyData.count },
         });
     }
 
@@ -142,7 +126,6 @@ class App extends Component {
             const count = this.countInArray(array, type);
             quantities.push(count);
         });
-
         return ({ type: uniqueTypes, count: quantities });        
     }
 
@@ -205,31 +188,19 @@ class App extends Component {
     createDeck() {
         let cards = this.state.setCards;
         let deck = [];
+
         do {
             const index = Math.round(Math.random() * (cards.length-1));
             const card = cards[index];
             if (!deck.includes(card)) deck.push(card);
         } while (deck.length < 10)
 
-        this.setState({
-            deck: deck,
-            showFilters: false
-        });
+        this.setState({ deck: deck, showFilters: false });
         return deck;
     }
 
-    // TODO: hide deck, show filters on button click
- /*    toggleFilters(e) {
-        e.preventDefault();
-        this.setState({
-            showFilters: !this.state.showFilters
-        });
-    } */
-
       toggleFilters() {
-          this.setState(prevState => ({
-              showFilters: !prevState.showFilters
-          }));
+          this.setState(prevState => ({ showFilters: !prevState.showFilters }));
       }
 
     // TODO: function to set filters
@@ -240,6 +211,7 @@ class App extends Component {
         const cards = this.state.setCards ? this.state.setCards : this.state.cards;
         const deck = this.state.deck;
 
+        const CardList = () => <CardLibrary cards={cards} />;
         const DeckBuilder = props => {
             let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
             let filter = this.state.showFilters ? <Filter /> : '';
@@ -252,15 +224,11 @@ class App extends Component {
                 </section>
             );                
         }
-
-        const CardList = () => {
-            return (
-                <CardLibrary cards={cards} />
-            );
-        }
+        
         return (
             <BrowserRouter>
                 <div className="app">
+                    <Nav />
                     <main>
                         <section className="set__container">
                             <BoxContainer>
@@ -278,7 +246,7 @@ class App extends Component {
                         </Switch>
                     </main>
                 </div>
-                </BrowserRouter>
+            </BrowserRouter>
         );
     }
 }
