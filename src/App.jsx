@@ -210,8 +210,12 @@ class App extends Component {
         // if no sets specified, use all cards
         const cards = this.state.setCards ? this.state.setCards : this.state.cards;
         const deck = this.state.deck;
+        const dominion2 = this.state.cardsBySet.dominion2;
+        const intrigue2 = this.state.cardsBySet.intrigue2;
+        const adventures = this.state.cardsBySet.adventures;
+        const nocturne = this.state.cardsBySet.nocturne;
 
-        const CardList = () => <CardLibrary cards={cards} />;
+        const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
         const DeckBuilder = () => {
             let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
             let filter = this.state.showFilters ? <Filter /> : '';
