@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-//import CardLibrary from './components/CardLibrary';
+import CardLibrary from './components/CardLibrary';
+import Nav from './components/basic/Nav';
 //import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
 import Box from './components/Box';
@@ -7,6 +8,7 @@ import ChartContainer from './components/ChartContainer';
 import Button from './components/basic/Button';
 import Filter from './components/Filter';
 import Result from './components/Result';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'; 
 
 class App extends Component {
     constructor(props) {
@@ -35,7 +37,6 @@ class App extends Component {
         this.processCards = this.processCards.bind(this);
         this.sortCardsBySet = this.sortCardsBySet.bind(this);
         this.calcData = this.calcData.bind(this);
-        //this.showPage = this.showPage.bind(this);
         this.countInArray = this.countInArray.bind(this);
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
@@ -52,11 +53,6 @@ class App extends Component {
             const cards = this.filterCardsBySet();
             this.processCards(cards);
         }
-
-        if (prevState.deck !== this.state.deck) {
-
-        }
-
     }
 
     // get initial data
@@ -116,18 +112,9 @@ class App extends Component {
 
         this.setState({
             setCards: cards,
-            class: {
-                type: classData.type,
-                count: classData.count
-            },
-            cost: {
-                type: costData.type,
-                count: costData.count
-            },
-            strategy: {
-                type: strategyData.type,
-                count: strategyData.count
-            },
+            class: { type: classData.type, count: classData.count },
+            cost: { type: costData.type, count: costData.count },
+            strategy: { type: strategyData.type, count: strategyData.count },
         });
     }
 
@@ -139,7 +126,6 @@ class App extends Component {
             const count = this.countInArray(array, type);
             quantities.push(count);
         });
-
         return ({ type: uniqueTypes, count: quantities });        
     }
 
@@ -197,55 +183,24 @@ class App extends Component {
         }
         return cards;
     }
-/* 
-    // TODO: function to change views
-    showPage(e, page) {
-        e.preventDefault();
-        switch (page) {
-            case 'card': // card library
-                this.setState({ showDeckList: false, showCardList: true });
-                break;
-            case 'deck': // deck library
-                this.setState({ showDeckList: true, showCardList: false });
-                break;        
-            case 'result': // result
-                this.setState({ showDeckList: true, showCardList: false });
-                break;        
-            default: // filters
-                this.setState({ showCardList: false, showDeckList: false });
-                break;
-        }
-    } */
 
     // creates deck from setCards array (no filters)
     createDeck() {
         let cards = this.state.setCards;
         let deck = [];
+
         do {
             const index = Math.round(Math.random() * (cards.length-1));
             const card = cards[index];
             if (!deck.includes(card)) deck.push(card);
         } while (deck.length < 10)
 
-        this.setState({
-            deck: deck,
-            showFilters: false
-        });
+        this.setState({ deck: deck, showFilters: false });
         return deck;
     }
 
-    // TODO: hide deck, show filters on button click
- /*    toggleFilters(e) {
-        e.preventDefault();
-        this.setState({
-            showFilters: !this.state.showFilters
-        });
-    } */
-
       toggleFilters() {
-          this.setState(prevState => ({
-              showFilters: !prevState.showFilters
-          }));
+          this.setState(prevState => ({ showFilters: !prevState.showFilters }));
       }
 
     // TODO: function to set filters
@@ -256,27 +211,46 @@ class App extends Component {
         const cards = this.state.setCards ? this.state.setCards : this.state.cards;
         const deck = this.state.deck;
 
-        let result = (this.state.deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
-        let filter = this.state.showFilters ? <Filter /> : '';
+        const CardList = () => <CardLibrary cards={cards} />;
+        const DeckBuilder = props => {
+            let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
+            let filter = this.state.showFilters ? <Filter /> : '';
 
-        return (
-            <main className="app">
-                <section className="set__container">
-                    <BoxContainer>
-                        <Box name="Dominion2" label="Dominion (2nd edition)" toggleBox={this.toggleBox} />
-                        <Box name="Intrigue2" label="Intrigue (2nd edition)" toggleBox={this.toggleBox} />
-                        <Box name="Adventures" label="Adventures" toggleBox={this.toggleBox} />
-                        <Box name="Nocturne" label="Nocturne" toggleBox={this.toggleBox} /> 
-                        <Button className="btn btn__create_deck" onClick={(e) => this.createDeck(e)}>Create Deck</Button>
-                    </BoxContainer>
-                    <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
-                </section>
+            return (
                 <section className="setup__container">
                     <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Show Setup' : 'Show Filters'}</Button>
                     {filter}
                     {result}
                 </section>
-            </main>
+            );                
+        }
+        
+        return (
+            <BrowserRouter>
+                <div className="app">
+                    <header className="header">
+                        <h1 className="header__title">Dominion</h1>
+                        <span className="header__subtitle">Deckbuilder</span>
+                        <Nav />
+                    </header>
+                    <main>
+                        <section className="set__container">
+                            <BoxContainer>
+                                <Box name="Dominion2" label="Dominion (2nd edition)" toggleBox={this.toggleBox} />
+                                <Box name="Intrigue2" label="Intrigue (2nd edition)" toggleBox={this.toggleBox} />
+                                <Box name="Adventures" label="Adventures" toggleBox={this.toggleBox} />
+                                <Box name="Nocturne" label="Nocturne" toggleBox={this.toggleBox} /> 
+                                <Button className="btn btn__create_deck" onClick={(e) => this.createDeck(e)}>Create Deck</Button>
+                            </BoxContainer>
+                            <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
+                        </section>
+                        <Switch>
+                            <Route path="/" exact component={DeckBuilder} />
+                            <Route path="/cards" component={CardList} />
+                        </Switch>
+                    </main>
+                </div>
+            </BrowserRouter>
         );
     }
 }
