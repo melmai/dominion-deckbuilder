@@ -228,7 +228,11 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="app">
-                    <Nav />
+                    <header className="header">
+                        <h1 className="header__title">Dominion</h1>
+                        <span className="header__subtitle">Deckbuilder</span>
+                        <Nav />
+                    </header>
                     <main>
                         <section className="set__container">
                             <BoxContainer>
