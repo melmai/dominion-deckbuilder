@@ -1,100 +1,117 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Card extends Component {
-    constructor(props) {
-        super(props);
+const Coin = (props) => {
+    return (
+        <div className="card__abilities-money">
+            <span>+&nbsp;</span>
+            <div className="card__abilities-coin">
+                {props.value}
+            </div>
+        </div>
+    );
+}
 
-        this.state = {
-            id: 0,
-            cost: Number,
-            class: [],
-            abilities: {
-                buy: 0,
-                card: 0,
-                action: 0,
-                money: 0,
-                trash: 0
-            },
-            text: 'text',
-            box: 'box',
-            journeyToken: false,
-            heirloom: 'heirloom',
-            linkedCard: 'linkedCard',
-        };
+const AbilityList = (props) => {
+    const abilities = props.abilities
+    const keys = Object.keys(abilities);
+    const values = Object.values(abilities);
 
-        // bind events
-        this.getCard = this.getCard.bind(this);
+    let items = [];
+    for (let i = 0; i < keys.length; i++) {
+        const processedKey = (key) => {
+            if (key === 'money') { // replace money with coin
+                items.push(<Coin value={values[i]} />);
+                return null;
+            } else { // replace with capitalized string and pluralize if needed
+                const firstLetter = key.charAt(0).toUpperCase();
+                let remainder = key.substring(1);
+                if (values[i] > 1) remainder = remainder.concat('s');
+                return firstLetter.concat(remainder);
+            }
+        }
+        if (!processedKey(keys[i])) break;
+        items.push(`+${values[i]} ${processedKey(keys[i])}`);
     }
 
-    
-    componentDidMount() {
-        this.getCard(this.props.id);
+    return (
+        <ul className="card__abilities">
+            {items.map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+    );    
+}
+
+const Card = (props) => {
+    let cardType = props.card.class;
+    cardType = cardType.join('-');
+
+    const icon = (box) => {
+        switch (box) {
+            case 'Dominion2':
+                return <img src="/img/dominion2-icon.svg" alt="Dominion Icon" className="card__icon_img" />
+            case 'Intrigue2':
+                return <img src="/img/intrigue2-icon.svg" alt="Intrigue Icon" className="card__icon_img" />
+            case 'Adventures':
+                return <img src="/img/adventures-icon.svg" alt="Adventures Icon" className="card__icon_img" />
+            case 'Nocturne':
+                return <img src="/img/nocturne-icon.svg" alt="Nocturne Icon" className="card__icon_img" />
+            default:
+                console.log('Error rendering icon');
+        }
     }
 
-    getCard(id) {
-        fetch(`/api/card/${id}`)
-            .then(response => response.json())
-            .then(responseData => {
-                let card = responseData[0];
-                let abilities = responseData[0].abilities ? responseData[0].abilities : false;
-                this.setState({
-                    name: card.name,
-                    id: card._id,
-                    cost: card.cost,
-                    abilities: {
-                        buy: abilities.buy,
-                        action: abilities.action,
-                        money: abilities.money,
-                        trash: abilities.trash,
-                        card: abilities.card 
-                    } ,
-                    class: card.class,
-                    text: card.text,
-                    box: card.box,
-                    journeyToken: card.journeyToken,
-                    heirloom: card.heirloom,
-                    linkedCard: card.linkedCard,
-                })
-            })
-            .catch((err) => {
-                console.log('Fetching and parsing data error', err)
-            });
+    const cardClass = (type) => {
+        let name = 'card';
+        if (type.includes('Duration') && type.includes('Reaction')) name = `${name} card__duration-reaction`;
+        if (type.includes('Treasure') && type.includes('Reserve')) name = `${name} card__treasure-reserve`;
+        if (type.includes('Treasure') && type.includes('Victory')) name = `${name} card__treasure-victory`;
+        if (type.includes('Reserve') && type.includes('Victory')) name = `${name} card__reserve-victory`;
+        if (type.includes('Duration')) name = `${name} card__duration`;
+        if (type.includes('Reserve')) name = `${name} card__reserve`;
+        if (type.includes('Victory')) name = `${name} card__victory`;
+        if (type.includes('Night')) name = `${name} card__night`;
+        if (type.includes('Treasure')) name = `${name} card__treasure`;
+        if (type.includes('Reaction')) name = `${name} card__reaction`;
+        return name;
     }
 
-    render() {
-
-        // basic card info
-        let text = this.state.text;
-        let cost = this.state.cost;
-        let linkedCard = this.state.linkedCard;
-        let heirloom = this.state.heirloom;
-
-        // abilities
-        let actions = this.state.abilities.action;
-        let money = this.state.abilities.money;
-        let buys = this.state.abilities.buy;
-        let cards = this.state.abilities.card;
-
+    const cardText = (text) => {
+        if (!text) return null;
+        if (text.includes('//')) {
+            const textArray = text.split('//');
+            return (
+                <div className="card__text">
+                    <span className="card__text-value">{textArray[0]}</span>
+                    <div className="card__text-divider" />
+                    <span className="card__text-value">{textArray[1]}</span>
+                </div>
+            );
+        }
         return (
-            <div className="card">
-                <h2>{this.state.name}</h2>
-                <ul className="card-abilities">
-                    { actions ? <li>+{actions} Actions</li> : '' }
-                    { money ? <li>+{money} Money</li> : '' }
-                    { buys ? <li>+{buys} Buys</li> : '' }
-                    { cards ? <li>+{cards} Cards</li> : '' }
-                </ul>
-                <p>{text}</p>
-                <p>{cost}</p>
-                <p>{ linkedCard ? linkedCard : '' }</p>
-                <p>{ heirloom ? heirloom : '' }</p>
+            <div className="card__text">
+                <span className="card__text-value">{text}</span>
             </div>
         );
     }
+
+    const heirloom = () => props.card.heirloom ? <span className="card__heirloom">Heirloom: {props.card.heirloom}</span> : null;
+    const abilities = (abilities) => abilities ? <AbilityList abilities={props.card.abilities} /> : null;
+
+    return (
+        <section className={cardClass(props.card.class)}>
+            <h1 className="card__name">{props.card.name}</h1>
+            <div className="card__icon_container">{icon(props.card.box)}</div>
+            <div className="card__divider" />
+            <div className="card__text_container">
+                {abilities(props.card.abilities)}
+                {cardText(props.card.text)}
+            </div>
+            <div className="card__bottom_banner">
+                {heirloom(props.card.heirloom)}
+                <p className="card__type">{cardType}</p>
+                <span className="card__cost">{props.card.cost}</span>
+            </div>
+        </section>
+    );
 }
-
-Card.propTypes = {
-
-};
 
 export default Card;
