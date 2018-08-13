@@ -212,7 +212,7 @@ class App extends Component {
         const deck = this.state.deck;
 
         const CardList = () => <CardLibrary cards={cards} />;
-        const DeckBuilder = props => {
+        const DeckBuilder = () => {
             let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
             let filter = this.state.showFilters ? <Filter /> : '';
 
