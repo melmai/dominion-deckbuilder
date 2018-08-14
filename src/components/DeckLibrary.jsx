@@ -1,61 +1,37 @@
 import React, { Component } from 'react';
-import Card from './Card';
+//import Deck from './Deck';
 
-class DeckLibrary extends Component {
-    constructor(props) {
-        super(props);
+const DeckRow = props => <tr className="table__row"><td>{props.deck.name}</td></tr>;
 
-        this.state = {
-            allCards: [],
-            deckID: 0,
-            nocturneCards: [],
-            adventuresCards: [],
-            intrigue2Cards: [],
-            dominion2Cards: []
-        };
+const DeckTable = props => {
+    const decks = props.decks;
+    const deckRows = decks.map(deck => <DeckRow key={deck._id} deck={deck} />);
 
-        // bind events
-        this.getCards = this.getCards.bind(this);
-        this.getDeck = this.getDeck.bind(this);
-    }
-
-    componentDidMount() {
-        this.getCards();
-    }
-
-    
-
-    getDeck(id) {
-        fetch(`/api/deck/${id}`)
-            .then(response => response.json())
-            .then(responseData => {
-                console.log(responseData);
-                this.setState({
-                    nocturneCards: responseData.cards.nocturne,
-                    adventuresCards: responseData.cards.adventures,
-                    intrigue2Cards: responseData.cards.intrigue,
-                    dominion2Cards: responseData.cards.dominion
-                });
-                console.log(this.state.deckCards);
-            })
-            .catch((err) => {
-                console.log('Fetching and parsing data error', err)
-            });
-    }
-
-    render() {
-
-        
-        return (
-            <div className="deck">
-                {this.state.allCards.map((card) => <Card key={card._id} id={card._id} />)} 
-            </div>
-        );
-    }
+    return (
+        <table className="table">
+            <thead className="table__header">
+                <tr>
+                    <td>Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                {deckRows}
+            </tbody>
+        </table>
+    );
 }
 
-DeckLibrary.propTypes = {
+class DeckLibrary extends Component {
 
-};
+    render() {
+        const decks = this.props.decks;
+        return (
+            <section className="deck-library">
+                <DeckTable decks={decks} />
+            </section>
+        );
+    }
+
+}
 
 export default DeckLibrary;
