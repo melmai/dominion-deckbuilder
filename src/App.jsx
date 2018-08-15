@@ -227,7 +227,7 @@ class App extends Component {
         const nocturne = this.state.cardsBySet.nocturne;
 
         const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
-        const DeckList = () => <DeckLibrary decks={this.state.decks} />;
+        const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
         const DeckBuilder = () => {
             let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
             let filter = this.state.showFilters ? <Filter /> : '';

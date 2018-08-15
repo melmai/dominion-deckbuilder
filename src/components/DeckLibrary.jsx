@@ -10,7 +10,7 @@ const DeckRow = props => {
     if (nocturne.length > 0) expansions.push('Nocturne');
 
     return (
-        <tr className="table__row">
+        <tr onClick={(e) => props.showDeck(props.deck._id, e)} className="table__row">
             <td>{props.deck.name}</td>
             <td>{expansions}</td>
         </tr>
@@ -19,7 +19,7 @@ const DeckRow = props => {
 
 const DeckTable = props => {
     const decks = props.decks;
-    const deckRows = decks.map(deck => <DeckRow key={deck._id} deck={deck} />);
+    const deckRows = decks.map(deck => <DeckRow key={deck._id} deck={deck} showDeck={props.showDeck} />);
 
     return (
         <table className="table">
@@ -37,12 +37,60 @@ const DeckTable = props => {
 }
 
 class DeckLibrary extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            id: 0,
+            decks: []
+        }
+
+        this.showDeck = this.showDeck.bind(this);
+        //this.loadData = this.loadData.bind(this);
+    }
+
+    /* componentDidMount() {
+        this.createDecks();
+    } */
+
+    /* createDecks() {
+        const decks = this.props.decks;
+        let dominionCards, intrigueCards, adventuresCards, nocturneCards;
+        let newDecks = decks.map(deck => {
+            if (deck.cards.dominion > 0) 
+            return (
+                {
+                    _id: deck._id,
+                    name: deck.name,
+                    cards: {
+                        dominion: {dominionCards},
+                        intrigue: {intrigueCards},
+                        adventures: {adventuresCards},
+                        nocturne: {nocturneCards}
+                    }
+                }
+            );
+        });
+    }*/
+
+
+    showDeck(id) {
+        console.log(id);
+        /* const deck = this.props.decks.find(deck => deck._id === id);
+        let cards = () => {
+            deck.forEach(name => {
+                const card = this.props.cards.find(card => card.name === name);
+                console.log(card);
+                //cards.push(card);
+            });
+        } */
+    } 
 
     render() {
         const decks = this.props.decks;
         return (
             <section className="deck-library">
-                <DeckTable decks={decks} />
+                <DeckTable decks={decks} showDeck={this.showDeck} />
             </section>
         );
     }
