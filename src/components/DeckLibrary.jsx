@@ -24,9 +24,7 @@ const DeckRow = props => {
                 <span className="deck__info--name">{props.deck.name}</span>
                 <span className="deck__info--expansions">{expansions}</span>
             </section>
-            <section className="deck__details">
-                {details(props.details, props.deck._id)}
-            </section>
+            {details(props.details, props.deck._id)}
         </section>
     )
 }
@@ -37,9 +35,9 @@ const DeckTable = props => {
 
     return (
         <article className="deck-library">
-            <header className="deck-library__header">
-                <span>Name</span>
-                <span>Expansions</span>
+            <header className="deck__info">
+                <span className="deck__info--name">Name</span>
+                <span className="deck__info--expansions">Expansions</span>
             </header>
             {deckRows}
         </article>
