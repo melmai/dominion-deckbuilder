@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Deck from './Deck';
+import Icon from './basic/Icon';
 
 const DeckRow = props => {
     const expansions = [];
@@ -9,7 +10,7 @@ const DeckRow = props => {
     if (intrigue.length > 0) expansions.push('Intrigue');
     if (nocturne.length > 0) expansions.push('Nocturne');
 
-    console.log(props.details);
+    //const icons = expansions => expansions.map(exp => <Icon box={exp} />);
 
     const details = (array, id) => {
         if (id === props.id) {
