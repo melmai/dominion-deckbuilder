@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import Deck from './Deck';
+import Deck from './Deck';
 
 const DeckRow = props => {
     const expansions = [];
@@ -9,30 +9,40 @@ const DeckRow = props => {
     if (intrigue.length > 0) expansions.push('Intrigue');
     if (nocturne.length > 0) expansions.push('Nocturne');
 
+    console.log(props.details);
+
+    const details = (array, id) => {
+        if (id === props.id) {
+            return <Deck cards={array} />;
+        }
+        return null;
+    }
+
     return (
-        <tr onClick={(e) => props.showDeck(props.deck._id, e)} className="table__row">
-            <td>{props.deck.name}</td>
-            <td>{expansions}</td>
-        </tr>
+        <section onClick={(e) => props.showDeck(props.deck._id, e)} className="deck__row">
+            <section className="deck__info">
+                <span className="deck__info--name">{props.deck.name}</span>
+                <span className="deck__info--expansions">{expansions}</span>
+            </section>
+            <section className="deck__details">
+                {details(props.details, props.deck._id)}
+            </section>
+        </section>
     )
 }
 
 const DeckTable = props => {
     const decks = props.decks;
-    const deckRows = decks.map(deck => <DeckRow key={deck._id} deck={deck} showDeck={props.showDeck} />);
+    const deckRows = decks.map(deck => <DeckRow key={deck._id} deck={deck} showDeck={props.showDeck} details={props.details} id={props.id} />);
 
     return (
-        <table className="table">
-            <thead className="table__header">
-                <tr>
-                    <td>Name</td>
-                    <td>Expansions</td>
-                </tr>
-            </thead>
-            <tbody>
-                {deckRows}
-            </tbody>
-        </table>
+        <article className="deck-library">
+            <header className="deck-library__header">
+                <span>Name</span>
+                <span>Expansions</span>
+            </header>
+            {deckRows}
+        </article>
     );
 }
 
@@ -42,36 +52,12 @@ class DeckLibrary extends Component {
         
         this.state = {
             id: 0,
-            decks: []
+            deck: []
         }
 
         this.showDeck = this.showDeck.bind(this);
-        //this.loadData = this.loadData.bind(this);
+        this.strToObj = this.strToObj.bind(this);
     }
-
-    /* componentDidMount() {
-        this.createDecks();
-    } */
-
-    /* createDecks() {
-        const decks = this.props.decks;
-        let dominionCards, intrigueCards, adventuresCards, nocturneCards;
-        let newDecks = decks.map(deck => {
-            if (deck.cards.dominion > 0) 
-            return (
-                {
-                    _id: deck._id,
-                    name: deck.name,
-                    cards: {
-                        dominion: {dominionCards},
-                        intrigue: {intrigueCards},
-                        adventures: {adventuresCards},
-                        nocturne: {nocturneCards}
-                    }
-                }
-            );
-        });
-    }*/
 
     // transforms [string] to [obj]
     strToObj(array) {
@@ -99,12 +85,13 @@ class DeckLibrary extends Component {
     } 
 
     render() {
-        const decks = this.props.decks;
-        return (
-            <section className="deck-library">
-                <DeckTable decks={decks} showDeck={this.showDeck} />
-            </section>
-        );
+        const decks = this.props.decks;  
+        return <DeckTable 
+                    decks={decks} 
+                    showDeck={this.showDeck} 
+                    details={this.state.deck} 
+                    id={this.state.id} 
+                />
     }
 
 }
