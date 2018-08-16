@@ -73,25 +73,29 @@ class DeckLibrary extends Component {
         });
     }*/
 
+    // transforms [string] to [obj]
+    strToObj(array) {
+        let cards = [];
+        array.forEach(str => {
+            const card = this.props.cards.find(card => card.name === str);
+            cards.push(card);
+        });
+        return cards;
+    }
 
     showDeck(id) {
-        console.log(id);
-        const deck = this.props.decks.find(deck => deck._id === id);
-        console.log(deck);
+        let deck = this.props.decks.find(deck => deck._id === id);
         let { adventures, dominion, intrigue, nocturne } = deck.cards;
-        console.log(adventures);
-        console.log(dominion);
-        console.log(intrigue);
-        console.log(nocturne);
-        if (nocturne.length > 0) {
-            let cards = [];
-            nocturne.forEach(name => {
-                const card = this.props.cards.find(card => card.name === name);
-                cards.push(card);
-            });
-            nocturne = cards;
-        }
-        console.log(nocturne);
+        if (nocturne.length > 0) nocturne = this.strToObj(nocturne);
+        if (adventures.length > 0) adventures = this.strToObj(adventures);
+        if (dominion.length > 0) dominion = this.strToObj(dominion);
+        if (intrigue.length > 0) intrigue = this.strToObj(intrigue);
+
+        deck = nocturne.concat(adventures, dominion, intrigue);
+        this.setState({ 
+            id: id,
+            deck: deck
+        })
     } 
 
     render() {
