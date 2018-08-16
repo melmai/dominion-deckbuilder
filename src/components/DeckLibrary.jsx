@@ -76,14 +76,22 @@ class DeckLibrary extends Component {
 
     showDeck(id) {
         console.log(id);
-        /* const deck = this.props.decks.find(deck => deck._id === id);
-        let cards = () => {
-            deck.forEach(name => {
+        const deck = this.props.decks.find(deck => deck._id === id);
+        console.log(deck);
+        let { adventures, dominion, intrigue, nocturne } = deck.cards;
+        console.log(adventures);
+        console.log(dominion);
+        console.log(intrigue);
+        console.log(nocturne);
+        if (nocturne.length > 0) {
+            let cards = [];
+            nocturne.forEach(name => {
                 const card = this.props.cards.find(card => card.name === name);
-                console.log(card);
-                //cards.push(card);
+                cards.push(card);
             });
-        } */
+            nocturne = cards;
+        }
+        console.log(nocturne);
     } 
 
     render() {

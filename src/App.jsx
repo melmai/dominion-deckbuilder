@@ -27,7 +27,8 @@ class App extends Component {
             filteredCards: [],
             showList: false,
             showFilters: true,
-            decks: []
+            decks: [],
+            deck: []
         };
 
         this.filterCardsBySet = this.filterCardsBySet.bind(this);
@@ -229,8 +230,8 @@ class App extends Component {
         const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
         const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
         const DeckBuilder = () => {
-            let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
-            let filter = this.state.showFilters ? <Filter /> : '';
+            let result = (deck.length > 0) ? <Result cards={deck} /> : null;
+            let filter = this.state.showFilters ? <Filter /> : 'Select Expansions and/or Preferences';
 
             return (
                 <section className="setup__container">
