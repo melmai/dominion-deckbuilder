@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CardLibrary from './components/CardLibrary';
 import Nav from './components/basic/Nav';
-//import DeckLibrary from './components/DeckLibrary';
+import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
 import Box from './components/Box';
 import ChartContainer from './components/ChartContainer';
@@ -25,9 +25,9 @@ class App extends Component {
             strategy: { type: [], count: [] },
             setCards: [],
             filteredCards: [],
-            library: '',
             showList: false,
             showFilters: true,
+            decks: [],
             deck: []
         };
 
@@ -64,7 +64,19 @@ class App extends Component {
                 this.sortCardsBySet(responseData); // create subarrays of card objects by expansion
                 this.processCards(responseData); // break down data to use in charts
             })
-            .catch((err) => console.log('Fetching and parsing data error', err));
+            .catch((err) => console.log('Fetching and parsing card data error', err));
+        
+        fetch(`/api/decks/`)
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({
+                    decks: responseData
+                });
+                console.log(this.state.deckCards);
+            })
+            .catch((err) => {
+                console.log('Fetching and parsing deck data error', err)
+            });   
     }
 
     // toggle box selection
@@ -216,9 +228,10 @@ class App extends Component {
         const nocturne = this.state.cardsBySet.nocturne;
 
         const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
+        const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
         const DeckBuilder = () => {
-            let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Expansions and/or Preferences';
-            let filter = this.state.showFilters ? <Filter /> : '';
+            let result = (deck.length > 0) ? <Result cards={deck} /> : null;
+            let filter = this.state.showFilters ? <Filter /> : 'Select Expansions and/or Preferences';
 
             return (
                 <section className="setup__container">
@@ -251,6 +264,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/" exact component={DeckBuilder} />
                             <Route path="/cards" component={CardList} />
+                            <Route path="/decks" component={DeckList} />
                         </Switch>
                     </main>
                 </div>
