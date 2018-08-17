@@ -2,9 +2,11 @@ import React from 'react';
 
 const Icon = props => {
     switch (props.box) {
+        case 'Dominion':
         case 'Dominion2':
             return <img src="/img/dominion2-icon.svg" alt="Dominion" className="card__icon_img" />
         case 'Intrigue2':
+        case 'Intrigue':
             return <img src="/img/intrigue2-icon.svg" alt="Intrigue" className="card__icon_img" />
         case 'Adventures':
             return <img src="/img/adventures-icon.svg" alt="Adventures" className="card__icon_img" />
