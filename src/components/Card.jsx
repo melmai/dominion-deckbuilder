@@ -62,7 +62,13 @@ const Card = (props) => {
 
     const cardText = (text) => {
         if (!text) return null;
-        if (text.includes('//')) {
+        let processedText = text;
+        const moneyString = /(\d)\s\[M\]/;
+        console.log(moneyString);
+        //const coin = value => <Coin value={value} />;
+        const newstr = processedText.replace(moneyString, 'value: $1');
+        console.log(newstr);
+        if (processedText.includes('//')) {
             const textArray = text.split('//');
             return (
                 <div className="card__text">
