@@ -1,5 +1,21 @@
 import React from 'react';
 
-const Filter = () => <section className="filter__container">This is a placeholder for Filters Area</section>;
+export default class Filter {
+    // props: boxes
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            equalSplit: true,
+        }
+    }
+    
 
-export default Filter;
+    render() {
+        return (
+            <form className="filter__container">
+                
+            </form>
+        );
+    }
+} 
