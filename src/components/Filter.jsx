@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class Filter {
+class Filter extends Component {
     // props: boxes
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         
         this.state = {
             equalSplit: true,
@@ -14,8 +14,10 @@ export default class Filter {
     render() {
         return (
             <form className="filter__container">
-                
+
             </form>
         );
     }
 } 
+
+export default Filter;
