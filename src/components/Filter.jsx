@@ -14,7 +14,8 @@ class Filter extends Component {
     render() {
         return (
             <form className="filter__container">
-
+                <input type="checkbox" name="equalSplit" value="equalSplit" /> 
+                <label htmlFor="equalSplit">Draw 5 cards from each set</label>
             </form>
         );
     }
