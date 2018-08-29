@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Deck from './Deck';
+import Icon from './basic/Icon';
 
 const DeckRow = props => {
     const expansions = [];
@@ -9,7 +10,7 @@ const DeckRow = props => {
     if (intrigue.length > 0) expansions.push('Intrigue');
     if (nocturne.length > 0) expansions.push('Nocturne');
 
-    console.log(props.details);
+    const icons = (exp) => exp.map(exp => <Icon key={exp} box={exp} />);
 
     const details = (array, id) => {
         if (id === props.id) {
@@ -22,7 +23,7 @@ const DeckRow = props => {
         <section onClick={(e) => props.showDeck(props.deck._id, e)} className="deck__row">
             <section className="deck__info">
                 <span className="deck__info--name">{props.deck.name}</span>
-                <span className="deck__info--expansions">{expansions}</span>
+                <span className="deck__info--expansions">{icons(expansions)}</span>
             </section>
             {details(props.details, props.deck._id)}
         </section>

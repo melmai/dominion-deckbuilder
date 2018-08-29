@@ -1,4 +1,11 @@
 import React from 'react';
+import Icon from './basic/Icon';
+
+const processMoney = text => {
+    const moneyString = /(\d)\s\[M\]/;
+    const strings = text.split(moneyString);
+    return strings;
+}
 
 const Coin = (props) => {
     return (
@@ -44,21 +51,6 @@ const Card = (props) => {
     let cardType = props.card.class;
     cardType = cardType.join('-');
 
-    const icon = (box) => {
-        switch (box) {
-            case 'Dominion2':
-                return <img src="/img/dominion2-icon.svg" alt="Dominion Icon" className="card__icon_img" />
-            case 'Intrigue2':
-                return <img src="/img/intrigue2-icon.svg" alt="Intrigue Icon" className="card__icon_img" />
-            case 'Adventures':
-                return <img src="/img/adventures-icon.svg" alt="Adventures Icon" className="card__icon_img" />
-            case 'Nocturne':
-                return <img src="/img/nocturne-icon.svg" alt="Nocturne Icon" className="card__icon_img" />
-            default:
-                console.log('Error rendering icon');
-        }
-    }
-
     const cardClass = (type) => {
         let name = 'card';
         if (type.includes('Duration') && type.includes('Reaction')) name = `${name} card__duration-reaction`;
@@ -76,8 +68,18 @@ const Card = (props) => {
 
     const cardText = (text) => {
         if (!text) return null;
+        //const victoryString = /\[VP\]/;
+        //const textCoin = value => <span className="card__abilities-coin">{value}</span>;
+        //const coin = value => <Coin value={value} />;
+        //const victory = victoryString.test(processedText);
         if (text.includes('//')) {
             const textArray = text.split('//');
+            for (const item of textArray) {
+                let processedArray = [];
+                if (item.includes('[M]')) processedArray = processMoney(item);
+                if (item.includes('[VP]')) console.log(`VP: ${item}`);
+                console.log(processedArray);
+            }
             return (
                 <div className="card__text">
                     <span className="card__text-value">{textArray[0]}</span>
@@ -99,7 +101,7 @@ const Card = (props) => {
     return (
         <section className={cardClass(props.card.class)}>
             <h1 className="card__name">{props.card.name}</h1>
-            <div className="card__icon_container">{icon(props.card.box)}</div>
+            <div className="card__icon_container"><Icon box={props.card.box} /></div>
             <div className="card__divider" />
             <div className="card__text_container">
                 {abilities(props.card.abilities)}

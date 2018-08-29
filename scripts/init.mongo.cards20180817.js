@@ -1,5 +1,5 @@
-// corrects Night Watchman and Ratcatcher
-
+// updated script corrects typo in Steward, replaces "Money" with [M] and VP with [VP]
+// adds choiceAbilities key to maintain searchable attributes without printing to card
 let db = new Mongo().getDB('dominion');
 db.cards.remove({});
 
@@ -12,7 +12,7 @@ db.cards.insertMany([
     "abilities": {
         "buy": 1
     },
-    "text": "You may discard an Estate for +4 Money. If you don't, gain an Estate.",
+    "text": "You may discard an Estate for +4 [M]. If you don't, gain an Estate.",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 0,
@@ -79,7 +79,7 @@ db.cards.insertMany([
     "name": "Courtier",
     "cost": 5,
     "class": ["Action"],
-    "text": "Reveal a card from your hand. For each type it has (Action, Attack, etc.), choose one: +1 Action; or +1 Buy; or +3 Money; or gain a Gold. The choices must be different.",
+    "text": "Reveal a card from your hand. For each type it has (Action, Attack, etc.), choose one: +1 Action; or +1 Buy; or +3 [M]; or gain a Gold. The choices must be different.",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -145,7 +145,7 @@ db.cards.insertMany([
     "name": "Ironworks",
     "cost": 4,
     "class": ["Action"],
-    "text": "Gain a card costing up to 4. If the gained card is an... Action card, +1 Action; Treasure card, +1 Money; Victory card, +1 Card.",
+    "text": "Gain a card costing up to 4. If the gained card is an... Action card, +1 Action; Treasure card, +1 [M]; Victory card, +1 Card.",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -215,7 +215,7 @@ db.cards.insertMany([
         "action": 1,
         "card": 1
     },
-    "text": "You may discard 2 cards for +2 Money.",
+    "text": "You may discard 2 cards for +2 [M]. // 1 [VP]",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -239,7 +239,7 @@ db.cards.insertMany([
         "action": 2,
         "card": 1
     },
-    "text": "You may trash this for +2 Money.",
+    "text": "You may trash this for +2 [M].",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -262,7 +262,7 @@ db.cards.insertMany([
     "abilities": {
         "action": 1
     },
-    "text": "Choose one: +2 Money; or discard your hand, +4 Cards, and each other player with at least 5 cards in hand discards their hand and draws 4 cards.",
+    "text": "Choose one: +2 [M]; or discard your hand, +4 Cards, and each other player with at least 5 cards in hand discards their hand and draws 4 cards.",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -305,13 +305,13 @@ db.cards.insertMany([
     "name": "Pawn",
     "cost": 2,
     "class": ["Action"],
-    "abilities": {
+    "choiceAbilities": {
         "card": 1,
         "action": 1,
         "buy": 1,
         "money": 1
     },
-    "text": "Choose two: +1 Card; +1 Action; +1 Buy; +1 Money. The choices must be different.",
+    "text": "Choose two: +1 Card; +1 Action; +1 Buy; +1 [M]. The choices must be different.",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -379,10 +379,10 @@ db.cards.insertMany([
     "cost": 3,
     "class": ["Action"],
     "abilities": {
-        "cards": 2,
+        "card": 2,
         "money": 2
     },
-    "text": "Choose one: +2 Cards; or +2 Money; or trash 2 cards from your hand.",
+    "text": "Choose one: +2 Cards; or +2 [M]; or trash 2 cards from your hand.",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -516,10 +516,11 @@ db.cards.insertMany([
     "name": "Nobles",
     "cost": 6,
     "class": ["Action", "Victory"],
-    "abilities": {
+    "choiceAbilities": {
         "card": 3,
         "action": 2
     },
+    "text": "Choose one: +3 Cards; or +2 Actions. // 2 [VP]",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 1,
@@ -542,6 +543,7 @@ db.cards.insertMany([
     "abilities": {
         "money": 2
     },
+    "text": "// 2 [VP]",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 0,
@@ -561,7 +563,7 @@ db.cards.insertMany([
     "name": "Duke",
     "cost": 5,
     "class": ["Victory"],
-    "text": "Worth 1 VP per Duchy you have.",
+    "text": "Worth 1 [VP] per Duchy you have.",
     "box": "Intrigue2",
     "strategy": {
         "addAction": 0,
@@ -581,7 +583,7 @@ db.cards.insertMany([
     "name": "Amulet",
     "cost": 3,
     "class": ["Action", "Duration"],
-    "text": "Now and at the start of your next turn, choose one: +1 Money; or trash a card from your hand; or gain a silver.",
+    "text": "Now and at the start of your next turn, choose one: +1 [M]; or trash a card from your hand; or gain a silver.",
     "box": "Adventures",
     "strategy": {
         "addAction": 0,
@@ -650,7 +652,7 @@ db.cards.insertMany([
         "card": 1,
         "action": 1
     },
-    "text": "At the start of your next turn, +1 Money. // When another player plays an Attack card, you may first play this from your hand. +1 Action has no effect if it is not your turn.",
+    "text": "At the start of your next turn, +1 [M]. // When another player plays an Attack card, you may first play this from your hand. +1 Action has no effect if it is not your turn.",
     "box": "Adventures",
     "strategy": {
         "addAction": 1,
@@ -693,7 +695,7 @@ db.cards.insertMany([
     "name": "Distant Lands",
     "cost": 5,
     "class": ["Action", "Reserve", "Victory"],
-    "text": "Put this on your Tavern mat. Worth 4 VP if on your Tavern mat at the end of the game. (Otherwise, worth 0).",
+    "text": "Put this on your Tavern mat. // Worth 4 [VP] if on your Tavern mat at the end of the game. (Otherwise, worth 0 [VP]).",
     "box": "Adventures",
     "strategy": {
         "addAction": 0,
@@ -779,7 +781,7 @@ db.cards.insertMany([
     "name": "Giant",
     "cost": 5,
     "class": ["Action", "Attack"],
-    "text": "Turn your Journey token over (it starts face up). Then, if it's face down, +1 Money. If it's face up, +5 Money, and each other player reveals the top card of their deck, trashes it if it costs from 3-6, and otherwise discards it and gains a Curse.",
+    "text": "Turn your Journey token over (it starts face up). Then, if it's face down, +1 [M]. If it's face up, +5 [M], and each other player reveals the top card of their deck, trashes it if it costs from 3-6, and otherwise discards it and gains a Curse.",
     "box": "Adventures",
     "journeyToken": 1,
     "strategy": {
@@ -960,7 +962,7 @@ db.cards.insertMany([
     "name": "Miser",
     "cost": 4,
     "class": ["Action"],
-    "text": "Choose one: put a Copper from your hand onto your Tavern mat; or +1 Money per Copper on your Tavern mat.",
+    "text": "Choose one: put a Copper from your hand onto your Tavern mat; or +1 [M] per Copper on your Tavern mat.",
     "box": "Adventures",
     "strategy": {
         "addAction": 0,
@@ -1125,7 +1127,7 @@ db.cards.insertMany([
         "action": 1,
         "money": 1
     },
-    "text": "Play up to 3 Treasures from your hand. Then pay all of your money (including the one from this) and draw a card per 1 you paid.",
+    "text": "Play up to 3 Treasures from your hand. Then pay all of your [M] (including the one from this) and draw a card per 1 you paid.",
     "box": "Adventures",
     "strategy": {
         "addAction": 1,
@@ -1145,7 +1147,7 @@ db.cards.insertMany([
     "name": "Swamp Hag",
     "cost": 5,
     "class": ["Action", "Attack", "Duration"],
-    "text": "Until your next turn, when any other player buys a card, they gain a Curse. At the start of your next turn: +3 Money.",
+    "text": "Until your next turn, when any other player buys a card, they gain a Curse. At the start of your next turn: +3 [M].",
     "box": "Adventures",
     "strategy": {
         "addAction": 0,
@@ -1506,7 +1508,7 @@ db.cards.insertMany([
         "card": 1,
         "action": 1
     },
-    "text": "The first time you play a Silver this turn, +1 Money.",
+    "text": "The first time you play a Silver this turn, +1 [M].",
     "box": "Dominion2",
     "strategy": {
         "addAction": 1,
@@ -1591,7 +1593,7 @@ db.cards.insertMany([
     "name": "Moneylender",
     "cost": 4,
     "class": ["Action"],
-    "text": "You may trash a Copper from your hand for +3 Money.",
+    "text": "You may trash a Copper from your hand for +3 [M].",
     "box": "Dominion2",
     "strategy": {
         "addAction": 0,
@@ -1810,7 +1812,7 @@ db.cards.insertMany([
     "name": "Gardens",
     "cost": 4,
     "class": ["Victory"],
-    "text": "Worth 1 VP per 10 cards you have (round down).",
+    "text": "Worth 1 [VP] per 10 cards you have (round down).",
     "box": "Dominion2",
     "strategy": {
         "addAction": 0,
@@ -2130,7 +2132,7 @@ db.cards.insertMany([
     "name": "Guardian",
     "cost": 2,
     "class": ["Night", "Duration"],
-    "text": "Until your next turn, when another player plays an Attack card, it doesn't affect you. At the start of your next turn, +1 Money. // This is gained to your hand (instead of your discard pile).",
+    "text": "Until your next turn, when another player plays an Attack card, it doesn't affect you. At the start of your next turn, +1 [M]. // This is gained to your hand (instead of your discard pile).",
     "immunity": 1,
     "box": "Nocturne",
     "strategy": {
@@ -2300,7 +2302,7 @@ db.cards.insertMany([
     "name": "Raider",
     "cost": 6,
     "class": ["Night", "Duration", "Attack"],
-    "text": "Each other player with 5 or more cards in hand discards a copy of a card you have in play (or reveals they can't). At the start of your next turn, +3 Money.",
+    "text": "Each other player with 5 or more cards in hand discards a copy of a card you have in play (or reveals they can't). At the start of your next turn, +3 [M].",
     "box": "Nocturne",
     "strategy": {
         "addAction": 0,
@@ -2324,7 +2326,7 @@ db.cards.insertMany([
         "buy": 1,
         "money": 3
     },
-    "text": "Receive a Boon. If it doesn't give +1 Money, each other player may receive it.",
+    "text": "Receive a Boon. If it doesn't give +1 [M], each other player may receive it.",
     "box": "Nocturne",
     "strategy": {
         "addAction": 0,
@@ -2348,7 +2350,7 @@ db.cards.insertMany([
         "card": 1,
         "action": 1
     },
-    "text": "You may discard 3 cards. If you did, then at the start of your next turn, +3 Money.",
+    "text": "You may discard 3 cards. If you did, then at the start of your next turn, +3 [M].",
     "heirloom": "Magic Lamp",
     "box": "Nocturne",
     "strategy": {
@@ -2529,7 +2531,7 @@ db.cards.insertMany([
     "name": "Cemetery",
     "cost": 4,
     "class": ["Victory"],
-    "text": "When you gain this, trash up to 4 cards from your hand.",
+    "text": "2 [VP] // When you gain this, trash up to 4 cards from your hand.",
     "heirloom": "Haunted Mirror",
     "box": "Nocturne",
     "strategy": {
