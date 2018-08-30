@@ -17,7 +17,6 @@ class App extends Component {
         // set state
         this.state = {
             boxes: [],
-            filters: {},
             cards: [],
             cardsBySet: { dominion2: [], intrigue2: [], adventures: [], nocturne: [] },
             class: { type: [], count: [] },
@@ -25,8 +24,10 @@ class App extends Component {
             strategy: { type: [], count: [] },
             setCards: [],
             filteredCards: [],
-            showList: false,
             showFilters: true,
+            filters: {
+                equalSplit: true,
+            },
             decks: [],
             deck: []
         };
@@ -40,6 +41,7 @@ class App extends Component {
         this.countInArray = this.countInArray.bind(this);
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
+        this.toggleSplit = this.toggleSplit.bind(this);
     }
 
     componentDidMount() {
@@ -196,13 +198,18 @@ class App extends Component {
         return cards;
     }
 
+    // returns list of filtered cards
+    filterCards(options) {
+
+    }
+
     // creates deck from setCards array (no filters)
-    createDeck() {
+    createDeck(options) {
         let cards = this.state.setCards;
         let deck = [];
 
         do {
-            const index = Math.round(Math.random() * (cards.length-1));
+            const index = Math.round(Math.random() * (cards.length - 1));
             const card = cards[index];
             if (!deck.includes(card)) deck.push(card);
         } while (deck.length < 10)
@@ -211,10 +218,14 @@ class App extends Component {
         return deck;
     }
 
-      toggleFilters() {
-          this.setState(prevState => ({ showFilters: !prevState.showFilters }));
-      }
+    toggleFilters() {
+        this.setState(prevState => ({ showFilters: !prevState.showFilters }));
+    }
 
+    toggleSplit() {
+        this.setState(prevState => ({ filters: { equalSplit: !prevState.filters.equalSplit }}));
+    }
+    
     // TODO: function to set filters
     setFilters(){}
     
@@ -231,7 +242,7 @@ class App extends Component {
         const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
         const DeckBuilder = () => {
             let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Filters and/or Expansions';
-            let filter = this.state.showFilters ? <Filter /> : null;
+            let filter = this.state.showFilters ? <Filter toggleSplit={this.toggleSplit} equalSplit={this.state.filters.equalSplit} /> : null;
 
             return (
                 <section className="setup__container">
