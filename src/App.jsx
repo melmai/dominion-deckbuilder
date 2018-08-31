@@ -41,7 +41,7 @@ class App extends Component {
         this.countInArray = this.countInArray.bind(this);
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
-        this.toggleSplit = this.toggleSplit.bind(this);
+        //this.toggleCheckbox = this.toggleCheckbox.bind(this);
     }
 
     componentDidMount() {
@@ -222,9 +222,10 @@ class App extends Component {
         this.setState(prevState => ({ showFilters: !prevState.showFilters }));
     }
 
-    toggleSplit() {
-        this.setState(prevState => ({ filters: { equalSplit: !prevState.filters.equalSplit }}));
-    }
+    /* toggleCheckbox(name, value) {
+        //this.setState(prevState => ({ filters: { equalSplit: !prevState.filters.equalSplit }}));
+        //this.setState(prevState => ({ filters: { [name]: prevState.[name]. }}));
+    } */
     
     // TODO: function to set filters
     setFilters(){}
@@ -242,7 +243,7 @@ class App extends Component {
         const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
         const DeckBuilder = () => {
             let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Filters and/or Expansions';
-            let filter = this.state.showFilters ? <Filter toggleSplit={this.toggleSplit} equalSplit={this.state.filters.equalSplit} /> : null;
+            let filter = this.state.showFilters ? <Filter boxes={this.state.boxes} toggleCheckbox={this.toggleCheckbox} equalSplit={this.state.filters.equalSplit} /> : null;
 
             return (
                 <section className="setup__container">
