@@ -22,9 +22,6 @@ class App extends Component {
             cost: { type: [], count: [] },
             strategy: { type: [], count: [] },
             setCards: [],
-            filters: {
-                equalSplit: true,
-            },
             decks: [],
         };
 
