@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import Filter from './Filter';
+import { dominion } from './config/checkboxes';
+import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
+
+const Filter = (props) => (
+    <form className="filter__container">
+        {dominion.map(item => (
+            <label key={item.key}>
+                <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
+                {item.label}
+            </label>
+        ))}
+    </form>
+);
 
 class DeckBuilder extends Component {
     constructor(props) {
@@ -9,11 +21,21 @@ class DeckBuilder extends Component {
 
         this.state = {
             deck: [],
-            showFilters: true
+            showFilters: true,
+            checked: new Map()
         }
         
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
+        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+
+    }
+
+    handleCheckboxChange(event) {
+        const target = event.target;
+        const name = target.name;
+        const isChecked = target.checked;
+        this.setState(prevState => ({ checked: prevState.checked.set(name, isChecked) }));
     }
 
     toggleFilters() {
@@ -37,7 +59,7 @@ class DeckBuilder extends Component {
 
     render() {
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
-        let filter = this.state.showFilters ? <Filter boxes={this.props.boxes} /> : null;
+        let filter = this.state.showFilters ? <Filter boxes={this.props.boxes} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
