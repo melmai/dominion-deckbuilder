@@ -22,13 +22,10 @@ class App extends Component {
             cost: { type: [], count: [] },
             strategy: { type: [], count: [] },
             setCards: [],
-            filteredCards: [],
-            showFilters: true,
             filters: {
                 equalSplit: true,
             },
             decks: [],
-            deck: []
         };
 
         this.filterCardsBySet = this.filterCardsBySet.bind(this);
@@ -38,8 +35,6 @@ class App extends Component {
         this.sortCardsBySet = this.sortCardsBySet.bind(this);
         this.calcData = this.calcData.bind(this);
         this.countInArray = this.countInArray.bind(this);
-        this.setDeck = this.setDeck.bind(this);
-        this.toggleFilters = this.toggleFilters.bind(this);
     }
 
     componentDidMount() {
@@ -195,15 +190,6 @@ class App extends Component {
         }
         return cards;
     }
-
-    // creates deck from setCards array (no filters)
-    setDeck(deck) {
-        this.setState({ deck: deck, showFilters: false });
-    }
-
-    toggleFilters() {
-        this.setState(prevState => ({ showFilters: !prevState.showFilters }));
-    }
     
     render () {
         // if no sets specified, use all cards
@@ -215,7 +201,7 @@ class App extends Component {
 
         const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
         const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
-        const Deckbuilder = () => <DeckBuilder cards={this.state.setCards} deck={this.state.deck} boxes={this.state.boxes} showFilters={this.state.showFilters} toggleFilters={this.toggleFilters} setDeck={this.setDeck} />;
+        const Deckbuilder = () => <DeckBuilder cards={this.state.setCards} boxes={this.state.boxes} />;
         
         return (
             <BrowserRouter>

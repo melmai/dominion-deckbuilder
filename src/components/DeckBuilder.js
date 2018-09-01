@@ -6,8 +6,18 @@ import Button from './basic/Button';
 class DeckBuilder extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            deck: [],
+            showFilters: true
+        }
         
         this.createDeck = this.createDeck.bind(this);
+        this.toggleFilters = this.toggleFilters.bind(this);
+    }
+
+    toggleFilters() {
+        this.setState(prevState => ({ showFilters: !prevState.showFilters }));
     }
 
     // creates deck from setCards array (no filters)
@@ -21,18 +31,18 @@ class DeckBuilder extends Component {
             if (!deck.includes(card)) deck.push(card);
         } while (deck.length < 10)
 
-        this.props.setDeck(deck);
+        this.setState({ deck: deck, showFilters: false });
         return deck;
     }
 
     render() {
-        let result = (this.props.deck.length > 0) ? <Result cards={this.props.deck} /> : 'Select Filters and/or Expansions';
-        let filter = this.props.showFilters ? <Filter boxes={this.props.boxes} /> : null;
+        let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
+        let filter = this.state.showFilters ? <Filter boxes={this.props.boxes} /> : null;
         
         return (
             <section className="setup__container">
                 <Button className="btn btn__create_deck" onClick={this.createDeck}>Create Deck</Button>
-                <Button className="btn btn__toggle_filters" onClick={this.props.toggleFilters}>{this.props.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
+                <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
                 {filter}
                 {result}
             </section>           
