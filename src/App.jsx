@@ -6,8 +6,7 @@ import BoxContainer from './components/BoxContainer';
 import Box from './components/Box';
 import ChartContainer from './components/ChartContainer';
 import Button from './components/basic/Button';
-import Filter from './components/Filter';
-import Result from './components/Result';
+import DeckBuilder from './components/DeckBuilder';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'; 
 
 class App extends Component {
@@ -41,7 +40,6 @@ class App extends Component {
         this.countInArray = this.countInArray.bind(this);
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
-        //this.toggleCheckbox = this.toggleCheckbox.bind(this);
     }
 
     componentDidMount() {
@@ -221,11 +219,6 @@ class App extends Component {
     toggleFilters() {
         this.setState(prevState => ({ showFilters: !prevState.showFilters }));
     }
-
-    /* toggleCheckbox(name, value) {
-        //this.setState(prevState => ({ filters: { equalSplit: !prevState.filters.equalSplit }}));
-        //this.setState(prevState => ({ filters: { [name]: prevState.[name]. }}));
-    } */
     
     // TODO: function to set filters
     setFilters(){}
@@ -233,7 +226,6 @@ class App extends Component {
     render () {
         // if no sets specified, use all cards
         const cards = this.state.setCards ? this.state.setCards : this.state.cards;
-        const deck = this.state.deck;
         const dominion2 = this.state.cardsBySet.dominion2;
         const intrigue2 = this.state.cardsBySet.intrigue2;
         const adventures = this.state.cardsBySet.adventures;
@@ -241,18 +233,7 @@ class App extends Component {
 
         const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
         const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
-        const DeckBuilder = () => {
-            let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Filters and/or Expansions';
-            let filter = this.state.showFilters ? <Filter boxes={this.state.boxes} toggleCheckbox={this.toggleCheckbox} equalSplit={this.state.filters.equalSplit} /> : null;
-
-            return (
-                <section className="setup__container">
-                    <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Show Setup' : 'Show Filters'}</Button>
-                    {filter}
-                    {result}
-                </section>
-            );                
-        }
+        const Deckbuilder = () => <DeckBuilder cards={this.state.deck} boxes={this.state.boxes} showFilters={this.state.showFilters} toggleFilters={this.toggleFilters} createDeck={this.createDeck} />;
         
         return (
             <BrowserRouter>
@@ -274,7 +255,7 @@ class App extends Component {
                             <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
                         </section>
                         <Switch>
-                            <Route path="/" exact component={DeckBuilder} />
+                            <Route path="/" exact component={Deckbuilder} />
                             <Route path="/cards" component={CardList} />
                             <Route path="/decks" component={DeckList} />
                         </Switch>

@@ -20,21 +20,6 @@ class Filter extends Component {
         const name = target.name;
         const isChecked = target.checked;
         this.setState(prevState => ({ checked: prevState.checked.set(name, isChecked) }));
-
-        //this.props.toggleCheckbox(name);
-/*         this.setState({
-            [name]: value
-        });
-    }
- */    
-
-/*     render() {
-        return (
-            <form className="filter__container">
-                <input type="checkbox" name="equalSplit" value={this.props.equalSplit} onChange={this.handleCheckboxChange} /> 
-                <label htmlFor="equalSplit">Draw 5 cards from each set</label>
-            </form>
-        ); */
     }
 
     render() {
