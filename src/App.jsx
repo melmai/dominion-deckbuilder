@@ -199,9 +199,25 @@ class App extends Component {
         const adventures = this.state.cardsBySet.adventures;
         const nocturne = this.state.cardsBySet.nocturne;
 
-        const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
-        const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
-        const Deckbuilder = () => <DeckBuilder cards={this.state.setCards} boxes={this.state.boxes} />;
+        const CardList = () => <CardLibrary 
+                                        boxes={this.state.boxes} 
+                                        dominion2={dominion2} 
+                                        intrigue2={intrigue2} 
+                                        adventures={adventures} 
+                                        nocturne={nocturne} 
+                                    />;
+        const DeckList = () => <DeckLibrary 
+                                        decks={this.state.decks} 
+                                        cards={this.state.setCards} 
+                                    />;
+        const Deckbuilder = () => <DeckBuilder 
+                                        cards={this.state.setCards} 
+                                        boxes={this.state.boxes} 
+                                        dominion2={dominion2} 
+                                        intrigue2={intrigue2}
+                                        adventures={adventures}
+                                        nocturne={nocturne}
+                                    />;
         
         return (
             <BrowserRouter>
