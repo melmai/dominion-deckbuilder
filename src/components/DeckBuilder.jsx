@@ -28,6 +28,12 @@ class DeckBuilder extends Component {
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+        this.findCardsByClass = this.findCardsByClass.bind(this);
+        this.removeCardsByClass = this.removeCardsByClass.bind(this);
+        this.findCardsByStrategy = this.findCardsByStrategy.bind(this);
+        this.removeCardsByStrategy = this.removeCardsByStrategy.bind(this);
+        this.drawCards = this.drawCards.bind(this);
+        this.findBigDraw = this.findBigDraw.bind(this);
 
     }
 
@@ -45,16 +51,56 @@ class DeckBuilder extends Component {
     // creates deck from setCards array (no filters)
     createDeck(options) {
         let cards = this.props.cards;
-        let deck = [];
 
+        let bigDraw = this.findBigDraw(cards);
+        console.log(bigDraw);
+
+        // create array of 10 unique cards
+        let deck = this.drawCards(10, cards);
+
+        this.setState({ deck: deck, showFilters: false });
+        return deck;
+    }    
+
+    // draw unique cards -- param: # cards to draw, array of cards
+    drawCards(number, cards) {
+        let deck = [];
         do {
             const index = Math.round(Math.random() * (cards.length - 1));
             const card = cards[index];
             if (!deck.includes(card)) deck.push(card);
-        } while (deck.length < 10)
-
-        this.setState({ deck: deck, showFilters: false });
+        } while (deck.length < number)
         return deck;
+    }
+
+    // filter card array by card class/type
+    findCardsByClass(array, category) {
+        return array.filter(card => card.class.includes(category));
+    }
+    
+    // remove cards by class/type
+    removeCardsByClass(array, category) {
+        return array.filter(card => !card.class.includes(category));
+    }
+    
+    // filter card array by strategy
+    findCardsByStrategy(array, strategy) {
+        return array.filter(card => card.strategy[strategy]);
+    }
+    
+    // remove cards by strategy
+    removeCardsByStrategy(array, strategy) {
+        return array.filter(card => !card.strategy[strategy]);
+    }
+
+    // find cards with large draw abilities
+    findBigDraw(array) {
+        let bigDraw = [];
+        array.forEach(card => {
+            if (!card.abilities || !card.abilities.card) return;
+            if (card.abilities.card > 1) bigDraw.push(card); 
+        });
+        return bigDraw;
     }
 
     render() {

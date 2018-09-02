@@ -15,11 +15,6 @@ export const dominion = [
         label: 'At least 1 card that allows drawing >2 cards'
     },
     {
-        name: 'attack',
-        key: 'attack',
-        label: 'At least 1 Attack Card'
-    },
-    {
         name: 'victory',
         key: 'victory',
         label: 'At least 1 Victory Card'
@@ -28,6 +23,11 @@ export const dominion = [
         name: 'no-victory',
         key: 'no-victory',
         label: 'No Victory Cards'
+    },
+    {
+        name: 'attack',
+        key: 'attack',
+        label: 'At least 1 Attack Card'
     },
     {
         name: 'no-attack',
