@@ -65,7 +65,7 @@ class DeckBuilder extends Component {
             const cardsByType = this.findCardsByClass(cards, category); // all cards of category
 
             if (options.get(include)) {
-                const card = this.drawCards(1, cardsByType);
+                const card = this.drawCards(1, cardsByType, deck);
                 deck = deck.concat(card);
             } else if (options.get(exclude)) {
                 cards = this.removeCardsByClass(cards, category);
@@ -101,14 +101,16 @@ class DeckBuilder extends Component {
                 default:
                     break;
             } 
+            console.log(card._id);
             cards = this.removeCard(cards, card._id);
+            console.log(cards);
             deck = deck.concat(card);
         });
 
         console.log(deck);
 
         // draw remaining cards and add to deck array
-        let remainder = this.drawCards((10 - deck.length), cards);
+        let remainder = this.drawCards((10 - deck.length), cards, deck);
         deck = deck.concat(remainder);
         console.log(deck);
         this.setState({ deck: deck, showFilters: false });
@@ -125,14 +127,15 @@ class DeckBuilder extends Component {
     }
 
     // draw unique cards -- param: # cards to draw, array of cards
-    drawCards(number, cards) {
-        let deck = [];
+    drawCards(number, cards, deck = []) {
+        const current = deck;
+        let draw = [];
         do {
             const index = Math.round(Math.random() * (cards.length - 1));
             const card = cards[index];
-            if (!deck.includes(card)) deck.push(card);
-        } while (deck.length < number)
-        return deck;
+            if (!draw.includes(card) && !current.includes(card)) draw.push(card);
+        } while (draw.length < number)
+        return draw;
     }
 
     // filter card array by card class/type
