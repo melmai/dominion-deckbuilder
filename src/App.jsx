@@ -61,10 +61,7 @@ class App extends Component {
         fetch(`/api/decks/`)
             .then(response => response.json())
             .then(responseData => {
-                this.setState({
-                    decks: responseData
-                });
-                console.log(this.state.deckCards);
+                this.setState({ decks: responseData });
             })
             .catch((err) => {
                 console.log('Fetching and parsing deck data error', err)

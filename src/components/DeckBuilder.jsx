@@ -34,7 +34,8 @@ class DeckBuilder extends Component {
         this.removeCardsByStrategy = this.removeCardsByStrategy.bind(this);
         this.drawCards = this.drawCards.bind(this);
         this.findCardsByAbility = this.findCardsByAbility.bind(this);
-
+        this.removeCard = this.removeCard.bind(this);
+        this.drawUnique = this.drawUnique.bind(this);
     }
 
     handleCheckboxChange(event) {
@@ -51,6 +52,7 @@ class DeckBuilder extends Component {
     // creates deck from setCards array (no filters)
     createDeck() {
         let cards = this.props.cards; // all cards
+        console.log(cards);
         const options = this.state.checked; // map
         console.log(options);
         let deck = [];
@@ -73,12 +75,54 @@ class DeckBuilder extends Component {
             }
         });
 
+        // add card by strategy
+        const benefits = ['actions', 'buys', 'cards', 'trash'];
+
+        benefits.forEach(benefit => {
+            if (!options.get(benefit)) return;
+            let card;
+            switch (benefit) {
+                case 'actions':
+                    const actions = this.findCardsByAbility(cards, 'action', 1);
+                    card = this.drawUnique(actions, deck);
+                    break;
+                case 'buys':
+                    const buys = this.findCardsByAbility(cards, 'buy', 0);
+                    card = this.drawUnique(buys, deck);
+                    break;
+                case 'cards':
+                    const bigDraw = this.findCardsByAbility(cards, 'card', 1);
+                    card = this.drawUnique(bigDraw, deck);
+                    break;
+                case 'trash':
+                    const trash = this.findCardsByStrategy(cards, 'trash', 0);
+                    card = this.drawUnique(trash, deck);
+                    break;
+                default:
+                    break;
+            } 
+            cards = this.removeCard(cards, card._id);
+            deck = deck.concat(card);
+        });
+
+        console.log(deck);
+
         // draw remaining cards and add to deck array
         let remainder = this.drawCards((10 - deck.length), cards);
         deck = deck.concat(remainder);
+        console.log(deck);
         this.setState({ deck: deck, showFilters: false });
         return deck;
     }    
+
+    // draw unique card
+    drawUnique(cards, deck) {
+        let card;
+        do {
+            card = this.drawCards(1, cards);
+        } while (deck.includes(card));
+        return card;
+    }
 
     // draw unique cards -- param: # cards to draw, array of cards
     drawCards(number, cards) {
@@ -116,9 +160,14 @@ class DeckBuilder extends Component {
         let cards = [];
         array.forEach(card => {
             if (!card.abilities || !card.abilities[ability]) return;
-            if (card.abilities.card > number) cards.push(card); 
+            if (card.abilities[ability] > number) cards.push(card); 
         });
         return cards;
+    }
+
+    // remove card by id
+    removeCard(array, id) {
+        return array.filter(card => card._id !== id);
     }
 
     render() {

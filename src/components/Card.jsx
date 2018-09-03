@@ -78,7 +78,7 @@ const Card = (props) => {
                 let processedArray = [];
                 if (item.includes('[M]')) processedArray = processMoney(item);
                 if (item.includes('[VP]')) console.log(`VP: ${item}`);
-                console.log(processedArray);
+                //console.log(processedArray);
             }
             return (
                 <div className="card__text">
