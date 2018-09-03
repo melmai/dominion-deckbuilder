@@ -5,9 +5,8 @@ import DeckLibrary from './components/DeckLibrary';
 import BoxContainer from './components/BoxContainer';
 import Box from './components/Box';
 import ChartContainer from './components/ChartContainer';
-import Button from './components/basic/Button';
-import Filter from './components/Filter';
-import Result from './components/Result';
+//import Button from './components/basic/Button';
+import DeckBuilder from './components/DeckBuilder';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'; 
 
 class App extends Component {
@@ -17,18 +16,13 @@ class App extends Component {
         // set state
         this.state = {
             boxes: [],
-            filters: {},
             cards: [],
             cardsBySet: { dominion2: [], intrigue2: [], adventures: [], nocturne: [] },
             class: { type: [], count: [] },
             cost: { type: [], count: [] },
             strategy: { type: [], count: [] },
             setCards: [],
-            filteredCards: [],
-            showList: false,
-            showFilters: true,
             decks: [],
-            deck: []
         };
 
         this.filterCardsBySet = this.filterCardsBySet.bind(this);
@@ -38,8 +32,6 @@ class App extends Component {
         this.sortCardsBySet = this.sortCardsBySet.bind(this);
         this.calcData = this.calcData.bind(this);
         this.countInArray = this.countInArray.bind(this);
-        this.createDeck = this.createDeck.bind(this);
-        this.toggleFilters = this.toggleFilters.bind(this);
     }
 
     componentDidMount() {
@@ -195,52 +187,34 @@ class App extends Component {
         }
         return cards;
     }
-
-    // creates deck from setCards array (no filters)
-    createDeck() {
-        let cards = this.state.setCards;
-        let deck = [];
-
-        do {
-            const index = Math.round(Math.random() * (cards.length-1));
-            const card = cards[index];
-            if (!deck.includes(card)) deck.push(card);
-        } while (deck.length < 10)
-
-        this.setState({ deck: deck, showFilters: false });
-        return deck;
-    }
-
-      toggleFilters() {
-          this.setState(prevState => ({ showFilters: !prevState.showFilters }));
-      }
-
-    // TODO: function to set filters
-    setFilters(){}
     
     render () {
         // if no sets specified, use all cards
         const cards = this.state.setCards ? this.state.setCards : this.state.cards;
-        const deck = this.state.deck;
         const dominion2 = this.state.cardsBySet.dominion2;
         const intrigue2 = this.state.cardsBySet.intrigue2;
         const adventures = this.state.cardsBySet.adventures;
         const nocturne = this.state.cardsBySet.nocturne;
 
-        const CardList = () => <CardLibrary boxes={this.state.boxes} dominion2={dominion2} intrigue2={intrigue2} adventures={adventures} nocturne={nocturne} />;
-        const DeckList = () => <DeckLibrary decks={this.state.decks} cards={this.state.setCards} />;
-        const DeckBuilder = () => {
-            let result = (deck.length > 0) ? <Result cards={deck} /> : 'Select Filters and/or Expansions';
-            let filter = this.state.showFilters ? <Filter /> : null;
-
-            return (
-                <section className="setup__container">
-                    <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Show Setup' : 'Show Filters'}</Button>
-                    {filter}
-                    {result}
-                </section>
-            );                
-        }
+        const CardList = () => <CardLibrary 
+                                        boxes={this.state.boxes} 
+                                        dominion2={dominion2} 
+                                        intrigue2={intrigue2} 
+                                        adventures={adventures} 
+                                        nocturne={nocturne} 
+                                    />;
+        const DeckList = () => <DeckLibrary 
+                                        decks={this.state.decks} 
+                                        cards={this.state.setCards} 
+                                    />;
+        const Deckbuilder = () => <DeckBuilder 
+                                        cards={this.state.setCards} 
+                                        boxes={this.state.boxes} 
+                                        dominion2={dominion2} 
+                                        intrigue2={intrigue2}
+                                        adventures={adventures}
+                                        nocturne={nocturne}
+                                    />;
         
         return (
             <BrowserRouter>
@@ -257,12 +231,11 @@ class App extends Component {
                                 <Box name="Intrigue2" label="Intrigue (2nd edition)" toggleBox={this.toggleBox} />
                                 <Box name="Adventures" label="Adventures" toggleBox={this.toggleBox} />
                                 <Box name="Nocturne" label="Nocturne" toggleBox={this.toggleBox} /> 
-                                <Button className="btn btn__create_deck" onClick={(e) => this.createDeck(e)}>Create Deck</Button>
                             </BoxContainer>
                             <ChartContainer cards={cards} classData={this.state.class} costData={this.state.cost} strategyData={this.state.strategy} />
                         </section>
                         <Switch>
-                            <Route path="/" exact component={DeckBuilder} />
+                            <Route path="/" exact component={Deckbuilder} />
                             <Route path="/cards" component={CardList} />
                             <Route path="/decks" component={DeckList} />
                         </Switch>
