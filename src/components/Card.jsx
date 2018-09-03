@@ -1,11 +1,11 @@
 import React from 'react';
 import Icon from './basic/Icon';
 
-const processMoney = text => {
+/* const processMoney = text => {
     const moneyString = /(\d)\s\[M\]/;
     const strings = text.split(moneyString);
     return strings;
-}
+} */
 
 const Coin = (props) => {
     return (
@@ -74,12 +74,12 @@ const Card = (props) => {
         //const victory = victoryString.test(processedText);
         if (text.includes('//')) {
             const textArray = text.split('//');
-            for (const item of textArray) {
+            /* for (const item of textArray) {
                 let processedArray = [];
                 if (item.includes('[M]')) processedArray = processMoney(item);
                 if (item.includes('[VP]')) console.log(`VP: ${item}`);
                 //console.log(processedArray);
-            }
+            } */
             return (
                 <div className="card__text">
                     <span className="card__text-value">{textArray[0]}</span>
