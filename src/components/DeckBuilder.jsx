@@ -33,7 +33,7 @@ class DeckBuilder extends Component {
         this.findCardsByStrategy = this.findCardsByStrategy.bind(this);
         this.removeCardsByStrategy = this.removeCardsByStrategy.bind(this);
         this.drawCards = this.drawCards.bind(this);
-        this.findBigDraw = this.findBigDraw.bind(this);
+        this.findCardsByAbility = this.findCardsByAbility.bind(this);
 
     }
 
@@ -49,14 +49,37 @@ class DeckBuilder extends Component {
     }
 
     // creates deck from setCards array (no filters)
-    createDeck(options) {
+    createDeck() {
         let cards = this.props.cards;
+        const options = this.state.checked;
+        console.log(options);
+        let deck = [];
 
-        let bigDraw = this.findBigDraw(cards);
-        console.log(bigDraw);
+/*         let victory = this.findCardsByClass(cards, 'Victory');
+        console.log(victory);
+        let trash = this.findCardsByStrategy(cards, 'trash');
+        console.log(trash); */
 
+        const categories = ['Attack', 'Reaction', 'Victory', 'Treasure', 'Traveller', 'Fate', 'Doom', 'Night', 'Duration', 'Reserve'];
+        categories.forEach(category => {
+            const type = category.toLowerCase();
+            if (!options.get(type)) return;
+            const cardsByType = this.findCardsByClass(cards, category);
+            const card = this.drawCards(1, cardsByType);
+            console.log(type);
+            console.log(cardsByType);
+            console.log(card);
+            deck = deck.concat(card);
+        });
+        console.log(deck);
+
+        let remainder = this.drawCards((10 - deck.length), cards);
+        console.log(remainder);
+        deck = deck.concat(remainder);
+        console.log(deck);
+ 
         // create array of 10 unique cards
-        let deck = this.drawCards(10, cards);
+        //let deck = this.drawCards(10, cards);
 
         this.setState({ deck: deck, showFilters: false });
         return deck;
@@ -94,13 +117,13 @@ class DeckBuilder extends Component {
     }
 
     // find cards with large draw abilities
-    findBigDraw(array) {
-        let bigDraw = [];
+    findCardsByAbility(array, ability, number) {
+        let cards = [];
         array.forEach(card => {
-            if (!card.abilities || !card.abilities.card) return;
-            if (card.abilities.card > 1) bigDraw.push(card); 
+            if (!card.abilities || !card.abilities[ability]) return;
+            if (card.abilities.card > number) cards.push(card); 
         });
-        return bigDraw;
+        return cards;
     }
 
     render() {
