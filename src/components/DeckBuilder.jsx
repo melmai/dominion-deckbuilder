@@ -52,16 +52,25 @@ class DeckBuilder extends Component {
     createDeck() {
         let cards = this.props.cards; // all cards
         const options = this.state.checked; // map
+        console.log(options);
         let deck = [];
 
-        // card classes
+        // add or exclude cards by class
         const categories = ['Attack', 'Reaction', 'Victory', 'Treasure', 'Traveller', 'Fate', 'Doom', 'Night', 'Duration', 'Reserve'];
         categories.forEach(category => {
-            const type = category.toLowerCase(); // options are lowercase strings
-            if (!options.get(type)) return;
-            const cardsByType = this.findCardsByClass(cards, category);
-            const card = this.drawCards(1, cardsByType);
-            deck = deck.concat(card);
+            const include = category.toLowerCase(); // include >1 card by class
+            const exclude = `no-${include}`; // exclude cards by class
+            const cardsByType = this.findCardsByClass(cards, category); // all cards of category
+
+            if (options.get(include)) {
+                const card = this.drawCards(1, cardsByType);
+                deck = deck.concat(card);
+            } else if (options.get(exclude)) {
+                cards = this.removeCardsByClass(cards, category);
+                console.log(cards);
+            } else {
+                return;
+            }
         });
 
         // draw remaining cards and add to deck array
