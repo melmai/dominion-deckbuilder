@@ -50,37 +50,23 @@ class DeckBuilder extends Component {
 
     // creates deck from setCards array (no filters)
     createDeck() {
-        let cards = this.props.cards;
-        const options = this.state.checked;
-        console.log(options);
+        let cards = this.props.cards; // all cards
+        const options = this.state.checked; // map
         let deck = [];
 
-/*         let victory = this.findCardsByClass(cards, 'Victory');
-        console.log(victory);
-        let trash = this.findCardsByStrategy(cards, 'trash');
-        console.log(trash); */
-
+        // card classes
         const categories = ['Attack', 'Reaction', 'Victory', 'Treasure', 'Traveller', 'Fate', 'Doom', 'Night', 'Duration', 'Reserve'];
         categories.forEach(category => {
-            const type = category.toLowerCase();
+            const type = category.toLowerCase(); // options are lowercase strings
             if (!options.get(type)) return;
             const cardsByType = this.findCardsByClass(cards, category);
             const card = this.drawCards(1, cardsByType);
-            console.log(type);
-            console.log(cardsByType);
-            console.log(card);
             deck = deck.concat(card);
         });
-        console.log(deck);
 
+        // draw remaining cards and add to deck array
         let remainder = this.drawCards((10 - deck.length), cards);
-        console.log(remainder);
         deck = deck.concat(remainder);
-        console.log(deck);
- 
-        // create array of 10 unique cards
-        //let deck = this.drawCards(10, cards);
-
         this.setState({ deck: deck, showFilters: false });
         return deck;
     }    
