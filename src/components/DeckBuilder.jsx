@@ -60,9 +60,9 @@ class DeckBuilder extends Component {
         // add or exclude cards by class
         const categories = ['Attack', 'Reaction', 'Victory', 'Treasure', 'Traveller', 'Fate', 'Doom', 'Night', 'Duration', 'Reserve'];
         categories.forEach(category => {
-            const include = category.toLowerCase(); // include >1 card by class
-            const exclude = `no-${include}`; // exclude cards by class
-            const cardsByType = this.findCardsByClass(cards, category); // all cards of category
+            const include = category.toLowerCase(), // include >1 card by class
+                  exclude = `no-${include}`, // exclude cards by class
+                  cardsByType = this.findCardsByClass(cards, category); // all cards of category
 
             if (options.get(include)) {
                 const card = this.drawCards(1, cardsByType, deck);
@@ -74,9 +74,54 @@ class DeckBuilder extends Component {
             }
         });
 
-        // add card by strategy
-        const benefits = ['actions', 'buys', 'cards', 'trash'];
+        // filter cards by attack preferences
+        const reactions = [
+            'attack-immunity', // if attack card, include immunity
+            'attack-reaction', // if attack card, include general rxn
+            'no-attack-reaction' // if no attack, no rxn
+        ];
 
+        reactions.forEach(reaction => {
+            if(!options.get(reaction)) return;
+            let attackExists = deck.find(card => card.class.includes('Attack')); //
+            let rxnExists = deck.find(card => card.class.includes('Reaction'));
+            const rxn = this.findCardsByClass(cards, 'Reaction');
+            const imm = this.findCardsByStrategy(rxn, 'immunity');
+            let card;
+            switch (reaction) {
+                case 'attack-immunity':
+                    if (attackExists && deck.includes(imm)) return;
+                    card = this.drawUnique(imm, deck);
+                    console.log(card);
+                    deck.push(card);
+                    cards = this.removeCard(cards, card._id); 
+                    console.log(cards);
+                    break;
+                case 'attack-reaction':
+                    if (attackExists && rxnExists) return;
+                    card = this.drawUnique(rxn, deck);
+                    deck.push(card);
+                    cards = this.removeCard(cards, card._id);
+                    break;
+                case 'no-attack-reaction':
+                    if (attackExists && !rxnExists) return;
+                    rxn.forEach(card => {
+                        cards = this.removeCard(cards, card._id);
+                        deck = this.removeCard(deck, card._id);
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // add card by strategy
+        const benefits = [
+            'actions', // +2 Actions
+            'buys', // +1 Buy
+            'cards', // +2 Cards
+            'trash' // Trash any card
+        ];
         benefits.forEach(benefit => {
             if (!options.get(benefit)) return;
             let card;
@@ -101,7 +146,6 @@ class DeckBuilder extends Component {
                     break;
             } 
             cards = this.removeCard(cards, card._id);
-            console.log(cards);
             deck = deck.concat(card);
         });
 
@@ -110,6 +154,8 @@ class DeckBuilder extends Component {
         // draw remaining cards and add to deck array
         let remainder = this.drawCards((10 - deck.length), cards, deck);
         deck = deck.concat(remainder);
+        console.log(remainder);
+        console.log(deck);
         this.setState({ deck: deck, showFilters: false });
         return deck;
     }    
