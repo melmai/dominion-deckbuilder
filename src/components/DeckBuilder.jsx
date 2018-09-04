@@ -100,7 +100,8 @@ class DeckBuilder extends Component {
                 default:
                     break;
             } 
-            cards = this.removeCard(cards, card[0]._id);
+            cards = this.removeCard(cards, card._id);
+            console.log(cards);
             deck = deck.concat(card);
         });
 
@@ -119,7 +120,7 @@ class DeckBuilder extends Component {
         do {
             card = this.drawCards(1, cards);
         } while (deck.includes(card));
-        return card;
+        return card[0];
     }
 
     // draw unique cards -- param: # cards to draw, array of cards
