@@ -69,7 +69,6 @@ class DeckBuilder extends Component {
                 deck = deck.concat(card);
             } else if (options.get(exclude)) {
                 cards = this.removeCardsByClass(cards, category);
-                console.log(cards);
             } else {
                 return;
             }
@@ -101,9 +100,7 @@ class DeckBuilder extends Component {
                 default:
                     break;
             } 
-            console.log(card._id);
-            cards = this.removeCard(cards, card._id);
-            console.log(cards);
+            cards = this.removeCard(cards, card[0]._id);
             deck = deck.concat(card);
         });
 
@@ -112,7 +109,6 @@ class DeckBuilder extends Component {
         // draw remaining cards and add to deck array
         let remainder = this.drawCards((10 - deck.length), cards, deck);
         deck = deck.concat(remainder);
-        console.log(deck);
         this.setState({ deck: deck, showFilters: false });
         return deck;
     }    
@@ -169,7 +165,7 @@ class DeckBuilder extends Component {
     }
 
     // remove card by id
-    removeCard(array, id) {
+    removeCard(array, id) { 
         return array.filter(card => card._id !== id);
     }
 
