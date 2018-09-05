@@ -36,6 +36,7 @@ class DeckBuilder extends Component {
         this.findCardsByAbility = this.findCardsByAbility.bind(this);
         this.removeCard = this.removeCard.bind(this);
         this.drawUnique = this.drawUnique.bind(this);
+        this.pickCard = this.pickCard.bind(this);
     }
 
     handleCheckboxChange(event) {
@@ -131,36 +132,16 @@ class DeckBuilder extends Component {
         ];
         benefits.forEach(benefit => {
             if (!options.get(benefit)) return;
-            let card, supply, exists;
-            switch (benefit) {
-                case 'actions':
-                    exists = this.findCardsByAbility(deck, 'action', 1).length > 0 ? true : false;
-                    if (exists) return;
-                    supply = this.findCardsByAbility(cards, 'action', 1);
-                    card = this.drawUnique(supply, deck);
-                    break;
-                case 'buys':
-                    exists = this.findCardsByAbility(deck, 'buy', 0).length > 0 ? true : false;
-                    if (exists) return;
-                    supply = this.findCardsByAbility(cards, 'buy', 0);
-                    card = this.drawUnique(supply, deck);
-                    break;
-                case 'cards':
-                    exists = this.findCardsByAbility(deck, 'card', 1).length > 0 ? true : false;
-                    if (exists) return;
-                    supply = this.findCardsByAbility(cards, 'card', 1);
-                    card = this.drawUnique(supply, deck);
-                    break;
-                case 'trash':
-                    exists = this.findCardsByStrategy(deck, 'trash').length > 0 ? true : false;
-                    if (!exists) return;
-                    supply = this.findCardsByStrategy(cards, 'trash');
-                    card = this.drawUnique(supply, deck);
-                    break;
-                default:
-                    break;
-            } 
-            console.log(benefit, exists);
+            let card;
+            const ability = benefit.substring(0, benefit.length - 1);
+            if (benefit === 'trash') {
+                card = this.pickCard(deck, cards, benefit);
+            } else if (benefit === 'buys') {
+                card = this.pickCard(deck, cards, ability);
+            } else {
+                card = this.pickCard(deck, cards, ability, 1);
+            }
+            if (!card) return; 
             cards = this.removeCard(cards, card._id);
             deck = deck.concat(card);
         });
@@ -174,6 +155,21 @@ class DeckBuilder extends Component {
         this.setState({ deck: deck, showFilters: false });
         return deck;
     }    
+
+    // pick unique card by ability
+    pickCard(deck, cards, ability, number = 0) {
+        let exists, supply;
+        if (ability === 'trash') {
+            exists = this.findCardsByStrategy(deck, ability).length > 0 ? true : false;
+            if (!exists) return;
+            supply = this.findCardsByStrategy(cards, ability);
+        } else {
+            exists = this.findCardsByAbility(deck, ability, number).length > 0 ? true : false;
+            if (exists) return;
+            supply = this.findCardsByAbility(cards, ability, number);
+        }
+        return this.drawUnique(supply, deck);
+    }
 
     // draw unique card
     drawUnique(cards, deck) {
