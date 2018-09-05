@@ -64,10 +64,5 @@ export const dominion = [
         key: 'trash',
         label: 'At least 1 card with trash ability',
     },
-    {
-        name: 'no-trash',
-        key: 'no-trash',
-        label: 'Exclude trash abilities',
-    },
 ];
 
