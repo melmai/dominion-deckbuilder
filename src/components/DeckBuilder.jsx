@@ -131,31 +131,31 @@ class DeckBuilder extends Component {
         ];
         benefits.forEach(benefit => {
             if (!options.get(benefit)) return;
-            let card, exists;
+            let card, supply, exists;
             switch (benefit) {
                 case 'actions':
                     exists = this.findCardsByAbility(deck, 'action', 1).length > 0 ? true : false;
                     if (exists) return;
-                    const actions = this.findCardsByAbility(cards, 'action', 1);
-                    card = this.drawUnique(actions, deck);
+                    supply = this.findCardsByAbility(cards, 'action', 1);
+                    card = this.drawUnique(supply, deck);
                     break;
                 case 'buys':
                     exists = this.findCardsByAbility(deck, 'buy', 0).length > 0 ? true : false;
                     if (exists) return;
-                    const buys = this.findCardsByAbility(cards, 'buy', 0);
-                    card = this.drawUnique(buys, deck);
+                    supply = this.findCardsByAbility(cards, 'buy', 0);
+                    card = this.drawUnique(supply, deck);
                     break;
                 case 'cards':
                     exists = this.findCardsByAbility(deck, 'card', 1).length > 0 ? true : false;
                     if (exists) return;
-                    const bigDraw = this.findCardsByAbility(cards, 'card', 1);
-                    card = this.drawUnique(bigDraw, deck);
+                    supply = this.findCardsByAbility(cards, 'card', 1);
+                    card = this.drawUnique(supply, deck);
                     break;
                 case 'trash':
                     exists = this.findCardsByStrategy(deck, 'trash').length > 0 ? true : false;
                     if (!exists) return;
-                    const trash = this.findCardsByStrategy(cards, 'trash');
-                    card = this.drawUnique(trash, deck);
+                    supply = this.findCardsByStrategy(cards, 'trash');
+                    card = this.drawUnique(supply, deck);
                     break;
                 default:
                     break;
