@@ -52,7 +52,6 @@ class DeckBuilder extends Component {
     // creates deck from setCards array (no filters)
     createDeck() {
         let cards = this.props.cards; // all cards
-        console.log(cards);
         const options = this.state.checked; // map
         console.log(options);
         let deck = [];
@@ -74,7 +73,17 @@ class DeckBuilder extends Component {
             }
         });
 
-        // filter cards by attack preferences
+        // filter cards by curse preferences
+        const cursesExist = this.findCardsByStrategy(deck, 'curse').length > 0 ? true : false;
+        const curses = this.findCardsByStrategy(cards, 'curse');
+        if (options.get('curses') && !cursesExist) {
+            const curse = this.drawUnique(curses, deck);
+            deck.push(curse);
+        } else if (options.get('no-curses')) {
+            cards = this.removeCardsByStrategy(cards, 'curse');
+        }
+
+        // filter cards by reaction preferences
         const reactions = [
             'attack-immunity', // if attack card, include immunity
             'attack-reaction', // if attack card, include general rxn
@@ -83,19 +92,17 @@ class DeckBuilder extends Component {
 
         reactions.forEach(reaction => {
             if(!options.get(reaction)) return;
-            let attackExists = deck.find(card => card.class.includes('Attack')); //
-            let rxnExists = deck.find(card => card.class.includes('Reaction'));
-            const rxn = this.findCardsByClass(cards, 'Reaction');
-            const imm = this.findCardsByStrategy(rxn, 'immunity');
+            let attackExists = deck.find(card => card.class.includes('Attack')); // attack card in deck
+            let rxnExists = deck.find(card => card.class.includes('Reaction')); // rxn in deck
+            const rxn = this.findCardsByClass(cards, 'Reaction'); // array of rxn cards in supply
+            const imm = this.findCardsByStrategy(rxn, 'immunity'); // array of immunity cards in supply
             let card;
             switch (reaction) {
                 case 'attack-immunity':
                     if (attackExists && deck.includes(imm)) return;
                     card = this.drawUnique(imm, deck);
-                    console.log(card);
                     deck.push(card);
                     cards = this.removeCard(cards, card._id); 
-                    console.log(cards);
                     break;
                 case 'attack-reaction':
                     if (attackExists && rxnExists) return;
@@ -124,27 +131,36 @@ class DeckBuilder extends Component {
         ];
         benefits.forEach(benefit => {
             if (!options.get(benefit)) return;
-            let card;
+            let card, exists;
             switch (benefit) {
                 case 'actions':
+                    exists = this.findCardsByAbility(deck, 'action', 1).length > 0 ? true : false;
+                    if (exists) return;
                     const actions = this.findCardsByAbility(cards, 'action', 1);
                     card = this.drawUnique(actions, deck);
                     break;
                 case 'buys':
+                    exists = this.findCardsByAbility(deck, 'buy', 0).length > 0 ? true : false;
+                    if (exists) return;
                     const buys = this.findCardsByAbility(cards, 'buy', 0);
                     card = this.drawUnique(buys, deck);
                     break;
                 case 'cards':
+                    exists = this.findCardsByAbility(deck, 'card', 1).length > 0 ? true : false;
+                    if (exists) return;
                     const bigDraw = this.findCardsByAbility(cards, 'card', 1);
                     card = this.drawUnique(bigDraw, deck);
                     break;
                 case 'trash':
-                    const trash = this.findCardsByStrategy(cards, 'trash', 0);
+                    exists = this.findCardsByStrategy(deck, 'trash').length > 0 ? true : false;
+                    if (!exists) return;
+                    const trash = this.findCardsByStrategy(cards, 'trash');
                     card = this.drawUnique(trash, deck);
                     break;
                 default:
                     break;
             } 
+            console.log(benefit, exists);
             cards = this.removeCard(cards, card._id);
             deck = deck.concat(card);
         });
@@ -155,7 +171,6 @@ class DeckBuilder extends Component {
         let remainder = this.drawCards((10 - deck.length), cards, deck);
         deck = deck.concat(remainder);
         console.log(remainder);
-        console.log(deck);
         this.setState({ deck: deck, showFilters: false });
         return deck;
     }    
