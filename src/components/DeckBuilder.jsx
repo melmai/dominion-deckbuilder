@@ -40,9 +40,7 @@ class DeckBuilder extends Component {
     }
 
     handleCheckboxChange(event) {
-        const target = event.target;
-        const name = target.name;
-        const isChecked = target.checked;
+        const target = event.target, name = target.name, isChecked = target.checked;
         this.setState(prevState => ({ checked: prevState.checked.set(name, isChecked) }));
     }
 
@@ -64,9 +62,9 @@ class DeckBuilder extends Component {
                   exclude = `no-${include}`, // exclude cards by class
                   cardsByType = this.findCardsByClass(cards, category); // all cards of category
 
-            if (options.get(include)) {
+            if (options.get(include)) { // if type required, find and add card
                 const card = this.drawCards(1, cardsByType, deck);
-                deck = deck.concat(card);
+                deck = deck.concat(card); 
             } else if (options.get(exclude)) {
                 cards = this.removeCardsByClass(cards, category);
             } else {
@@ -93,11 +91,13 @@ class DeckBuilder extends Component {
 
         reactions.forEach(reaction => {
             if(!options.get(reaction)) return;
-            let attackExists = deck.find(card => card.class.includes('Attack')); // attack card in deck
-            let rxnExists = deck.find(card => card.class.includes('Reaction')); // rxn in deck
-            const rxn = this.findCardsByClass(cards, 'Reaction'); // array of rxn cards in supply
-            const imm = this.findCardsByStrategy(rxn, 'immunity'); // array of immunity cards in supply
+            let attackExists = deck.find(card => card.class.includes('Attack')), // attack card in deck
+                rxnExists = deck.find(card => card.class.includes('Reaction')); // rxn in deck
             let card;
+            const rxn = this.findCardsByClass(cards, 'Reaction'), // array of rxn cards in supply
+                  imm = this.findCardsByStrategy(cards, 'immunity'); // array of immunity cards in supply
+            console.log(rxn);
+
             switch (reaction) {
                 case 'attack-immunity':
                     if (attackExists && deck.includes(imm)) return;
@@ -132,8 +132,9 @@ class DeckBuilder extends Component {
         ];
         benefits.forEach(benefit => {
             if (!options.get(benefit)) return;
-            let card;
             const ability = benefit.substring(0, benefit.length - 1);
+            let card;
+
             if (benefit === 'trash') {
                 card = this.pickCard(deck, cards, benefit);
             } else if (benefit === 'buys') {
@@ -149,7 +150,7 @@ class DeckBuilder extends Component {
         console.log(deck);
 
         // draw remaining cards and add to deck array
-        let remainder = this.drawCards((10 - deck.length), cards, deck);
+        const remainder = this.drawCards((10 - deck.length), cards, deck);
         deck = deck.concat(remainder);
         console.log(remainder);
         this.setState({ deck: deck, showFilters: false });
@@ -182,12 +183,11 @@ class DeckBuilder extends Component {
 
     // draw unique cards -- param: # cards to draw, array of cards
     drawCards(number, cards, deck = []) {
-        const current = deck;
         let draw = [];
         do {
-            const index = Math.round(Math.random() * (cards.length - 1));
-            const card = cards[index];
-            if (!draw.includes(card) && !current.includes(card)) draw.push(card);
+            const index = Math.round(Math.random() * (cards.length - 1)),
+                  card = cards[index];
+            if (!draw.includes(card) && !deck.includes(card)) draw.push(card);
         } while (draw.length < number)
         return draw;
     }
