@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { dominion } from './config/checkboxes';
+import { options, dominion, intrigue, adventures, nocturne } from './config/checkboxes';
 import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
 
-const Filter = (props) => (
+const Filter = (props) => ( // PROPS: boxes, options, checked, handleCheckboxChange()
     <form className="filter__container">
-        {dominion.map(item => (
+        {props.options.map(item => (
             <label key={item.key}>
                 <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
                 {item.label}
@@ -37,6 +37,7 @@ class DeckBuilder extends Component {
         this.removeCard = this.removeCard.bind(this);
         this.drawUnique = this.drawUnique.bind(this);
         this.pickCard = this.pickCard.bind(this);
+        this.getOptions = this.getOptions.bind(this);
     }
 
     handleCheckboxChange(event) {
@@ -227,9 +228,43 @@ class DeckBuilder extends Component {
         return array.filter(card => card._id !== id);
     }
 
+    getOptions(boxes) {
+        const dom = boxes.includes('Dominion2'),
+              int = boxes.includes('Intrigue2'),
+              adv = boxes.includes('Adventures'),
+              noc = boxes.includes('Nocturne');
+        let checkboxes;
+
+        if (dom && int) {
+            checkboxes = options.concat(dominion, intrigue); 
+        } else if (dom && adv) {
+            checkboxes = options.concat(dominion, adventures);
+        } else if (dom && noc) {
+            checkboxes = options.concat(dominion, nocturne);
+        } else if (int && adv) {
+            checkboxes = options.concat(intrigue, adventures);
+        } else if (int && noc) {
+            checkboxes = options.concat(intrigue, nocturne);
+        } else if (adv && noc) {
+            checkboxes = options.concat(adventures, nocturne);
+        } else if (dom) {
+            checkboxes = options.concat(dominion);
+        } else if (int) {
+            checkboxes = options.concat(intrigue);
+        } else if (noc) {
+            checkboxes = options.concat(nocturne);
+        } else {
+            checkboxes = options.concat(dominion, intrigue, adventures, nocturne);
+        }
+        console.log(checkboxes);
+        return checkboxes;
+    }
+
     render() {
+        let options = this.getOptions(this.props.boxes);
+        console.log(options);
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
-        let filter = this.state.showFilters ? <Filter boxes={this.props.boxes} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
+        let filter = this.state.showFilters ? <Filter options={options} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
