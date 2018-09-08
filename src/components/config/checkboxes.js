@@ -45,7 +45,7 @@ export const globalClasses = [
     },
 ];
 
-export const attack = [ // attack related
+export const curse = [ // attack related
     {
         name: 'curses',
         key: 'curses',
@@ -56,6 +56,9 @@ export const attack = [ // attack related
         key: 'no-curses',
         label: 'No Curses',
     },
+];
+
+export const reaction = [ // reactions
     {
         name: 'attack-reaction',
         key: 'attack-reaction',

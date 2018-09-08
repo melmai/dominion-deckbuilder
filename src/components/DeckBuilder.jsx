@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { globalAbilities, globalClasses, immunity, treasure, traveller, night, duration, reserve, attack } from './config/checkboxes';
+import { globalAbilities, globalClasses, immunity, treasure, traveller, night, duration, reserve, curse, reaction } from './config/checkboxes';
 import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
@@ -20,7 +20,8 @@ const Filter = props => ( // PROPS: boxes, options, checked, handleCheckboxChang
     <form className="filter__container">
         <FilterCategory title="Basic Abilities" options={props.abilities} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
         <FilterCategory title="Card Types" options={props.types} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
-        <FilterCategory title="Attack/Reaction" options={props.attack} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <FilterCategory title="Curses" options={props.curse} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <FilterCategory title="Attack/Reaction" options={props.reaction} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
     </form>
 );
 
@@ -253,15 +254,23 @@ class DeckBuilder extends Component {
 
             case 'types':
                 options = globalClasses;
-                if (int || adv || noc) options = options.concat(treasure);
-                if (adv) options = options.concat(traveller, reserve);
-                if (noc) options = options.concat(night);
-                if (adv || noc) options = options.concat(duration);    
+                if (boxes.length < 1) {
+                    options = options.concat(treasure, traveller, reserve, night, duration);
+                } else {
+                    if (int || adv || noc) options = options.concat(treasure);
+                    if (adv) options = options.concat(traveller, reserve);
+                    if (noc) options = options.concat(night);
+                    if (adv || noc) options = options.concat(duration);
+                }
                 break;
 
-            case 'attack':
-                options = attack;
-                if (dom || noc) options = immunity.concat(options);
+            case 'curse':
+                options = curse;
+                break;
+
+            case 'reaction':
+                options = reaction;
+                if (boxes.length < 1 || dom || noc) options = immunity.concat(reaction);
                 break;
         
             default:
@@ -274,10 +283,11 @@ class DeckBuilder extends Component {
     render() {
         let abilities = this.getOptions(this.props.boxes, 'abilities');
         let types = this.getOptions(this.props.boxes, 'types');
-        let attack = this.getOptions(this.props.boxes, 'attack');
+        let curse = this.getOptions(this.props.boxes, 'curse');
+        let reaction = this.getOptions(this.props.boxes, 'reaction');
 
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
-        let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} attack={attack} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
+        let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
