@@ -43,6 +43,9 @@ export const globalClasses = [
         key: 'no-attack',
         label: 'No Attack Cards'
     },
+];
+
+export const attack = [ // attack related
     {
         name: 'curses',
         key: 'curses',
@@ -57,7 +60,7 @@ export const globalClasses = [
         name: 'attack-reaction',
         key: 'attack-reaction',
         label: 'If Attack Card, include Reaction',
-    },
+    }, 
     {
         name: 'no-attack-reaction',
         key: 'no-attack-reaction',

@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
-import { globalAbilities, globalClasses, immunity, treasure, traveller, night, duration, reserve } from './config/checkboxes';
+import { globalAbilities, globalClasses, immunity, treasure, traveller, night, duration, reserve, attack } from './config/checkboxes';
 import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
 
-const Filter = (props) => ( // PROPS: boxes, options, checked, handleCheckboxChange()
-    <form className="filter__container">
+const FilterCategory = props => (
+    <section>
+        <h2>{props.title}</h2>
         {props.options.map(item => (
             <label key={item.key}>
                 <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
                 {item.label}
             </label>
         ))}
+    </section>
+);
+
+const Filter = props => ( // PROPS: boxes, options, checked, handleCheckboxChange()
+    <form className="filter__container">
+        <FilterCategory title="Basic Abilities" options={props.abilities} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <FilterCategory title="Card Types" options={props.types} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <FilterCategory title="Attack/Reaction" options={props.attack} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
     </form>
 );
 
@@ -230,31 +239,45 @@ class DeckBuilder extends Component {
         return array.filter(card => card._id !== id);
     }
 
-    getOptions(boxes) {
+    getOptions(boxes, category) {
         const dom = boxes.includes('Dominion2'),
               int = boxes.includes('Intrigue2'),
               adv = boxes.includes('Adventures'),
               noc = boxes.includes('Nocturne');
-        let abilities = globalAbilities,
-            types = globalClasses,
-            checkboxes = [];
+        let options;
 
-        if (dom || noc) abilities = abilities.concat(immunity);
-        
-        
-        if (int || adv || noc) types = types.concat(treasure);
-        if (adv) types = types.concat(traveller, reserve);
-        if (noc) types = types.concat(night);
-        if (adv || noc) types = types.concat(duration);
+        switch (category) {
+            case 'abilities':
+                options = globalAbilities;
+                break;
 
-        checkboxes = abilities.concat(types);
-        return checkboxes; 
+            case 'types':
+                options = globalClasses;
+                if (int || adv || noc) options = options.concat(treasure);
+                if (adv) options = options.concat(traveller, reserve);
+                if (noc) options = options.concat(night);
+                if (adv || noc) options = options.concat(duration);    
+                break;
+
+            case 'attack':
+                options = attack;
+                if (dom || noc) options = immunity.concat(options);
+                break;
+        
+            default:
+                break;
+        }
+
+        return options; 
     }
 
     render() {
-        let options = this.getOptions(this.props.boxes);
+        let abilities = this.getOptions(this.props.boxes, 'abilities');
+        let types = this.getOptions(this.props.boxes, 'types');
+        let attack = this.getOptions(this.props.boxes, 'attack');
+
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
-        let filter = this.state.showFilters ? <Filter options={options} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
+        let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} attack={attack} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
