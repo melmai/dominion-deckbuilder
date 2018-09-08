@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
-import { dominion } from './config/checkboxes';
+import { globalAbilities, globalClasses, immunity, treasure, traveller, night, duration, reserve, curse, reaction } from './config/checkboxes';
 import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
 
-const Filter = (props) => (
-    <form className="filter__container">
-        {dominion.map(item => (
+const FilterCategory = props => (
+    <section>
+        <h2>{props.title}</h2>
+        {props.options.map(item => (
             <label key={item.key}>
                 <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
                 {item.label}
             </label>
         ))}
+    </section>
+);
+
+const Filter = props => ( // PROPS: boxes, options, checked, handleCheckboxChange()
+    <form className="filter__container">
+        <FilterCategory title="Basic Abilities" options={props.abilities} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <FilterCategory title="Card Types" options={props.types} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <FilterCategory title="Curses" options={props.curse} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <FilterCategory title="Attack/Reaction" options={props.reaction} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
     </form>
 );
 
@@ -37,6 +47,7 @@ class DeckBuilder extends Component {
         this.removeCard = this.removeCard.bind(this);
         this.drawUnique = this.drawUnique.bind(this);
         this.pickCard = this.pickCard.bind(this);
+        this.getOptions = this.getOptions.bind(this);
     }
 
     handleCheckboxChange(event) {
@@ -54,6 +65,8 @@ class DeckBuilder extends Component {
         const options = this.state.checked; // map
         console.log(options);
         let deck = [];
+
+        console.log(this.findCardsByAbility(cards, 'buy', 0));
 
         // add or exclude cards by class
         const categories = ['Attack', 'Reaction', 'Victory', 'Treasure', 'Traveller', 'Fate', 'Doom', 'Night', 'Duration', 'Reserve'];
@@ -227,9 +240,54 @@ class DeckBuilder extends Component {
         return array.filter(card => card._id !== id);
     }
 
+    getOptions(boxes, category) {
+        const dom = boxes.includes('Dominion2'),
+              int = boxes.includes('Intrigue2'),
+              adv = boxes.includes('Adventures'),
+              noc = boxes.includes('Nocturne');
+        let options;
+
+        switch (category) {
+            case 'abilities':
+                options = globalAbilities;
+                break;
+
+            case 'types':
+                options = globalClasses;
+                if (boxes.length < 1) {
+                    options = options.concat(treasure, traveller, reserve, night, duration);
+                } else {
+                    if (int || adv || noc) options = options.concat(treasure);
+                    if (adv) options = options.concat(traveller, reserve);
+                    if (noc) options = options.concat(night);
+                    if (adv || noc) options = options.concat(duration);
+                }
+                break;
+
+            case 'curse':
+                options = curse;
+                break;
+
+            case 'reaction':
+                options = reaction;
+                if (boxes.length < 1 || dom || noc) options = immunity.concat(reaction);
+                break;
+        
+            default:
+                break;
+        }
+
+        return options; 
+    }
+
     render() {
+        let abilities = this.getOptions(this.props.boxes, 'abilities');
+        let types = this.getOptions(this.props.boxes, 'types');
+        let curse = this.getOptions(this.props.boxes, 'curse');
+        let reaction = this.getOptions(this.props.boxes, 'reaction');
+
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
-        let filter = this.state.showFilters ? <Filter boxes={this.props.boxes} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
+        let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
