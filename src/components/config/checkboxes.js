@@ -1,5 +1,5 @@
 
-export const options = [
+export const globalAbilities = [
     {
         name: 'actions',
         key: 'actions',
@@ -16,6 +16,14 @@ export const options = [
         label: 'At least 1 card that allows drawing >2 cards'
     },
     {
+        name: 'trash',
+        key: 'trash',
+        label: 'At least 1 card with trash ability',
+    },
+];
+
+export const globalClasses = [
+    {
         name: 'victory',
         key: 'victory',
         label: 'At least 1 Victory Card'
@@ -25,15 +33,6 @@ export const options = [
         key: 'no-victory',
         label: 'No Victory Cards'
     },
-    /* {
-        name: 'treasure', // TREASURES (int)
-        key: 'treasure',
-        label: 'At least 1 Treasure Card'
-    }, {
-        name: 'no-treasure',
-        key: 'no-treasure',
-        label: 'No Treasure Cards'
-    }, */
     {
         name: 'attack',
         key: 'attack',
@@ -54,11 +53,6 @@ export const options = [
         key: 'no-curses',
         label: 'No Curses',
     },
-    /* {
-        name: 'attack-immunity',    // IMMUNITY (dom, noc)
-        key: 'attack-immunity',
-        label: 'If Attack Card, include Immunity',
-    }, */
     {
         name: 'attack-reaction',
         key: 'attack-reaction',
@@ -69,14 +63,9 @@ export const options = [
         key: 'no-attack-reaction',
         label: 'If no Attack Card, exclude Reactions',
     },
-    {
-        name: 'trash',
-        key: 'trash',
-        label: 'At least 1 card with trash ability',
-    },
 ];
 
-export const dominion = [ // immunity
+export const immunity = [ // immunity
     {
         name: 'attack-immunity', // IMMUNITY (dom, noc)
         key: 'attack-immunity',
@@ -84,17 +73,65 @@ export const dominion = [ // immunity
     },
 ];
 
-export const intrigue = [ // treasure
+export const treasure = [ // treasure
     {
         name: 'treasure', // TREASURES (int)
         key: 'treasure',
         label: 'At least 1 Treasure Card'
-    }, {
+    }, 
+    {
         name: 'no-treasure',
         key: 'no-treasure',
         label: 'No Treasure Cards'
     },
 ];
 
-export const adventures = [];
-export const nocturne = [];
+export const traveller = [
+    {
+        name: 'traveller', // TRAVELLER (adv)
+        key: 'traveller',
+        label: 'At least 1 Traveller Card'
+    }, 
+    {
+        name: 'no-traveller',
+        key: 'no-traveller',
+        label: 'No Traveller Cards'
+    },
+];
+
+export const reserve = [
+    {
+        name: 'reserve', // RESERVE (adv)
+        key: 'reserve',
+        label: 'At least 1 Reserve Card'
+    }, 
+    {
+        name: 'no-reserve',
+        key: 'no-reserve',
+        label: 'No Reserve Cards'
+    },
+];
+
+export const night = [
+    {
+        name: 'night', // NIGHT (noc)
+        key: 'night',
+        label: 'At least 1 Night Card'
+    }, {
+        name: 'no-night',
+        key: 'no-night',
+        label: 'No Night Cards'
+    },
+];
+
+export const duration = [
+    {
+        name: 'duration', // DURATION (adv, noc)
+        key: 'duration',
+        label: 'At least 1 Duration Card'
+    }, {
+        name: 'no-duration',
+        key: 'no-duration',
+        label: 'No Duration Cards'
+    },
+];

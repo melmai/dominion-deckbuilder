@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { options, dominion, intrigue, adventures, nocturne } from './config/checkboxes';
+import { globalAbilities, globalClasses, immunity, treasure, traveller, night, duration, reserve } from './config/checkboxes';
 import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
@@ -55,6 +55,8 @@ class DeckBuilder extends Component {
         const options = this.state.checked; // map
         console.log(options);
         let deck = [];
+
+        console.log(this.findCardsByAbility(cards, 'buy', 0));
 
         // add or exclude cards by class
         const categories = ['Attack', 'Reaction', 'Victory', 'Treasure', 'Traveller', 'Fate', 'Doom', 'Night', 'Duration', 'Reserve'];
@@ -233,36 +235,24 @@ class DeckBuilder extends Component {
               int = boxes.includes('Intrigue2'),
               adv = boxes.includes('Adventures'),
               noc = boxes.includes('Nocturne');
-        let checkboxes;
+        let abilities = globalAbilities,
+            types = globalClasses,
+            checkboxes = [];
 
-        if (dom && int) {
-            checkboxes = options.concat(dominion, intrigue); 
-        } else if (dom && adv) {
-            checkboxes = options.concat(dominion, adventures);
-        } else if (dom && noc) {
-            checkboxes = options.concat(dominion, nocturne);
-        } else if (int && adv) {
-            checkboxes = options.concat(intrigue, adventures);
-        } else if (int && noc) {
-            checkboxes = options.concat(intrigue, nocturne);
-        } else if (adv && noc) {
-            checkboxes = options.concat(adventures, nocturne);
-        } else if (dom) {
-            checkboxes = options.concat(dominion);
-        } else if (int) {
-            checkboxes = options.concat(intrigue);
-        } else if (noc) {
-            checkboxes = options.concat(nocturne);
-        } else {
-            checkboxes = options.concat(dominion, intrigue, adventures, nocturne);
-        }
-        console.log(checkboxes);
-        return checkboxes;
+        if (dom || noc) abilities = abilities.concat(immunity);
+        
+        
+        if (int || adv || noc) types = types.concat(treasure);
+        if (adv) types = types.concat(traveller, reserve);
+        if (noc) types = types.concat(night);
+        if (adv || noc) types = types.concat(duration);
+
+        checkboxes = abilities.concat(types);
+        return checkboxes; 
     }
 
     render() {
         let options = this.getOptions(this.props.boxes);
-        console.log(options);
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
         let filter = this.state.showFilters ? <Filter options={options} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
