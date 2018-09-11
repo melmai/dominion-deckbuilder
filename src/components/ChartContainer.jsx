@@ -88,7 +88,6 @@ class ChartContainer extends Component {
                     <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('cost', e)}>Cost</Button>
                     <Button className="btn btn__select_chart" onClick={(e) => this.showGraph('strategy', e)}>Strategy</Button>
                 </section>
-                <h3 className="chart__card_count">{this.props.cards.length} cards remaining</h3>
             </section>
         );
     }

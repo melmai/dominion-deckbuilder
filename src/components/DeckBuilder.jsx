@@ -297,6 +297,7 @@ class DeckBuilder extends Component {
             <section className="setup__container">
                 <section className="setup__container--buttons">
                     <Button className="btn btn__create_deck" onClick={this.createDeck}>Create Deck</Button>
+                    <span className="chart__card_count">{this.props.cards.length} cards remaining</span>
                     <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
                 </section>
                 {filter}
