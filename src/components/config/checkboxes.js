@@ -13,7 +13,7 @@ export const globalAbilities = [
     {
         name: 'cards',
         key: 'cards',
-        label: 'At least 1 card that allows drawing >2 cards'
+        label: 'At least 1 card that draws >2 cards'
     },
     {
         name: 'trash',
