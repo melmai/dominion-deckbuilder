@@ -110,6 +110,7 @@ class App extends Component {
         const classData = this.calcData(types);
         const costData = this.calcData(costs);
         const strategyData = this.calcData(strategies);
+        console.log(classData);
 
         this.setState({
             setCards: cards,
@@ -120,7 +121,8 @@ class App extends Component {
     }
 
     calcData(array) {
-        const uniqueTypes = [...new Set(array)].sort();
+        let uniqueTypes = [...new Set(array)].sort();
+        if (uniqueTypes.includes('Action')) uniqueTypes.shift(); // removes Action data from card classes
         const quantities = [];
 
         uniqueTypes.forEach(type => {
