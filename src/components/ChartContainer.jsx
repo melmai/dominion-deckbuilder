@@ -9,13 +9,13 @@ class ChartContainer extends Component {
         super(props);
                 
         this.state = {
-            graph: 'class'
+            graph: 'class' // show class graph by default
         };
 
         this.showGraph = this.showGraph.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount() { // set font preferences
         Chart.defaults.global.defaultFontColor = '#ffffff';
         Chart.defaults.global.defaultFontFamily = 'Times New Roman';
         Chart.defaults.global.defaultFontSize = 9;
@@ -25,13 +25,13 @@ class ChartContainer extends Component {
     showGraph(graph, e) {
         e.preventDefault();
         switch (graph) {
-            case 'class':
+            case 'class': // show class graph
                 this.setState({ graph: 'class' });
                 break;
-            case 'cost':
+            case 'cost': // show cost graph
                 this.setState({ graph: 'cost' });
                 break;
-            case 'strategy':
+            case 'strategy': // show strategy graph
                 this.setState({ graph: 'strategy' });
                 break;
             default:
