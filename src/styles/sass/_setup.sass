@@ -3,16 +3,59 @@
     display: flex
     flex-direction: column
 
-.filter__container
+.setup__container--buttons
+    display: flex
+    justify-content: space-around
+    align-items: flex-start
 
-.deck__container
+.filter__container
+    display: flex
+    justify-content: space-between
+
+.filter__container--section // left/right containers
+    min-width: 45%
+
+.filter__category // filter categories
+    border: 1px solid black
+    padding: 3% 5%
+    display: flex
+    justify-content: flex-start
+    align-items: flex-start
+    margin-bottom: 30px
+
+.filter__image
+    width: 40px
+    margin-right: 20px
+
+.filter__options h2
+    @extend .display_font
+    margin-top: 0
+    margin-bottom: 10px
+    
+.filter__container--section:nth-child(2) label:nth-child(odd)
+    margin-bottom: 10px
+    
+label
+    display: block
+    line-height: 1.5
+
+.deck__container // result container
     display: grid
     grid-template-columns: repeat(5, 1fr)
     grid-gap: 5px
     gap: 5px
     padding: 5px
 
-.deck 
+.deck // result
     display: flex
     flex-wrap: wrap
     justify-content: space-around
+
+.chart__card_count
+    font-size: 1.4em
+    text-transform: capitalize
+    background: radial-gradient($lightReaction, $darkReaction)
+    border: 2px solid $darkReaction
+    line-height: 1.8
+    text-align: center
+    justify-content: flex-end

@@ -4,24 +4,50 @@ import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
 
-const FilterCategory = props => (
-    <section>
-        <h2>{props.title}</h2>
-        {props.options.map(item => (
-            <label key={item.key}>
-                <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
-                {item.label}
-            </label>
-        ))}
-    </section>
-);
+const image = name => `img/${name}.svg`;
+
+const FilterCategory = props => { 
+    return (
+        <section className="filter__category">
+            <img className="filter__image" src={image(props.img)} alt="" />
+            <div className="filter__options">
+                <h2>{props.title}</h2>
+                {props.options.map(item => (
+                    <label key={item.key}>
+                        <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
+                        {item.label}
+                    </label>
+                ))}
+                </div>
+        </section>
+    );
+}
 
 const Filter = props => ( // PROPS: boxes, options, checked, handleCheckboxChange()
     <form className="filter__container">
-        <FilterCategory title="Basic Abilities" options={props.abilities} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
-        <FilterCategory title="Card Types" options={props.types} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
-        <FilterCategory title="Curses" options={props.curse} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
-        <FilterCategory title="Attack/Reaction" options={props.reaction} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <section className="filter__container--section">
+            <FilterCategory 
+                title="Basic Abilities" 
+                img="settings"
+                options={props.abilities} 
+                checked={props.checked} 
+                handleCheckboxChange={props.handleCheckboxChange} />
+            <FilterCategory 
+                title="Curses" 
+                img="curse"
+                options={props.curse} 
+                checked={props.checked} 
+                handleCheckboxChange={props.handleCheckboxChange} />
+            <FilterCategory 
+                title="Attack/Reaction" 
+                img="reaction"
+                options={props.reaction} 
+                checked={props.checked} 
+                handleCheckboxChange={props.handleCheckboxChange} />
+        </section>
+        <section className="filter__container--section">
+            <FilterCategory title="Card Types" options={props.types} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        </section>
     </form>
 );
 
@@ -286,13 +312,16 @@ class DeckBuilder extends Component {
         let curse = this.getOptions(this.props.boxes, 'curse');
         let reaction = this.getOptions(this.props.boxes, 'reaction');
 
-        let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : 'Select Filters and/or Expansions';
+        let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : null;
         let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
-                <Button className="btn btn__create_deck" onClick={this.createDeck}>Create Deck</Button>
-                <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
+                <section className="setup__container--buttons">
+                    <Button className="btn btn__create_deck" onClick={this.createDeck}>Create Deck</Button>
+                    <span className="chart__card_count">{this.props.cards.length} cards remaining</span>
+                    <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
+                </section>
                 {filter}
                 {result}
             </section>           
