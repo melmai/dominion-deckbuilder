@@ -4,26 +4,48 @@ import Checkbox from './basic/Checkbox';
 import Result from './Result';
 import Button from './basic/Button';
 
-const FilterCategory = props => (
-    <section className="filter__container--category">
-        <h2>{props.title}</h2>
-        {props.options.map(item => (
-            <label key={item.key}>
-                <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
-                {item.label}
-            </label>
-        ))}
-    </section>
-);
+const image = name => `img/${name}.svg`;
+
+const FilterCategory = props => { 
+    return (
+        <section className="filter__category">
+            <img className="filter__image" src={image(props.img)} alt="" />
+            <div className="filter__options">
+                <h2>{props.title}</h2>
+                {props.options.map(item => (
+                    <label key={item.key}>
+                        <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
+                        {item.label}
+                    </label>
+                ))}
+                </div>
+        </section>
+    );
+}
 
 const Filter = props => ( // PROPS: boxes, options, checked, handleCheckboxChange()
     <form className="filter__container">
-        <section className="filter__container--left">
-            <FilterCategory title="Basic Abilities" options={props.abilities} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
-            <FilterCategory title="Curses" options={props.curse} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
-            <FilterCategory title="Attack/Reaction" options={props.reaction} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
+        <section className="filter__container--section">
+            <FilterCategory 
+                title="Basic Abilities" 
+                img="settings"
+                options={props.abilities} 
+                checked={props.checked} 
+                handleCheckboxChange={props.handleCheckboxChange} />
+            <FilterCategory 
+                title="Curses" 
+                img="curse"
+                options={props.curse} 
+                checked={props.checked} 
+                handleCheckboxChange={props.handleCheckboxChange} />
+            <FilterCategory 
+                title="Attack/Reaction" 
+                img="reaction"
+                options={props.reaction} 
+                checked={props.checked} 
+                handleCheckboxChange={props.handleCheckboxChange} />
         </section>
-        <section className="filter__container--right">
+        <section className="filter__container--section">
             <FilterCategory title="Card Types" options={props.types} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
         </section>
     </form>
