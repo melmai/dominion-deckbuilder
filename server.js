@@ -1,10 +1,11 @@
 const express = require('express');
 const parser = require('body-parser');
 const path = require('path');
+require('dotenv').config();
 
 // models
-const Card = require('../models/Card');
-const Deck = require('../models/Deck');
+const Card = require('./client/src/models/Card');
+const Deck = require('./client/src/models/Deck');
 
 const app = express();
 app.set('port', process.env.PORT || 4000);
@@ -13,10 +14,7 @@ app.use(parser.json());
 app.use(parser.urlencoded({
     extended: true
 }));
-app.use(express.static(__dirname + '/public'));
-
-// routing
-app.get('/', (req, res) => res.sendFile('index.html', {root: path.join(__dirname)}));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // API Routing
 // READ (get all)
@@ -108,56 +106,8 @@ app.get('/api/deck/:id', (req, res) => {
     });
 });
 
-/* // CREATE
-app.post('/api/cards/add', (req, res) => {
-    const newCard = new Card();
-    newCard.title = req.body.title || '';
-    newCard.author = req.body.author || '';
-    newCard.pubDate = req.body.pubDate || '';
-
-    newCard.save((err) => {
-        if (err) res.send(err);
-        res.json({
-            'message': 'Card added!'
-        });
-    });
-});
-
-// UPDATE
-app.post('/api/card/update/:id', (req, res) => {
-    const id = req.params.id;
-    const updatedCard = req.body;
-
-    Card.findByIdAndUpdate(id, updatedCard, {
-        new: true
-    }, (err) => {
-        if (err) res.send(err);
-        res.json({
-            'message': 'Card updated!'
-        });
-    });
-});
-
-
-// DELETE
-app.delete('/api/card/delete/:id', (req, res) => {
-    const id = req.params.id;
-
-    Card.remove({
-        '_id': id
-    }, (err, result) => {
-        if (err) return err;
-        if (result.n) {
-            res.json({
-                'message': 'Card deleted'
-            });
-        } else {
-            res.json({
-                'message': 'No Card found by that name'
-            });
-        }
-    });
-}); */
+// routing
+app.get('/*', (req, res) => res.sendFile(path.join(__dirname, "client", "build", "index.html")));
 
 // 404 Error
 app.use((req, res) => {

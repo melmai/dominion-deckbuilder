@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const credentials = require('../credentials');
-mongoose.connect(credentials.mongo.development.connectionString);
+//const credentials = require('../credentials');
+mongoose.connect(process.env.MONGODB_URI);
 
 const conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
