@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 //const credentials = require('../credentials');
-mongoose.connect(MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI);
 //mongoose.connect(credentials.mongo.development.connectionString);
 
 const conn = mongoose.connection;
