@@ -1,0 +1,29 @@
+{"_id":1,"name":"Dusk","cards":{"nocturne":["Blessed Village","Cobbler","Den of Sin","Faithful Hound","Fool","Monastery","Night Watchman","Shepherd","Tormentor","Tragic Hero"]}}
+{"_id":2,"name":"Midnight","cards":{"nocturne":["Conclave","Crypt","Cursed Village","Devil's Workshop","Druid","Exorcist","Leprechaun","Pooka","Raider","Secret Cave"]}}
+{"_id":3,"name":"Night Shift","cards":{"nocturne":["Druid","Exorcist","Ghost Town","Idol","Night Watchman"],"dominion":["Bandit","Gardens","Mine","Poacher","Smithy"]}}
+{"_id":4,"name":"Idle Hands","cards":{"nocturne":["Bard","Conclave","Cursed Village","Devil's Workshop","Tragic Hero"],"dominion":["Cellar","Harbinger","Market","Merchant","Moneylender"]}}
+{"_id":5,"name":"Shadowy Figures","cards":{"nocturne":["Cobbler","Conclave","Faithful Hound","Shepherd","Tragic Hero"],"intrigue":["Bridge","Conspirator","Mill","Nobles","Secret Passage"]}}
+{"_id":6,"name":"Impending Doom","cards":{"nocturne":["Leprechaun","Monastery","Necromancer","Tormentor","Werewolf"],"intrigue":["Courtier","Lurker","Mining Village","Swindler","Upgrade"]}}
+{"_id":7,"name":"Monster Mash","cards":{"nocturne":["Conclave","Guardian","Pixie","Vampire","Werewolf"],"adventures":["Bridge Troll","Giant","Messenger","Ratcatcher","Storyteller"]},"events":["Quest"]}
+{"_id":8,"name":"Lost in the Woods","cards":{"nocturne":["Blessed Village","Druid","Fool","Sacred Grove","Tracker"],"adventures":["Caravan Guard","Guide","Haunted Woods","Hireling","Ranger"]},"events":["Pilgrimage"]}
+{"_id":9,"name":"Gentle Intro","cards":{"adventures":["Amulet","Distant Lands","Dungeon","Duplicate","Giant","Hireling","Port","Ranger","Ratcatcher","Treasure Trove"]},"events":["Scouting Party"]}
+{"_id":10,"name":"Expert Intro","cards":{"adventures":["Caravan Guard","Coin of the Realm","Haunted Woods","Lost City","Magpie","Peasant","Raze","Swamp Hag","Transmogrify","Wine Merchant"]},"events":["Mission","Plan"]}
+{"_id":11,"name":"Level Up","cards":{"adventures":["Dungeon","Gear","Guide","Lost City","Miser"],"dominion":["Market","Merchant","Militia","Throne Room","Workshop"]},"events":["Training"]}
+{"_id":12,"name":"Son of Size Distortion","cards":{"adventures":["Amulet","Duplicate","Giant","Messenger","Treasure Trove"],"dominion":["Bandit","Bureaucrat","Gardens","Moneylender","Witch"]},"events":["Bonfire","Raid"]}
+{"_id":13,"name":"Masters of Finance","cards":{"adventures":["Artificer","Distant Lands","Gear","Transmogrify","Wine Merchant"],"intrigue":["Bridge","Pawn","Shanty Town","Steward","Upgrade"]},"events":["Ball","Borrow"]}
+{"_id":14,"name":"First Game","cards":{"dominion":["Cellar","Market","Merchant","Militia","Mine","Moat","Remodel","Smithy","Village","Workshop"]}}
+{"_id":15,"name":"Size Distortion","cards":{"dominion":["Artisan","Bandit","Bureaucrat","Chapel","Festival","Gardens","Sentry","Throne Room","Witch","Workshop"]}}
+{"_id":16,"name":"Deck Top","cards":{"dominion":["Artisan","Bureaucrat","Council Room","Festival","Harbinger","Laboratory","Moneylender","Sentry","Vassal","Village"]}}
+{"_id":17,"name":"Sleight of Hand","cards":{"dominion":["Cellar","Council Room","Festival","Gardens","Library","Harbinger","Militia","Poacher","Smithy","Throne Room"]}}
+{"_id":18,"name":"Improvements","cards":{"dominion":["Artisan","Cellar","Market","Merchant","Mine","Moat","Moneylender","Poacher","Remodel","Witch"]}}
+{"_id":19,"name":"Silver \u0026 Gold","cards":{"dominion":["Bandit","Bureaucrat","Chapel","Harbinger","Laboratory","Merchant","Mine","Moneylender","Throne Room","Vassal"]}}
+{"_id":20,"name":"Underlings","cards":{"dominion":["Cellar","Festival","Library","Sentry","Vassal"],"intrigue":["Courtier","Diplomat","Minion","Nobles","Pawn"]}}
+{"_id":21,"name":"Grand Scheme","cards":{"dominion":["Artisan","Council Room","Market","Militia","Workshop"],"intrigue":["Bridge","Mill","Mining Village","Patrol","Shanty Town"]}}
+{"_id":22,"name":"Deconstruction","cards":{"dominion":["Bandit","Mine","Remodel","Throne Room","Village"],"intrigue":["Diplomat","Harem","Lurker","Replace","Swindler"]}}
+{"_id":23,"name":"Victory Dance","cards":{"intrigue":["Baron","Courtier","Duke","Harem","Ironworks","Masquerade","Mill","Nobles","Patrol","Replace"]}}
+{"_id":24,"name":"The Plot Thickens","cards":{"intrigue":["Conspirator","Ironworks","Lurker","Pawn","Mining Village","Secret Passage","Steward","Swindler","Torturer","Trading Post"]}}
+{"_id":25,"name":"Best Wishes","cards":{"intrigue":["Baron","Conspirator","Courtyard","Diplomat","Duke","Secret Passage","Shanty Town","Torturer","Upgrade","Wishing Well"]}}
+{"_id":26,"name":"Underlings","cards":{"intrigue":["Courtier","Diplomat","Minion","Nobles","Pawn"],"dominion":["Cellar","Festival","Library","Sentry","Vassal"]}}
+{"_id":27,"name":"Grand Scheme","cards":{"intrigue":["Bridge","Mill","Mining Village","Patrol","Shanty Town"],"dominion":["Artisan","Council Room","Market","Militia","Workshop"]}}
+{"_id":28,"name":"Deconstruction","cards":{"intrigue":["Diplomat","Harem","Lurker","Replace","Swindler"],"dominion":["Bandit","Mine","Remodel","Throne Room","Village"]}}
+{"_id":29,"name":"Royalty Factory","cards":{"adventures":["Bridge Troll","Duplicate","Page","Raze","Royal Carriage"],"intrigue":["Conspirator","Courtier","Harem","Nobles","Swindler"]},"events":["Pilgrimage"]}
