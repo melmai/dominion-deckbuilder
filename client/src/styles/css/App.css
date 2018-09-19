@@ -1,0 +1,546 @@
+@import url("https://fonts.googleapis.com/css?family=Cormorant+Unicase");
+.shadow, .card__divider, .btn, .btn__toggle_filters {
+  -moz-box-shadow: 0 1px 3px 1px #00080b;
+  -webkit-box-shadow: 0 1px 3px 1px #00080b;
+  box-shadow: 0 1px 3px 1px #00080b;
+}
+
+.inner-shadow, .box__container, .box__container-selected, .btn__create_deck {
+  -moz-box-shadow: inset 0 0 10px #222;
+  -webkit-box-shadow: inset 0 0 10px #222;
+  box-shadow: inset 0 0 10px #222;
+}
+
+.one-edge-shadow, .card__bottom_banner .card__cost {
+  -webkit-box-shadow: 0 8px 6px -6px #00080b;
+  -moz-box-shadow: 0 8px 6px -6px #00080b;
+  box-shadow: 0 8px 6px -6px #00080b;
+}
+
+.wood_border, .card__text_container, .card__divider, .card__icon_container {
+  border-left: 3px solid #221815;
+  border-right: 3px solid #221815;
+}
+
+.display_font, .filter__container--category h2, .card__bottom_banner .card__type, .card__name, .filter__options h2, .btn__select_chart, .box__text, .btn__create_deck, .deck__info, .deck-library header.deck__info, .header {
+  font-family: "Cormorant Unicase", serif;
+  text-transform: uppercase;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Times New Roman", Times, serif;
+  box-sizing: border-box;
+  background: linear-gradient(#00080b, #293b71, #9bbcf5);
+}
+
+header, footer {
+  padding: 1%;
+}
+
+.app {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.header__title {
+  font-size: 4em;
+  color: #d8dccd;
+  text-align: center;
+  margin-bottom: 0;
+  line-height: 0.9em;
+}
+
+.header__subtitle {
+  font-size: 2.5em;
+  line-height: 0.9em;
+  text-align: center;
+  display: block;
+  margin: 0 auto 30px;
+  color: #9bbcf5;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav__item {
+  margin-right: 20px;
+  text-decoration: none;
+  color: #d8dccd;
+  font-size: 1.3em;
+  padding: 5px 0;
+}
+
+.nav__item-active {
+  border-bottom: 1px solid #d8dccd;
+}
+
+.deck-library {
+  display: flex;
+  flex-direction: column;
+  background: #1e1c1d;
+  width: 100%;
+}
+
+.deck-library header.deck__info {
+  font-weight: bold;
+  background: #9a8362;
+  padding: 0;
+  padding-left: 20px;
+  overflow: visible;
+}
+.deck-library header.deck__info span {
+  padding: 1%;
+  color: #00080b;
+  font-size: 1.3em;
+  line-height: 50px;
+}
+.deck-library .deck__container {
+  padding: 0;
+  margin-bottom: 20px;
+}
+.deck-library .deck__container .card__text-container {
+  font-size: 0.7em;
+}
+.deck-library .deck__container .card__abilities-money span {
+  padding: 0;
+}
+.deck-library .deck__container .card__cost {
+  height: 10px;
+  width: 10px;
+  line-height: 10px;
+}
+.deck-library .deck__container .card__heirloom {
+  height: 7px;
+  line-height: 7px;
+  width: 166px;
+  top: -16px;
+}
+
+.deck__row {
+  -moz-box-shadow: inset 1px 2px 25px #626063;
+  -webkit-box-shadow: inset 1px 2px 25px #626063;
+  box-shadow: inset 1px 2px 25px #626063;
+}
+.deck__row span {
+  padding: 5px;
+}
+
+.deck__info {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-auto-rows: minmax(50px, auto);
+  color: #d8dccd;
+}
+.deck__info .deck__info--name, .deck__info .deck__info--expansions {
+  line-height: 50px;
+  padding-left: 20px;
+}
+
+.deck__info--expansions > .card__icon_img {
+  width: 20px;
+  height: auto;
+  margin-right: 5px;
+  line-height: 50px;
+}
+
+.btn, .btn__toggle_filters {
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn__create_deck {
+  width: 30%;
+  height: 60px;
+  font-size: 2.2em;
+  background-color: #395c41;
+  color: #d8dccd;
+  border: 2px solid #395c41;
+  justify-self: flex-start;
+}
+
+.btn__toggle_filters {
+  font-family: "Times New Roman", Times, serif;
+  text-transform: uppercase;
+  font-size: 1.1em;
+  line-height: 1.7em;
+  background: radial-gradient(#626063, #1e1c1d);
+  color: #d8dccd;
+  border: 1px solid #00080b;
+}
+
+.set__container {
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.box__selector {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-basis: 50%;
+}
+
+.box__container, .box__container-selected {
+  background: radial-gradient(#444, #00080b);
+  color: #d8dccd;
+  height: 20%;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.box__container-selected {
+  background: radial-gradient(#9a8362, #634930, #221815);
+  color: #d8dccd;
+}
+
+.box__icon {
+  height: 20px;
+  margin-right: 10px;
+}
+
+.box__text {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.btn__select_chart {
+  font-size: 1.1em;
+  border-radius: 0;
+  background: radial-gradient(#cdbb59, #74632f);
+  border: 2px solid #74632f;
+}
+
+.chart__container {
+  flex-basis: 50%;
+}
+
+.chart__buttons {
+  text-align: center;
+  margin-top: 2%;
+}
+
+.setup__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.setup__container--buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.filter__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter__container--section {
+  min-width: 45%;
+}
+
+.filter__category {
+  border: 1px solid black;
+  padding: 3% 5%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.filter__image {
+  width: 40px;
+  margin-right: 20px;
+}
+
+.filter__options h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.filter__container--section:nth-child(2) label:nth-child(odd) {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  line-height: 1.5;
+}
+
+.deck__container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+  gap: 5px;
+  padding: 5px;
+}
+
+.deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.chart__card_count {
+  font-size: 1.4em;
+  text-transform: capitalize;
+  background: radial-gradient(#6ea3c2, #2e607b);
+  border: 2px solid #2e607b;
+  line-height: 1.8;
+  text-align: center;
+  justify-content: flex-end;
+}
+
+.card {
+  border: 10px solid #00080b;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #99aaa4;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__name {
+  background-color: #d8dccd;
+  font-size: 0.75em;
+  padding: 1%;
+  margin: 0;
+}
+
+.card__icon_container {
+  background-color: #00080b;
+  color: #d8dccd;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__icon_img {
+  height: 70px;
+  width: auto;
+}
+
+.card__divider {
+  height: 1px;
+  width: 97%;
+}
+
+.card__text_container {
+  height: 110px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 0.8em;
+  flex-direction: column;
+  padding: 4% 1%;
+}
+
+.card__abilities {
+  list-style-type: none;
+  padding-left: 0;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+}
+.card__abilities .card__abilities-money {
+  display: flex;
+}
+.card__abilities .card__abilities-money .card__abilities-coin {
+  background: radial-gradient(#f7dc69, #bd9d60);
+  height: 15px;
+  width: 15px;
+  line-height: 15px;
+  border-radius: 50%;
+}
+
+.card__text-value {
+  margin: 0;
+}
+
+.card__text-divider {
+  width: 60%;
+  height: 1px;
+  margin: 5px auto;
+  background: #00080b;
+}
+
+.card__bottom_banner {
+  background-color: #d8dccd;
+  position: relative;
+  align-self: flex-end;
+  width: 100%;
+  overflow: visible;
+}
+.card__bottom_banner .card__heirloom {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  font-size: 0.6em;
+  text-align: center;
+  width: 100%;
+  background: radial-gradient(#f7dc69, #bd9d60);
+  line-height: 1.5;
+  font-style: italic;
+}
+.card__bottom_banner .card__type {
+  text-align: center;
+  font-size: 0.6em;
+  line-height: 20px;
+  margin: 0;
+}
+.card__bottom_banner .card__cost {
+  background: linear-gradient(#b49e39, #9a8362, #634930);
+  width: 20px;
+  height: 20px;
+  font-size: 1.1em;
+  line-height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-right: 5px;
+}
+
+.card__reaction > .card__name {
+  background: radial-gradient(#6ea3c2, #2e607b);
+}
+.card__reaction > .card__text_container {
+  -moz-box-shadow: inset 1px 1px 30px #2e607b;
+  -webkit-box-shadow: inset 1px 1px 30px #2e607b;
+  box-shadow: inset 1px 1px 30px #2e607b;
+}
+.card__reaction > .card__bottom_banner {
+  background: radial-gradient(#6ea3c2, #2e607b);
+}
+
+.card__victory > .card__name {
+  background: radial-gradient(#9bd173, #3b693a);
+}
+.card__victory > .card__text_container {
+  -moz-box-shadow: inset 1px 1px 30px #3b693a;
+  -webkit-box-shadow: inset 1px 1px 30px #3b693a;
+  box-shadow: inset 1px 1px 30px #3b693a;
+}
+.card__victory > .card__bottom_banner {
+  background: radial-gradient(#9bd173, #3b693a);
+}
+
+.card__treasure > .card__name {
+  background: radial-gradient(#f7dc69, #bd9d60);
+}
+.card__treasure > .card__text_container {
+  -moz-box-shadow: inset 1px 1px 30px #bd9d60;
+  -webkit-box-shadow: inset 1px 1px 30px #bd9d60;
+  box-shadow: inset 1px 1px 30px #bd9d60;
+}
+.card__treasure > .card__bottom_banner {
+  background: radial-gradient(#f7dc69, #bd9d60);
+}
+
+.card__reserve > .card__name {
+  background: radial-gradient(#cdbb59, #74632f);
+}
+.card__reserve > .card__text_container {
+  -moz-box-shadow: inset 1px 1px 30px #cdbb59;
+  -webkit-box-shadow: inset 1px 1px 30px #cdbb59;
+  box-shadow: inset 1px 1px 30px #cdbb59;
+}
+.card__reserve > .card__bottom_banner {
+  background: radial-gradient(#cdbb59, #74632f);
+}
+
+.card__night > .card__name {
+  background: radial-gradient(#626063, #1e1c1d);
+  color: #d8dccd;
+}
+.card__night > .card__text_container {
+  background: radial-gradient(#626063, #1e1c1d);
+}
+.card__night > .card__text_container .card__text-value {
+  color: #d8dccd;
+}
+.card__night > .card__text_container .card__text-divider {
+  background: #d8dccd;
+}
+.card__night > .card__bottom_banner {
+  background: radial-gradient(#626063, #1e1c1d);
+}
+.card__night > .card__bottom_banner > .card__type {
+  color: #d8dccd;
+}
+
+.card__duration > .card__name {
+  background: radial-gradient(#fc9843, #885737);
+  color: #00080b;
+}
+.card__duration > .card__text_container {
+  -moz-box-shadow: inset 1px 1px 30px #885737;
+  -webkit-box-shadow: inset 1px 1px 30px #885737;
+  box-shadow: inset 1px 1px 30px #885737;
+}
+.card__duration > .card__bottom_banner {
+  background: radial-gradient(#fc9843, #885737);
+}
+.card__duration > .card__bottom_banner > .card__type {
+  color: #00080b;
+}
+
+.card__duration-reaction > .card__name {
+  background: linear-gradient(#fc9843, #6ea3c2);
+}
+.card__duration-reaction > .card__bottom_banner {
+  background: linear-gradient(#fc9843, #6ea3c2);
+}
+
+.card__treasure-reserve > .card__name {
+  background: linear-gradient(#f7dc69, #cdbb59);
+}
+.card__treasure-reserve > .card__bottom_banner {
+  background: linear-gradient(#f7dc69, #cdbb59);
+}
+
+.card__treasure-victory > .card__name {
+  background: linear-gradient(#f7dc69, #3b693a);
+}
+.card__treasure-victory > .card__text_container {
+  background: linear-gradient(#f7dc69, #3b693a);
+}
+.card__treasure-victory > .card__bottom_banner {
+  background: linear-gradient(#f7dc69, #3b693a);
+}
+
+.card__reserve-victory > .card__name {
+  background: linear-gradient(#74632f, #9bd173);
+}
+.card__reserve-victory > .card__bottom_banner {
+  background: linear-gradient(#74632f, #9bd173);
+}
+
+.filter__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter__container--section:nth-child(2) label:nth-child(odd) {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  line-height: 1.5;
+}
+
+/*# sourceMappingURL=App.css.map */
