@@ -1,6 +1,7 @@
 const express = require('express');
 const parser = require('body-parser');
 const path = require('path');
+require('dotenv').config();
 
 // models
 const Card = require('./client/src/models/Card');
@@ -107,56 +108,6 @@ app.get('/api/deck/:id', (req, res) => {
 
 // routing
 app.get('/*', (req, res) => res.sendFile(path.join(__dirname, "client", "build", "index.html")));
-/* // CREATE
-app.post('/api/cards/add', (req, res) => {
-    const newCard = new Card();
-    newCard.title = req.body.title || '';
-    newCard.author = req.body.author || '';
-    newCard.pubDate = req.body.pubDate || '';
-
-    newCard.save((err) => {
-        if (err) res.send(err);
-        res.json({
-            'message': 'Card added!'
-        });
-    });
-});
-
-// UPDATE
-app.post('/api/card/update/:id', (req, res) => {
-    const id = req.params.id;
-    const updatedCard = req.body;
-
-    Card.findByIdAndUpdate(id, updatedCard, {
-        new: true
-    }, (err) => {
-        if (err) res.send(err);
-        res.json({
-            'message': 'Card updated!'
-        });
-    });
-});
-
-
-// DELETE
-app.delete('/api/card/delete/:id', (req, res) => {
-    const id = req.params.id;
-
-    Card.remove({
-        '_id': id
-    }, (err, result) => {
-        if (err) return err;
-        if (result.n) {
-            res.json({
-                'message': 'Card deleted'
-            });
-        } else {
-            res.json({
-                'message': 'No Card found by that name'
-            });
-        }
-    });
-}); */
 
 // 404 Error
 app.use((req, res) => {
