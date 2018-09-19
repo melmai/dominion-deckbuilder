@@ -13,7 +13,7 @@ app.use(parser.json());
 app.use(parser.urlencoded({
     extended: true
 }));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // API Routing
 // READ (get all)
@@ -106,9 +106,7 @@ app.get('/api/deck/:id', (req, res) => {
 });
 
 // routing
-app.get('/*', (req, res) => res.sendFile('index.html', {
-    root: path.join(__dirname)
-}));
+app.get('/*', (req, res) => res.sendFile(path.join(__dirname, "client", "build", "index.html")));
 /* // CREATE
 app.post('/api/cards/add', (req, res) => {
     const newCard = new Card();
