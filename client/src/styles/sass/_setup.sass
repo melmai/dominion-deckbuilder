@@ -7,10 +7,12 @@
     display: flex
     justify-content: space-around
     align-items: flex-start
+    margin-bottom: 30px
 
 .filter__container
     display: flex
     justify-content: space-between
+    margin-top: 30px
 
 .filter__container--section // left/right containers
     min-width: 45%
@@ -21,7 +23,7 @@
     display: flex
     justify-content: flex-start
     align-items: flex-start
-    margin-bottom: 30px
+    margin-bottom: 20px
 
 .filter__image
     width: 40px
@@ -51,11 +53,16 @@ label
     flex-wrap: wrap
     justify-content: space-around
 
-.chart__card_count
+.chart__card_count // card counter
     font-size: 1.4em
     text-transform: capitalize
-    background: radial-gradient($lightReaction, $darkReaction)
-    border: 2px solid $darkReaction
+    //background: radial-gradient($lightReaction, $darkReaction)
+    //border: 2px solid $darkReaction
     line-height: 1.8
     text-align: center
     justify-content: flex-end
+    color: $white
+
+.inline-icon // inline icons eg, cards
+    height: 20px
+    margin-right: 5px
