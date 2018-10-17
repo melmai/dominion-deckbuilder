@@ -306,6 +306,10 @@ label {
   margin-right: 5px;
 }
 
+label {
+  display: inline;
+}
+
 .card {
   border: 10px solid #00080b;
   border-radius: 8px;

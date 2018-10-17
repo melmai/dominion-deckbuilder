@@ -14,8 +14,12 @@ const FilterCategory = props => {
                 <h2>{props.title}</h2>
                 {props.options.map(item => (
                     <label key={item.key}>
-                        <Checkbox name={item.name} checked={props.checked.get(item.name)} onChange={props.handleCheckboxChange} />
-                        {item.label}
+                        <Checkbox 
+                            name={item.name} 
+                            label={item.label} 
+                            checked={props.checked.get(item.name)} 
+                            onChange={props.handleCheckboxChange} 
+                            />
                     </label>
                 ))}
                 </div>
@@ -80,6 +84,10 @@ class DeckBuilder extends Component {
         const target = event.target, name = target.name, isChecked = target.checked;
         this.setState(prevState => ({ checked: prevState.checked.set(name, isChecked) }));
     }
+
+    handleRadioChange(event) {
+        const target = event.target, name = target.name, isChecked = target.checked;
+        this.setState(prevState => ({ checked: prevState.checked.set(name, isChecked) }));    }
 
     toggleFilters() {
         this.setState(prevState => ({ showFilters: !prevState.showFilters }));
