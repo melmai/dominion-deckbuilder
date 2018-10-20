@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { globalAbilities, globalClasses, immunity, curse, reaction } from './config/checkboxes';
+import { globalAbilities, immunity, curse, reaction } from './config/checkboxes';
 import Result from './Result';
 import Filter from './Filter';
 import Button from './basic/Button';
@@ -147,7 +147,6 @@ class DeckBuilder extends Component {
         // draw remaining cards and add to deck array
         const remainder = this.drawCards((10 - deck.length), cards, deck);
         deck = deck.concat(remainder);
-        console.log(remainder);
         this.setState({ deck: deck, showFilters: false });
         return deck;
     }    
@@ -235,7 +234,7 @@ class DeckBuilder extends Component {
                 break;
 
             case 'types':
-                options = globalClasses;
+                options = ['victory', 'attack']; // global classes
                 if (boxes.length < 1) {
                     //options = options.concat(treasure, traveller, reserve, night, duration);
                     options = ['Treasure', 'Traveller', 'Reserve', 'Night', 'Duration'];
