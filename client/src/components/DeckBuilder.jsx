@@ -1,59 +1,8 @@
 import React, { Component } from 'react';
-import { globalAbilities, globalClasses, immunity, treasure, traveller, night, duration, reserve, curse, reaction } from './config/checkboxes';
-import Checkbox from './basic/Checkbox';
+import { globalAbilities, globalClasses, immunity, curse, reaction } from './config/checkboxes';
 import Result from './Result';
+import Filter from './Filter';
 import Button from './basic/Button';
-
-const image = name => `img/${name}.svg`;
-
-const FilterCategory = props => { 
-    return (
-        <section className="filter__category">
-            <img className="filter__image" src={image(props.img)} alt="" />
-            <div className="filter__options">
-                <h2>{props.title}</h2>
-                {props.options.map(item => (
-                    <label key={item.key}>
-                        <Checkbox 
-                            name={item.name} 
-                            label={item.label} 
-                            checked={props.checked.get(item.name)} 
-                            onChange={props.handleCheckboxChange} 
-                            />
-                    </label>
-                ))}
-                </div>
-        </section>
-    );
-}
-
-const Filter = props => ( // PROPS: boxes, options, checked, handleCheckboxChange()
-    <form className="filter__container">
-        <section className="filter__container--section">
-            <FilterCategory 
-                title="Basic Abilities" 
-                img="settings"
-                options={props.abilities} 
-                checked={props.checked} 
-                handleCheckboxChange={props.handleCheckboxChange} />
-            <FilterCategory 
-                title="Curses" 
-                img="curse"
-                options={props.curse} 
-                checked={props.checked} 
-                handleCheckboxChange={props.handleCheckboxChange} />
-            <FilterCategory 
-                title="Attack/Reaction" 
-                img="reaction"
-                options={props.reaction} 
-                checked={props.checked} 
-                handleCheckboxChange={props.handleCheckboxChange} />
-        </section>
-        <section className="filter__container--section">
-            <FilterCategory title="Card Types" options={props.types} checked={props.checked} handleCheckboxChange={props.handleCheckboxChange} />
-        </section>
-    </form>
-);
 
 class DeckBuilder extends Component {
     constructor(props) {
@@ -62,12 +11,14 @@ class DeckBuilder extends Component {
         this.state = {
             deck: [],
             showFilters: true,
-            checked: new Map()
+            checked: new Map(),
+            selected: new Map()
         }
         
         this.createDeck = this.createDeck.bind(this);
         this.toggleFilters = this.toggleFilters.bind(this);
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+        this.handleRadioChange = this.handleRadioChange.bind(this);
         this.findCardsByClass = this.findCardsByClass.bind(this);
         this.removeCardsByClass = this.removeCardsByClass.bind(this);
         this.findCardsByStrategy = this.findCardsByStrategy.bind(this);
@@ -85,9 +36,10 @@ class DeckBuilder extends Component {
         this.setState(prevState => ({ checked: prevState.checked.set(name, isChecked) }));
     }
 
-    handleRadioChange(event) {
-        const target = event.target, name = target.name, isChecked = target.checked;
-        this.setState(prevState => ({ checked: prevState.checked.set(name, isChecked) }));    }
+    handleRadioChange(event, value) {
+        const target = event.target, name = target.name, selected = this.state.selected;
+        this.setState({ selected: selected.set(name, value) });    
+    }
 
     toggleFilters() {
         this.setState(prevState => ({ showFilters: !prevState.showFilters }));
@@ -99,8 +51,6 @@ class DeckBuilder extends Component {
         const options = this.state.checked; // map
         console.log(options);
         let deck = [];
-
-        console.log(this.findCardsByAbility(cards, 'buy', 0));
 
         // add or exclude cards by class
         const categories = ['Attack', 'Reaction', 'Victory', 'Treasure', 'Traveller', 'Fate', 'Doom', 'Night', 'Duration', 'Reserve'];
@@ -193,8 +143,6 @@ class DeckBuilder extends Component {
             cards = this.removeCard(cards, card._id);
             deck = deck.concat(card);
         });
-
-        console.log(deck);
 
         // draw remaining cards and add to deck array
         const remainder = this.drawCards((10 - deck.length), cards, deck);
@@ -289,12 +237,13 @@ class DeckBuilder extends Component {
             case 'types':
                 options = globalClasses;
                 if (boxes.length < 1) {
-                    options = options.concat(treasure, traveller, reserve, night, duration);
+                    //options = options.concat(treasure, traveller, reserve, night, duration);
+                    options = ['Treasure', 'Traveller', 'Reserve', 'Night', 'Duration'];
                 } else {
-                    if (int || adv || noc) options = options.concat(treasure);
-                    if (adv) options = options.concat(traveller, reserve);
-                    if (noc) options = options.concat(night);
-                    if (adv || noc) options = options.concat(duration);
+                    if (int || adv || noc) options = options.concat('Treasure');
+                    if (adv) options = options.concat('Traveller', 'Reserve');
+                    if (noc) options = options.concat('Night');
+                    if (adv || noc) options = options.concat('Duration');
                 }
                 break;
 
@@ -321,13 +270,13 @@ class DeckBuilder extends Component {
         let reaction = this.getOptions(this.props.boxes, 'reaction');
 
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : null;
-        let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} handleCheckboxChange={this.handleCheckboxChange} /> : null;
+        let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} selected={this.state.selected} handleRadioChange={this.handleRadioChange} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
                 <section className="setup__container--buttons">
                     <Button className="btn btn__create_deck" onClick={this.createDeck}>Create Deck</Button>
-                    <span className="chart__card_count"><img class="inline-icon" src="/img/cards.svg" alt="cards" />{this.props.cards.length}</span>
+                    <span className="chart__card_count"><img className="inline-icon" src="/img/cards.svg" alt="cards" />{this.props.cards.length}</span>
                     <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
                 </section>
                 {filter}

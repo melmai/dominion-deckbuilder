@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Radio = ({ type = 'radio', name, checked = false, onChange }) => (
-  <input type={type} name={name} checked={checked} onChange={onChange} />
+const Radio = ({ name, value, label, selected = false, onChange }) => (
+    <React.Fragment>
+        <input type="radio" id={`${value}${name}`} name={name} value={value} selected={selected} onChange={(e) => onChange(e, value)} />
+        <label htmlFor={`${value}${name}`}>{label}</label>
+    </React.Fragment>
 );
 
 Radio.propTypes = {

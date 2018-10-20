@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Checkbox = ({ type = 'checkbox', name, label, checked = false, onChange }) => (
     <div>    
         <input type={type} id={name} name={name} checked={checked} onChange={onChange} />
-        <label for={name}>{label}</label>
+        <label htmlFor={name}>{label}</label>
     </div>
 );
 
