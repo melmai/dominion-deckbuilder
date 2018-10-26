@@ -319,6 +319,10 @@ label {
   flex-direction: column;
 }
 
+.card__blank {
+  min-height: 250px;
+}
+
 .card__name {
   background-color: #d8dccd;
   font-size: 0.75em;
