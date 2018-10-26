@@ -148,7 +148,7 @@ class DeckBuilder extends Component {
         // draw remaining cards and add to deck array
         const remainder = this.drawCards((10 - deck.length), cards, deck);
         deck = deck.concat(remainder);
-        this.setState({ deck: deck, showFilters: false });
+        this.setState({ deck: deck });
         return deck;
     }    
 
@@ -270,14 +270,14 @@ class DeckBuilder extends Component {
         let reaction = this.getOptions(this.props.boxes, 'reaction');
 
         let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : <Deck />;
-        let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} selected={this.state.selected} handleRadioChange={this.handleRadioChange} handleCheckboxChange={this.handleCheckboxChange} /> : null;
+        let filter = !this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} selected={this.state.selected} handleRadioChange={this.handleRadioChange} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
             <section className="setup__container">
                 <section className="setup__container--buttons">
                     <Button className="btn btn__create_deck" onClick={this.createDeck}>Create Deck</Button>
                     <span className="chart__card_count"><img className="inline-icon" src="/img/cards.svg" alt="cards" />{this.props.cards.length}</span>
-                    <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{this.state.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
+                    <Button className="btn btn__toggle_filters" onClick={this.toggleFilters}>{!this.state.showFilters ? 'Hide Filters' : 'Show Filters'}</Button>
                 </section>
                 {filter}
                 {result}
