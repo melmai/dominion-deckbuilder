@@ -22,7 +22,7 @@
   border-right: 3px solid #221815;
 }
 
-.display_font, .filter__container--category h2, .card__bottom_banner .card__type, .card__name, .filter__options h2, .btn__select_chart, .box__text, .btn__create_deck, .deck__info, .deck-library header.deck__info, .header {
+.display_font, .card__bottom_banner .card__type, .card__name, .filter__options h2, .btn__select_chart, .box__text, .btn__create_deck, .deck__info, .deck-library header.deck__info, .header {
   font-family: "Cormorant Unicase", serif;
   text-transform: uppercase;
 }
@@ -237,11 +237,13 @@ header, footer {
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
+  margin-bottom: 30px;
 }
 
 .filter__container {
   display: flex;
   justify-content: space-between;
+  margin-top: 30px;
 }
 
 .filter__container--section {
@@ -254,7 +256,7 @@ header, footer {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .filter__image {
@@ -293,11 +295,19 @@ label {
 .chart__card_count {
   font-size: 1.4em;
   text-transform: capitalize;
-  background: radial-gradient(#6ea3c2, #2e607b);
-  border: 2px solid #2e607b;
   line-height: 1.8;
   text-align: center;
   justify-content: flex-end;
+  color: #d8dccd;
+}
+
+.inline-icon {
+  height: 20px;
+  margin-right: 5px;
+}
+
+label {
+  display: inline;
 }
 
 .card {
@@ -307,6 +317,33 @@ label {
   background-color: #99aaa4;
   display: flex;
   flex-direction: column;
+}
+
+.card__blank {
+  height: 250px;
+  background-color: #293b71;
+  border-color: #00080b;
+  justify-content: center;
+  align-items: center;
+}
+.card__blank .card__name {
+  color: #17479c;
+  background-color: #9a8362;
+  font-size: 2em;
+  line-height: 1;
+  text-shadow: -3px 3px 3px #444;
+  display: block;
+  padding: 7%;
+}
+.card__blank .left {
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg) translate(30px, 30px);
+}
+.card__blank .right {
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg) translate(27px, 30px);
 }
 
 .card__name {
@@ -527,20 +564,6 @@ label {
 }
 .card__reserve-victory > .card__bottom_banner {
   background: linear-gradient(#74632f, #9bd173);
-}
-
-.filter__container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.filter__container--section:nth-child(2) label:nth-child(odd) {
-  margin-bottom: 10px;
-}
-
-label {
-  display: block;
-  line-height: 1.5;
 }
 
 /*# sourceMappingURL=App.css.map */

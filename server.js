@@ -14,7 +14,8 @@ app.use(parser.json());
 app.use(parser.urlencoded({
     extended: true
 }));
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+//app.use(express.static(path.join(__dirname, 'client', 'build'))); // production
+app.use(express.static(__dirname + '/client/public')); // development
 
 // API Routing
 // READ (get all)
@@ -107,18 +108,19 @@ app.get('/api/deck/:id', (req, res) => {
 });
 
 // routing
-app.get('/*', (req, res) => res.sendFile(path.join(__dirname, "client", "build", "index.html")));
+//app.get('/*', (req, res) => res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))); // production
+app.get('/', (req, res) => res.sendFile('index.html', {root: path.join(__dirname)})); // development
 
 // 404 Error
 app.use((req, res) => {
     res.status(404);
-    res.render('404');
+    res.send('404');
 });
 
 // 500 Error
 app.use((err, req, res) => {
     res.status(500);
-    res.render('500');
+    res.send('500');
 });
 
 app.listen(app.get('port'), () => {

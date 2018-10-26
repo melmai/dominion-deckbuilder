@@ -22,28 +22,30 @@ export const globalAbilities = [
     },
 ];
 
-export const globalClasses = [
-    {
-        name: 'victory',
-        key: 'victory',
-        label: 'At least 1 Victory Card'
-    },
-    {
-        name: 'no-victory',
-        key: 'no-victory',
-        label: 'No Victory Cards'
-    },
-    {
-        name: 'attack',
-        key: 'attack',
-        label: 'At least 1 Attack Card'
-    },
-    {
-        name: 'no-attack',
-        key: 'no-attack',
-        label: 'No Attack Cards'
-    },
-];
+// export const globalClasses = [
+//     {
+//         name: 'victory',
+//         key: 'victory',
+//         label: '1 Victory Card'
+//     },
+//     {
+//         name: 'no-victory',
+//         key: 'no-victory',
+//         label: 'exclude Victory'
+//     },
+//     {
+//         name: 'attack',
+//         key: 'attack',
+//         label: 'At least 1 Attack Card'
+//     },
+//     {
+//         name: 'no-attack',
+//         key: 'no-attack',
+//         label: 'No Attack Cards'
+//     },
+// ];
+
+export const globalClasses = [ 'victory', 'attack' ];
 
 export const curse = [ // attack related
     {
@@ -79,65 +81,66 @@ export const immunity = [ // immunity
     },
 ];
 
-export const treasure = [ // treasure
-    {
-        name: 'treasure', // TREASURES (int)
-        key: 'treasure',
-        label: 'At least 1 Treasure Card'
-    }, 
-    {
-        name: 'no-treasure',
-        key: 'no-treasure',
-        label: 'No Treasure Cards'
-    },
-];
+// export const treasure = [ // treasure
+//     {
+//         name: 'treasure', // TREASURES (int)
+//         key: 'treasure',
+//         label: 'At least 1 Treasure Card'
+//     }, 
+//     {
+//         name: 'no-treasure',
+//         key: 'no-treasure',
+//         label: 'No Treasure Cards'
+//     },
+// ];
 
-export const traveller = [
-    {
-        name: 'traveller', // TRAVELLER (adv)
-        key: 'traveller',
-        label: 'At least 1 Traveller Card'
-    }, 
-    {
-        name: 'no-traveller',
-        key: 'no-traveller',
-        label: 'No Traveller Cards'
-    },
-];
+// export const traveller = [
+//     {
+//         name: 'traveller', // TRAVELLER (adv)
+//         key: 'traveller',
+//         label: 'At least 1 Traveller Card'
+//     }, 
+//     {
+//         name: 'no-traveller',
+//         key: 'no-traveller',
+//         label: 'No Traveller Cards'
+//     },
+// ];
 
-export const reserve = [
-    {
-        name: 'reserve', // RESERVE (adv)
-        key: 'reserve',
-        label: 'At least 1 Reserve Card'
-    }, 
-    {
-        name: 'no-reserve',
-        key: 'no-reserve',
-        label: 'No Reserve Cards'
-    },
-];
+// export const reserve = [
+//     {
+//         name: 'reserve', // RESERVE (adv)
+//         key: 'reserve',
+//         label: 'At least 1 Reserve Card'
+//     }, 
+//     {
+//         name: 'no-reserve',
+//         key: 'no-reserve',
+//         label: 'No Reserve Cards'
+//     },
+// ];
 
-export const night = [
-    {
-        name: 'night', // NIGHT (noc)
-        key: 'night',
-        label: 'At least 1 Night Card'
-    }, {
-        name: 'no-night',
-        key: 'no-night',
-        label: 'No Night Cards'
-    },
-];
+// export const night = [
+//     {
+//         name: 'night', // NIGHT (noc)
+//         key: 'night',
+//         label: 'At least 1 Night Card'
+//     }, 
+//     {
+//         name: 'no-night',
+//         key: 'no-night',
+//         label: 'No Night Cards'
+//     },
+// ];
 
-export const duration = [
-    {
-        name: 'duration', // DURATION (adv, noc)
-        key: 'duration',
-        label: 'At least 1 Duration Card'
-    }, {
-        name: 'no-duration',
-        key: 'no-duration',
-        label: 'No Duration Cards'
-    },
-];
+// export const duration = [
+//     {
+//         name: 'duration', // DURATION (adv, noc)
+//         key: 'duration',
+//         label: 'At least 1 Duration Card'
+//     }, {
+//         name: 'no-duration',
+//         key: 'no-duration',
+//         label: 'No Duration Cards'
+//     },
+// ];

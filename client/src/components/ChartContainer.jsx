@@ -21,7 +21,8 @@ class ChartContainer extends Component {
         Chart.defaults.global.defaultFontSize = 9;
         Chart.scaleService.updateScaleDefaults('linear', {
             ticks: {
-                min: 0
+                min: 0,
+                stepSize: 1
             }
         });
     }
