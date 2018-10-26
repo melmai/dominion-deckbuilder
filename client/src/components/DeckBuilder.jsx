@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { globalAbilities, immunity, curse, reaction } from './config/checkboxes';
 import Result from './Result';
 import Filter from './Filter';
+import Deck from './Deck';
 import Button from './basic/Button';
 
 class DeckBuilder extends Component {
@@ -268,7 +269,7 @@ class DeckBuilder extends Component {
         let curse = this.getOptions(this.props.boxes, 'curse');
         let reaction = this.getOptions(this.props.boxes, 'reaction');
 
-        let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : null;
+        let result = (this.state.deck.length > 0) ? <Result cards={this.state.deck} /> : <Deck />;
         let filter = this.state.showFilters ? <Filter abilities={abilities} types={types} curse={curse} reaction={reaction} checked={this.state.checked} selected={this.state.selected} handleRadioChange={this.handleRadioChange} handleCheckboxChange={this.handleCheckboxChange} /> : null;
         
         return (
