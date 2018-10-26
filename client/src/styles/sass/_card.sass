@@ -6,6 +6,31 @@
     display: flex
     flex-direction: column
 
+.card__blank
+    height: 250px
+    background-color: $darkBlue
+    border-color: $black
+    justify-content: center
+    align-items: center
+    .card__name
+        color: $brightBlue
+        background-color: $lightTan
+        font-size: 2em
+        line-height: 1
+        text-shadow: -3px 3px 3px $gray
+        display: block
+        padding: 7%
+        //box-shadow: -1px -1px 5px 5px $black inset
+        //outline: none
+    .left
+        -ms-transform: rotate(90deg) //* IE 9 */
+        -webkit-transform: rotate(90deg) //* Safari 3-8 */
+        transform: rotate(90deg) translate(30px, 30px)
+    .right
+        -ms-transform: rotate(-90deg) //* IE 9 */
+        -webkit-transform: rotate(-90deg) //* Safari 3-8 */
+        transform: rotate(-90deg) translate(27px, 30px)
+
 .card__name
     @extend .display_font
     background-color: $white
