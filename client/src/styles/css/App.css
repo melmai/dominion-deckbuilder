@@ -320,7 +320,30 @@ label {
 }
 
 .card__blank {
-  min-height: 250px;
+  height: 250px;
+  background-color: #293b71;
+  border-color: #00080b;
+  justify-content: center;
+  align-items: center;
+}
+.card__blank .card__name {
+  color: #17479c;
+  background-color: #9a8362;
+  font-size: 2em;
+  line-height: 1;
+  text-shadow: -3px 3px 3px #444;
+  display: block;
+  padding: 7%;
+}
+.card__blank .left {
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg) translate(30px, 30px);
+}
+.card__blank .right {
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg) translate(27px, 30px);
 }
 
 .card__name {

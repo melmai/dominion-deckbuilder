@@ -3,7 +3,8 @@ import Card from './Card';
 
 export const BlankCard = () => (
     <section className="card card__blank">
-        Dominion
+        <span className="card__name left">Dominion</span>
+        <span className="card__name right">Dominion</span>
     </section>
 );
 
