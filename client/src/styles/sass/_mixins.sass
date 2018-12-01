@@ -8,6 +8,14 @@
    -webkit-box-shadow: inset $x $y $blur $color
    box-shadow:         inset $x $y $blur $color 
 
+@mixin less-than($pixels)
+    @media (max-width: $pixels)
+        @content
+
+@mixin greater-than($pixels)
+    @media (min-width: $pixels)
+        @content
+
 .shadow 
     -moz-box-shadow:    0 1px 3px 1px $black
     -webkit-box-shadow: 0 1px 3px 1px $black
